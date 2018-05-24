@@ -1,0 +1,57 @@
+{
+  "signing":
+  {
+    "default":
+    {
+      "ocsp_url": "https://ocsp.home.kai-server.dn42",
+      "crl_url": "https://ocsp.home.kai-server.dn42/crl",
+      "expiry": "26280h",
+      "usages":
+      [
+        "signing",
+        "key encipherment",
+        "client auth"
+       ]
+     },
+     "profiles":
+     {
+       "ocsp":
+       {
+         "usages": ["digital signature", "ocsp signing"],
+         "expiry": "26280h"
+       },
+       "intermediate":
+       {
+         "usages": ["cert sign", "crl sign"],
+         "expiry": "26280h",
+         "ca_constraint": {"is_ca": true}
+       },
+       "server":
+       {
+         "usages": ["signing", "key encipherment", "server auth"],
+         "expiry": "26280h",
+         "auth_key": "master"
+       },
+       "client":
+       {
+         "usages": ["signing", "key encipherment", "client auth"],
+         "expiry": "26280h",
+         "auth_key": "master"
+       },
+       "COP":
+       {
+         "usages": ["signing", "key encipherment", "client auth","server auth"],
+         "expiry": "26280h",
+         "auth_key": "master"
+       }
+    }
+  },
+  "auth_keys":
+  {
+    "master":
+    {
+      "type":"standard",
+      "key":"68c29c0ecb9996a90ebb2d76bf28c562"
+    }
+  }
+}

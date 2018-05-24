@@ -1,0 +1,18 @@
+{
+	"hosts": [
+		"librenms.home.kai",
+		"librenms.home.kai-server.dn42",
+                "librenms.kai-server.dn42"
+	],
+	"key": {
+		"algo": "rsa",
+		"size": 4096
+	},
+	"names": [{
+		"C": "DE",
+		"L": "Offenbach am Main",
+		"O": "KaiNET",
+		"OU": "Data Services",
+		"ST": "Hessen"
+	}]
+}

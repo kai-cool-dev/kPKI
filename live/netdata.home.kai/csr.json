@@ -1,0 +1,31 @@
+{
+	"hosts": [
+		"netdata.home.kai",
+		"netdata.home.kai-server.dn42",
+                "netdata.kai-server.dn42",
+                "litt.netdata.kai-server.dn42",
+                "spectre.netdata.kai-server.dn42",
+                "pve.netdata.kai-server.dn42",
+                "openhab.netdata.kai-server.dn42",
+                "shaw.netdata.kai-server.dn42",
+                "clive.netdata.kai-server.dn42",
+                "dn42.netdata.kai-server.dn42",
+                "dn42-1.netdata.kai-server.dn42",
+                "dn42-home.netdata.kai-server.dn42",
+                "pve.netdata.kai-server.dn42",
+                "nessus.netdata.kai-server.dn42",
+                "nfs.netdata.kai-server.dn42",
+                "ts3.netdata.kai-server.dn42"
+	],
+	"key": {
+		"algo": "ecdsa",
+		"size": 256
+	},
+	"names": [{
+		"C": "DE",
+		"L": "Offenbach am Main",
+		"O": "KaiNET",
+		"OU": "Data Services",
+		"ST": "Hessen"
+	}]
+}

@@ -1,0 +1,44 @@
+{
+  "__comment":"Hey, ich bin ein Kommentar. Das hier ist JSON. Bitte nicht erschrecken, es ist eigentlich ganz einfach. Die Konfigurationswerte sind im key:value Prinzip geschrieben.",
+  "__comment":"[key,key] - Zeigt das es ein Array ist",
+  "__comment":"{key:value,key:value} - Zeigt das es ein Objekt ist",
+  "__comment":"Hier die zugehörigen Datenbankdaten hinterlegen.",
+  "database":
+  {
+    "user": "cfssl",
+    "passwort" : "UW4.XG9f48XqX7",
+    "host": "localhost",
+    "database": "cfssl"
+	},
+  "__comment":"Hier die zugehörigen Backend-Daten hinterlegen.",
+  "backend": {
+    "url": "https://certserver.kai-server.dn42",
+    "auth_token": "68c29c0ecb9996a90ebb2d76bf28c562"
+  },
+  "__comment":"Schaltet den log/debug.log ein.",
+  "debug":true,
+  "__comment":"Firmendaten (Werden bei CSR's als Standard gesetzt und im Frontend dargestellt).",
+  "company":
+  {
+    "country":"DE",
+    "province":"Hessen",
+    "city":"Offenbach am Main",
+    "department":
+    {
+      "__comment":"Okay, jetzt wird es knifflig. Im Daemon sind per Standard verschiedene Profile Konfiguriert. Diese kannst du hier selbst benennen und werden als OU im Zertifikat gesetzt.",
+      "__comment":"Du kannst hier auch deine eigenen Profile übertragen, jedoch mit einigen Limits: Der auth_token wird vorausgesetzt, der muss bei jedem Profil gleich sein. Du kannst aber im Daemon genauere Einstellungen vornehmen.",
+      "server":"Web Services",
+      "client":"VPN Services",
+      "intermediate":"Intermediate CA",
+      "ocsp":"OCSP Services",
+      "CoP":"Customer Operations"
+    },
+    "name":"ADACOR Hosting GmbH"
+  },
+  "__comment":"Ab hier brauchst du eigentlich nicht mehr konfigurieren. Die Standardwerte reichen aus.",
+  "__comment":"Oj, mit Themes kannst du die CA optisch anpassen oder auch ein eigenes erstellen. Orientiere dich dabei an dem Standard-Theme :)",
+  "theme":"adacor.theme",
+  "__comment":"Weiter geht es mit der Standardsprache.",
+  "language":"DE",
+  "year":"2017"
+}

@@ -1,0 +1,3 @@
+# Ignoriere Zertifikate
+*.pem
+*.csr

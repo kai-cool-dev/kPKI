@@ -1,0 +1,19 @@
+{
+	"hosts": [
+		"pki.home.kai",
+		"pki.home.kai-server.dn42",
+                "pki.kai-server.dn42",
+                "certserver.kai-server.dn42"
+	],
+	"key": {
+		"algo": "rsa",
+		"size": 4096
+	},
+	"names": [{
+		"C": "DE",
+		"L": "Offenbach am Main",
+		"O": "KaiNET",
+		"OU": "Data Services",
+		"ST": "Hessen"
+	}]
+}

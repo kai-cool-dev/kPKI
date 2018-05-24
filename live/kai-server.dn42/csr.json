@@ -1,0 +1,18 @@
+{
+	"hosts": [
+		"kai-server.dn42",
+		"www.kai-server.dn42",
+                "*.kai-server.dn42"
+	],
+	"key": {
+		"algo": "rsa",
+		"size": 4096
+	},
+	"names": [{
+		"C": "DE",
+		"L": "Offenbach am Main",
+		"O": "KaiNET",
+		"OU": "Data Services",
+		"ST": "Hessen"
+	}]
+}
