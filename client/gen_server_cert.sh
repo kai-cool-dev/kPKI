@@ -1,5 +1,7 @@
 #!/bin/bash
 # Generiert ein neues SSL File basierend auf einem CSR
+SCRIPT=`realpath $0`
+SCRIPTPATH=`dirname $SCRIPT`
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
@@ -48,5 +50,9 @@ then
   echo "Parameter -d/--dir <path/to/destination/> missing!"
   exit 1
 fi
+if [ "$DIRECTORY" == "." ]
+then
+  DIRECTORY="$(pwd)"
+fi
 
-/root/go/bin/cfssl gencert -config="/pki/conf/config_client.json" -profile="server" "$CSR" | /root/go/bin/cfssljson -bare "$DIRECTORY/$NAME"
+$SCRIPTPATH/cfssl gencert -config="$SCRIPTPATH/config_client.json" -profile="server" "$CSR" | $SCRIPTPATH/cfssljson -bare "$DIRECTORY/$NAME"

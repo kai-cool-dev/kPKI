@@ -20,6 +20,6 @@
   },
   "remotes":
   {
-    "caserver": "https://certserver.kai-server.dn42"
+    "caserver": "https://pki.server.pep:443"
   }
 }

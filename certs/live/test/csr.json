@@ -1,0 +1,18 @@
+{
+  "CN": "test.pep",
+  "hosts": [
+    "test.pep",
+    "*.test.pep"
+  ],
+  "key": {
+    "algo": "ecdsa",
+    "size": 256
+  },
+  "names": [{
+    "C": "UK",
+    "L": "London",
+    "O": "420 SERVICES LTD",
+    "OU": "PKI Services",
+    "ST": "London"
+  }]
+}

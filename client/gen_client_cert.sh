@@ -1,5 +1,7 @@
 #!/bin/bash
 # Generiert ein neues SSL File basierend auf einem CSR
+SCRIPT=`realpath $0`
+SCRIPTPATH=`dirname $SCRIPT`
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
@@ -49,4 +51,4 @@ then
   exit 1
 fi
 
-/root/go/bin/cfssl gencert -config="/pki/conf/config_client.json" -profile="client" "$CSR" | /root/go/bin/cfssljson -bare "$DIRECTORY/$NAME"
+$SCRIPTPATH/cfssl gencert -config="$SCRIPTPATH/config_client.json" -profile="client" "$CSR" | $SCRIPTPATH/cfssljson -bare "$DIRECTORY/$NAME"

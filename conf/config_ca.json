@@ -37,12 +37,6 @@
          "usages": ["signing", "key encipherment", "client auth"],
          "expiry": "26280h",
          "auth_key": "master"
-       },
-       "COP":
-       {
-         "usages": ["signing", "key encipherment", "client auth","server auth"],
-         "expiry": "26280h",
-         "auth_key": "master"
        }
     }
   },
