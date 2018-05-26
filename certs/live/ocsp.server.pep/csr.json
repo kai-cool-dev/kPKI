@@ -1,7 +1,6 @@
 {
 	"hosts": [
-		"shaw.kai-server.dn42",
-		"shaw.fastnameserver.eu"
+		"ocsp.server.pep"
 	],
 	"key": {
 		"algo": "rsa",

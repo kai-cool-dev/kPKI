@@ -3,8 +3,8 @@
   {
     "default":
     {
-      "ocsp_url": "https://ocsp.home.kai-server.dn42",
-      "crl_url": "https://ocsp.home.kai-server.dn42/crl",
+      "ocsp_url": "https://ocsp.server.pep",
+      "crl_url": "https://ocsp.server.pep/crl",
       "expiry": "26280h",
       "usages":
       [

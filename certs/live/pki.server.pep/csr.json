@@ -1,8 +1,6 @@
 {
 	"hosts": [
-		"librenms.home.kai",
-		"librenms.home.kai-server.dn42",
-                "librenms.kai-server.dn42"
+		"pki.server.pep"
 	],
 	"key": {
 		"algo": "rsa",
