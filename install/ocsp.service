@@ -1,0 +1,13 @@
+[Unit]
+Description=OCSP Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/pki/
+ExecStart=/bin/bash /pki/start_ocsp_service.sh
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
