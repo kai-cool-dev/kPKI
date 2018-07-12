@@ -1,50 +1,60 @@
-{{ content() }}
-
-<ul class="pager">
-    <li class="previous pull-left">
-        {{ link_to("profiles/index", "&larr; Go Back") }}
-    </li>
-    <li class="pull-right">
-        {{ link_to("profiles/create", "Create profiles", "class": "btn btn-primary") }}
-    </li>
-</ul>
-
-{% for profile in page.items %}
-{% if loop.first %}
-<table class="table table-bordered table-striped" align="center">
+<div class="row">
+  <div class="col-lg-12">
+    {{ content() }}
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+  <table class="table table-hover">
     <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Active?</th>
-        </tr>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Active</th>
+        <th scope="col" colspan="2"></th>
+      </tr>
     </thead>
     <tbody>
-{% endif %}
-        <tr>
-            <td>{{ profile.id }}</td>
-            <td>{{ profile.name }}</td>
-            <td>{{ profile.active == 'Y' ? 'Yes' : 'No' }}</td>
-            <td width="12%">{{ link_to("profiles/edit/" ~ profile.id, '<i class="icon-pencil"></i> Edit', "class": "btn") }}</td>
-            <td width="12%">{{ link_to("profiles/delete/" ~ profile.id, '<i class="icon-remove"></i> Delete', "class": "btn") }}</td>
-        </tr>
-{% if loop.last %}
+    {% for profile in page.items %}
+      <tr>
+        <th scope="row">{{ profile.id }}</th>
+        <td>{{ profile.name }}</td>
+        <td>{{ profile.name }}</td>
+        <td>{{ profile.active == 'Y' ? 'Yes' : 'No' }}</td>
+        <td>{{ link_to("profiles/edit/" ~ profile.id, 'Edit', "class": "btn btn-light form-control") }}</td>
+        <td>{{ link_to("profiles/delete/" ~ profile.id, 'Delete', "class": "btn btn-danger form-control") }}</td>
+      </tr>
+    {% else %}
+      <tr colspan="8">
+        <th>No profiles are recorded</th>
+      </tr>
+    {% endfor %}
     </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="10" align="right">
-                <div class="btn-group">
-                    {{ link_to("profiles/search", '<i class="icon-fast-backward"></i> First', "class": "btn") }}
-                    {{ link_to("profiles/search?page=" ~ page.before, '<i class="icon-step-backward"></i> Previous', "class": "btn ") }}
-                    {{ link_to("profiles/search?page=" ~ page.next, '<i class="icon-step-forward"></i> Next', "class": "btn") }}
-                    {{ link_to("profiles/search?page=" ~ page.last, '<i class="icon-fast-forward"></i> Last', "class": "btn") }}
-                    <span class="help-inline">{{ page.current }}/{{ page.total_pages }}</span>
-                </div>
-            </td>
-        </tr>
-    </tfoot>
-</table>
-{% endif %}
-{% else %}
-    No profiles are recorded
-{% endfor %}
+  </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-2">
+    {{ link_to("profiles/search", 'First', "class": "btn btn-light form-control") }}
+  </div>
+  <div class="col-lg-2">
+    {{ link_to("profiles/search?page=" ~ page.before, 'Previous', "class": "btn btn-light form-control") }}
+  </div>
+  <div class="col-lg-4">
+    <p class="btn form-control">{{ page.current }}/{{ page.total_pages }}</p>
+  </div>
+  <div class="col-lg-2">
+    {{ link_to("profiles/search?page=" ~ page.next, 'Next', "class": "btn btn-light form-control") }}
+  </div>
+  <div class="col-lg-2">
+    {{ link_to("profiles/search?page=" ~ page.last, 'Last', "class": "btn btn-light form-control") }}
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    {{ link_to("profiles/index", "Back to search", "class":"btn btn-light form-control") }}
+  </div>
+  <div class="col-lg-6">
+    {{ link_to("profiles/create", "Create new profile", "class":"btn btn-light form-control") }}
+  </div>
+</div>
