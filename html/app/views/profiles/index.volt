@@ -1,29 +1,42 @@
-{{ content() }}
-
-<div align="right">
-    {{ link_to("profiles/create", "<i class='icon-plus-sign'></i> Create Profiles", "class": "btn btn-primary") }}
+<div class="row">
+  <div class="col-lg-12">
+    {{ content() }}
+  </div>
 </div>
 
-<form method="post" action="{{ url("profiles/search") }}" autocomplete="off">
+<div class="row">
+  <div class="col-lg-12">
+    <h2>Search users</h2>
+  </div>
+</div>
 
-    <div class="center scaffold">
-
-        <h2>Search profiles</h2>
-
-        <div class="clearfix">
-            <label for="id">Id</label>
-            {{ form.render("id") }}
-        </div>
-
-        <div class="clearfix">
-            <label for="name">Name</label>
-            {{ form.render("name") }}
-        </div>
-
-        <div class="clearfix">
-            {{ submit_button("Search", "class": "btn btn-primary") }}
-        </div>
-
+<form method="post" action="{{ url("users/search") }}" autocomplete="off">
+<div class="row">
+  <div class="col-lg-6">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="id-addon">ID</span>
+      </div>
+      {{ form.render("id") }}
     </div>
+  </div>
 
+  <div class="col-lg-6">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="name-addon">Name</span>
+      </div>
+      {{ form.render("name") }}
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    {{ submit_button("Search", "class": "btn btn-light form-control") }}
+  </div>
+  <div class="col-lg-6">
+    {{ link_to("profiles/create", "Create new profile", "class":"btn btn-light form-control") }}
+  </div>
+</div>
 </form>
