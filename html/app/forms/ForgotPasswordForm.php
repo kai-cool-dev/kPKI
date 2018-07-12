@@ -13,7 +13,8 @@ class ForgotPasswordForm extends Form
     public function initialize()
     {
         $email = new Text('email', [
-            'placeholder' => 'Email'
+            'placeholder' => 'Email',
+            'class' => 'form-control'
         ]);
 
         $email->addValidators([
@@ -28,7 +29,7 @@ class ForgotPasswordForm extends Form
         $this->add($email);
 
         $this->add(new Submit('Send', [
-            'class' => 'btn btn-primary'
+            'class' => 'btn btn-success form-control'
         ]));
     }
 }

@@ -10,7 +10,7 @@
 	</div>
 </div>
 
-{{ form('class': 'form-search') }}
+{{ form() }}
 <div class="row">
 	<div class="col-lg-6">
 		<div class="input-group mb-3">
@@ -21,16 +21,7 @@
 		</div>
 	</div>
 	<div class="col-lg-6">
+		{{ form.render('Send') }}
 	</div>
 </div>
-
-<div align="center" class="well">
-
-
-		{{ form.render('Send') }}
-
-		<hr>
-
-	</form>
-
-</div>
+</form>
