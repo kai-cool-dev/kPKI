@@ -4,14 +4,6 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-6">
-    {{ link_to("users/index", "Back to search", "class":"btn btn-light form-control") }}
-  </div>
-  <div class="col-lg-6">
-    {{ link_to("users/create", "Create new user", "class":"btn btn-light form-control") }}
-  </div>
-</div>
-<div class="row">
   <div class="col-lg-12">
   <table class="table table-hover">
     <thead>
@@ -63,5 +55,13 @@
   </div>
   <div class="col-lg-2">
     {{ link_to("users/search?page=" ~ page.last, 'Last', "class": "btn btn-light form-control") }}
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    {{ link_to("users/index", "Back to search", "class":"btn btn-light form-control") }}
+  </div>
+  <div class="col-lg-6">
+    {{ link_to("users/create", "Create new user", "class":"btn btn-light form-control") }}
   </div>
 </div>
