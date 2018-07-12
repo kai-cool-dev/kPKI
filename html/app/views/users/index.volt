@@ -1,4 +1,14 @@
-{{ content() }}
+<div class="row">
+  <div class="col-lg-12">
+    {{ content() }}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-4">
+    
+  </div>
+</div>
 
 <div align="right">
     {{ link_to("users/create", "<i class='icon-plus-sign'></i> Create Users", "class": "btn btn-primary") }}
