@@ -1,47 +1,49 @@
-<div class="navbar">
-    <div class="navbar-inner">
-      <div class="container" style="width: auto;">
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </a>
-        {{ link_to(null, 'class': 'brand', 'kPKI - Tools')}}
-        <div class="nav-collapse">
-          <ul class="nav">
-
-            {%- set menus = [
-              'Home': 'index'
-            ] -%}
-
-            {%- for key, value in menus %}
-              {% if value == dispatcher.getControllerName() %}
-              <li class="active">{{ link_to(value, key) }}</li>
-              {% else %}
-              <li>{{ link_to(value, key) }}</li>
-              {% endif %}
-            {%- endfor -%}
-
-          </ul>
-
-          <ul class="nav pull-right">
-            {%- if logged_in is defined and not(logged_in is empty) -%}
-            <li>{{ link_to('users', 'Management') }}</li>
-            <li>{{ link_to('session/logout', 'Logout') }}</li>
-            {% else %}
-            <li>{{ link_to('session/login', 'Login') }}</li>
-            {% endif %}
-          </ul>
-        </div><!-- /.nav-collapse -->
-      </div>
-    </div><!-- /navbar-inner -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">kPKI - Tools</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        {{ link_to(null, 'Tools', 'class':'nav-link') }}
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Public Tools <b class="caret"></a></b>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {{ link_to('tools/certinfo', 'Certinfo - Analyze SSL certificate', 'class':'dropdown-item') }}
+          {{ link_to('tools/hostinfo', 'SSL Test - (like SSL-Labs)', 'class':'dropdown-item') }}
+        </div>
+      </li>
+      <li class="nav-item">
+        {{ link_to('ca', 'About this CA', 'class':'nav-link') }}
+      </li>
+      {%- if logged_in is defined and not(logged_in is empty) -%}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ auth.getName() }} <b class="caret"></a></b>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {{ link_to('users/changePassword', 'Change Password', 'class':'dropdown-item') }}
+          <div class="dropdown-divider"></div>
+          {{ link_to('users', ' User Management', 'class':'dropdown-item') }}
+          {{ link_to('profiles', ' Profiles Management', 'class':'dropdown-item') }}
+          {{ link_to('permissions', ' Permissions Management', 'class':'dropdown-item') }}
+          <div class="dropdown-divider"></div>
+          {{ link_to('session/logout', 'Logout', 'class':'dropdown-item') }}
+        </div>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        {{ link_to('session/login', 'Login', 'class':'nav-link') }}
+      </li>
+      {% endif %}
+    </ul>
   </div>
+</nav>
 
-<div class="container main-container">
+<div class="container">
   {{ content() }}
 </div>
-
 <footer>
-  <p>Made with love in Germany<br>
+  <p>Made with <span class="red"><3</span> in Germany<br>
   © {{ date("Y") }} Kai Pazdzewicz</p>
 </footer>
