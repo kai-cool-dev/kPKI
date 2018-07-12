@@ -67,14 +67,20 @@ class UsersForm extends Form
     $this->add(new Select('banned', [
       'Y' => 'Yes',
       'N' => 'No'
+    ], [
+      'class' => 'form-control'
     ]));
     $this->add(new Select('suspended', [
       'Y' => 'Yes',
       'N' => 'No'
+    ], [
+      'class' => 'form-control'
     ]));
     $this->add(new Select('active', [
       'Y' => 'Yes',
       'N' => 'No'
+    ], [
+      'class' => 'form-control'
     ]));
   }
 }

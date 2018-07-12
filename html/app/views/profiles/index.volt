@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<form method="post" action="{{ url("users/search") }}" autocomplete="off">
+<form method="post" action="{{ url("profiles/search") }}" autocomplete="off">
 <div class="row">
   <div class="col-lg-6">
     <div class="input-group mb-3">
