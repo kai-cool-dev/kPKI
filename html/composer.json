@@ -1,24 +1,20 @@
 {
-    "name": "phalcon/vokuro",
-    "description": "This is a sample application for the Phalcon PHP Framework",
-    "version": "1.2.0",
+    "name": "kpki/html",
+    "description": "The kpki framework",
+    "version": "1.0.0",
     "keywords": [
         "phalcon",
         "framework",
-        "sample app",
-        "vokuro"
+        "kpki",
+        "cfssl"
     ],
     "type": "library",
     "license": "BSD-3",
-    "homepage": "https://www.phalconphp.com",
+    "homepage": "https://www.kai.cool",
     "authors" : [
         {
-            "name" : "Andres Gutierrez",
-            "email" : "andres@phalconphp.com"
-        },
-        {
-            "name" : "Mark Garrett",
-            "email" : "mark@moderndeveloperllc.com"
+            "name" : "Kai Pazdzewicz",
+            "email" : "ich@kai.cool"
         }
     ],
     "require": {
