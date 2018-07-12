@@ -15,8 +15,6 @@
           <div class="dropdown-divider"></div>
           {{ link_to('create/server', 'Create Server Certificate', 'class':'dropdown-item') }}
           {{ link_to('create/client', 'Create Client Certificate', 'class':'dropdown-item') }}
-          <div class="dropdown-divider"></div>
-          {{ link_to('session/logout', 'Logout', 'class':'dropdown-item') }}
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -34,12 +32,10 @@
     </ul>
   </div>
 </nav>
-
 <div class="container">
   {{ content() }}
 </div>
-
 <footer>
-  <p>Made with love in Germany<br>
+  <p>Made with <span class="red"><3</span> in Germany<br>
   © {{ date("Y") }} Kai Pazdzewicz</p>
 </footer>
