@@ -1,50 +1,63 @@
 <?php
-
 use Phalcon\Config;
 use Phalcon\Logger;
-
 return new Config([
-    'database' => [
-        'adapter' => 'Mysql',
-        'host' => '127.0.0.1',
-        'username' => '',
-        'password' => '',
-        'dbname' => 'cfssl'
+  // MySQL Configuration
+  'database' => [
+    'adapter' => 'Mysql',
+    'host' => '127.0.0.1',
+    'username' => 'cfssl',
+    'password' => '',
+    'dbname' => 'cfssl'
+  ],
+  // CFSSL Configuration
+  'cfssl' => [
+    "remotes" => [
+      // Usually http://localhost:8888
+      "caserver" => "http://localhost:8888"
     ],
-    'application' => [
-        'controllersDir' => APP_PATH . '/controllers/',
-        'modelsDir'      => APP_PATH . '/models/',
-        'formsDir'       => APP_PATH . '/forms/',
-        'viewsDir'       => APP_PATH . '/views/',
-        'libraryDir'     => APP_PATH . '/library/',
-        'pluginsDir'     => APP_PATH . '/plugins/',
-        'cacheDir'       => BASE_PATH . '/cache/',
-        'baseUri'        => '/',
-        'publicUrl'      => 'pki.fastnameserver.eu',
-        'cryptSalt'      => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
-    ],
-    'mail' => [
-        'fromName' => 'kpki',
-        'fromEmail' => 'kpki@fastnameserver.eu',
-        'smtp' => [
-            'server' => '',
-            'port' => 587,
-            'security' => 'tls',
-            'username' => '',
-            'password' => ''
-        ]
-    ],
-    'amazon' => [
-        'AWSAccessKeyId' => '',
-        'AWSSecretKey' => ''
-    ],
-    'logger' => [
-        'path'     => BASE_PATH . '/logs/',
-        'format'   => '%date% [%type%] %message%',
-        'date'     => 'D j H:i:s',
-        'logLevel' => Logger::DEBUG,
-        'filename' => 'application.log',
-    ],
-    // Set to false to disable sending emails (for use in test environment)
-    'useMail' => true
+    // only the master key is supported
+    'auth_keys' => [
+      "master" => [
+        "type" => "standard",
+        "key" => "68c29c0ecb9996a90ebb2d76bf28c562"
+      ]
+    ]
+  ],
+  'application' => [
+    'controllersDir' => APP_PATH . '/controllers/',
+    'modelsDir'      => APP_PATH . '/models/',
+    'formsDir'       => APP_PATH . '/forms/',
+    'viewsDir'       => APP_PATH . '/views/',
+    'libraryDir'     => APP_PATH . '/library/',
+    'pluginsDir'     => APP_PATH . '/plugins/',
+    'cacheDir'       => BASE_PATH . '/cache/',
+    'baseUri'        => '/',
+    'publicUrl'      => 'pki.fastnameserver.eu',
+    'cryptSalt'      => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
+  ],
+  'mail' => [
+    'fromName' => 'kpki',
+    'fromEmail' => 'kpki@fastnameserver.eu',
+    'smtp' => [
+      'server' => 'claire.fastnameserver.eu',
+      'port' => 587,
+      'security' => 'tls',
+      'username' => 'kpki@fastnameserver.eu',
+      'password' => ''
+    ]
+  ],
+  'amazon' => [
+    'AWSAccessKeyId' => '',
+    'AWSSecretKey' => ''
+  ],
+  'logger' => [
+    'path'     => BASE_PATH . '/logs/',
+    'format'   => '%date% [%type%] %message%',
+    'date'     => 'D j H:i:s',
+    'logLevel' => Logger::DEBUG,
+    'filename' => 'application.log',
+  ],
+  // Set to false to disable sending emails (for use in test environment)
+  'useMail' => true
 ]);
