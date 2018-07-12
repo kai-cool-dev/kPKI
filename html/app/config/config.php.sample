@@ -6,9 +6,9 @@ use Phalcon\Logger;
 return new Config([
     'database' => [
         'adapter' => 'Mysql',
-        'host' => '10.0.1.66',
-        'username' => 'cfssl',
-        'password' => 'UW4.XG9f48XqX7',
+        'host' => '127.0.0.1',
+        'username' => '',
+        'password' => '',
         'dbname' => 'cfssl'
     ],
     'application' => [
@@ -27,11 +27,11 @@ return new Config([
         'fromName' => 'kpki',
         'fromEmail' => 'kpki@fastnameserver.eu',
         'smtp' => [
-            'server' => 'claire.fastnameserver.eu',
+            'server' => '',
             'port' => 587,
             'security' => 'tls',
-            'username' => 'kpki@fastnameserver.eu',
-            'password' => 'XwAL4Bf8jW76'
+            'username' => '',
+            'password' => ''
         ]
     ],
     'amazon' => [
