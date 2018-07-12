@@ -5,39 +5,39 @@
 </div>
 <div class="row">
   <div class="col-lg-12">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Profile</th>
-        <th scope="col">Banned</th>
-        <th scope="col">Suspended</th>
-        <th scope="col">Confirmed</th>
-        <th scope="col" colspan="2"></th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for user in page.items %}
-      <tr>
-        <th scope="row">{{ user.id }}</th>
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.profile.name }}</td>
-        <td>{{ user.banned == 'Y' ? 'Yes' : 'No' }}</td>
-        <td>{{ user.suspended == 'Y' ? 'Yes' : 'No' }}</td>
-        <td>{{ user.active == 'Y' ? 'Yes' : 'No' }}</td>
-        <td>{{ link_to("users/edit/" ~ user.id, 'Edit', "class": "btn btn-light form-control") }}</td>
-        <td>{{ link_to("users/delete/" ~ user.id, 'Delete', "class": "btn btn-danger form-control") }}</td>
-      </tr>
-    {% else %}
-      <tr colspan="8">
-        <th>No users are recorded</th>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Profile</th>
+          <th scope="col">Banned</th>
+          <th scope="col">Suspended</th>
+          <th scope="col">Confirmed</th>
+          <th scope="col" colspan="2"></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for user in page.items %}
+        <tr>
+          <th scope="row">{{ user.id }}</th>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.profile.name }}</td>
+          <td>{{ user.banned == 'Y' ? 'Yes' : 'No' }}</td>
+          <td>{{ user.suspended == 'Y' ? 'Yes' : 'No' }}</td>
+          <td>{{ user.active == 'Y' ? 'Yes' : 'No' }}</td>
+          <td>{{ link_to("users/edit/" ~ user.id, 'Edit', "class": "btn btn-light form-control") }}</td>
+          <td>{{ link_to("users/delete/" ~ user.id, 'Delete', "class": "btn btn-danger form-control") }}</td>
+        </tr>
+      {% else %}
+        <tr colspan="8">
+          <th>No users are recorded</th>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
 <div class="row">

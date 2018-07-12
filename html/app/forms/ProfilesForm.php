@@ -28,10 +28,12 @@ class ProfilesForm extends Form
       ])
     ]);
     $this->add($name);
-    
+
     $this->add(new Select('active', [
       'Y' => 'Yes',
       'N' => 'No'
+    ], [
+      'class' => 'form-control'
     ]));
   }
 }
