@@ -37,5 +37,5 @@
 </div>
 <footer>
   <p>Made with <span class="red"><3</span> in Germany<br>
-  © {{ date("Y") }} Kai Pazdzewicz | <a href="https://gitlab.fastnameserver.eu/root/kpki" target="_blank">GitLab</a></p>
+  © {{ date("Y") }} Kai Pazdzewicz | <a href="https://gitlab.fastnameserver.eu/root/kpki" target="_blank">GitLab</a> | <a href="https://gitlab.fastnameserver.eu/root/kpki/blob/master/License.md" target="_blank">BSD-3 License</a></p>
 </footer>
