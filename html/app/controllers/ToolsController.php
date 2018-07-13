@@ -15,11 +15,6 @@ class ToolsController extends ControllerBase
         $this->view->setTemplateBefore('public');
     }
 
-    public function indexAction()
-    {
-
-    }
-
     public function certinfoAction()
     {
 
