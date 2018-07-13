@@ -23,12 +23,11 @@ return new Config([
         'permissions' => [
             'index'
         ],
-        'certificates' => [
-            'index'
-        ],
-        'create' => [
-            'server',
-            'client'
-        ]
+        'certificate' => [
+            'index',
+            'search',
+            'show',
+            'create',
+            'revoke'
     ]
 ]);
