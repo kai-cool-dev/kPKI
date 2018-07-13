@@ -1,6 +1,7 @@
 <?php
 namespace Vokuro\Controllers;
 
+
 /**
  * Handles the GUI for certificates
  */
@@ -39,6 +40,6 @@ class CertificateController extends ControllerBase
     // Revoke Certificate
     public function revokeAction()
     {
-      
+
     }
 }

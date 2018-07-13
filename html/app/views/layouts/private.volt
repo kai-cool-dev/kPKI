@@ -11,10 +11,11 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Certificate Management <b class="caret"></a></b>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          {{ link_to('certificates', 'Show Certificates', 'class':'dropdown-item') }}
+          {{ link_to('certificate/index', 'Show Certificates', 'class':'dropdown-item') }}
+          {{ link_to('certificate/search', 'Search Certificates', 'class':'dropdown-item') }}
           <div class="dropdown-divider"></div>
-          {{ link_to('create/server', 'Create Server Certificate', 'class':'dropdown-item') }}
-          {{ link_to('create/client', 'Create Client Certificate', 'class':'dropdown-item') }}
+          {{ link_to('certificate/create', 'Create Certificate', 'class':'dropdown-item') }}
+          {{ link_to('certificate/revoke', 'Revoke Certificate', 'class':'dropdown-item') }}
         </div>
       </li>
       <li class="nav-item dropdown">
