@@ -2,6 +2,8 @@
 namespace Vokuro\Forms;
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
+use Phalcon\Validation\Validator\PresenceOf;
+
 class CertinfoForm extends Form
 {
   public function initialize($entity = null, $options = null)
