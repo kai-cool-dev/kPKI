@@ -14,7 +14,7 @@
   <div class="col-lg-8">
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">@</span>
+        <span class="input-group-text" id="basic-addon1">Host</span>
       </div>
       {{ form.render("host") }}
     </div>

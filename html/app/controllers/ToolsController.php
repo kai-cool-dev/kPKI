@@ -16,6 +16,11 @@ class ToolsController extends ControllerBase
     public function certinfoAction()
     {
       $this->view->form = new CertinfoForm();
+      if ($this->request->isPost()) {
+        echo "POST";
+      } else {
+        echo "GET";
+      }
     }
 
     public function hostinfoAction()
