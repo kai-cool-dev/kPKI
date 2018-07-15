@@ -1,5 +1,6 @@
 <?php
 namespace Vokuro\Controllers;
+use Vokuro\Forms\CertinfoForm;
 
 /**
  * Display the default index page.
@@ -7,9 +8,6 @@ namespace Vokuro\Controllers;
 class ToolsController extends ControllerBase
 {
 
-    /**
-     * Default action. Set the public layout (layouts/public.volt)
-     */
     public function initialize()
     {
         $this->view->setTemplateBefore('public');
@@ -17,7 +15,7 @@ class ToolsController extends ControllerBase
 
     public function certinfoAction()
     {
-
+      $this->view->form = new CertinfoForm();
     }
 
     public function hostinfoAction()
