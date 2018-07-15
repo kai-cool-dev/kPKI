@@ -19,4 +19,9 @@ class ToolsController extends ControllerBase
     {
 
     }
+
+    public function hostinfoAction()
+    {
+
+    }
 }
