@@ -35,7 +35,8 @@
   <div class="row">
     <div class="col-lg-6">
       <h6 class="card-title">ISSUER</h6>
-      <p></p>
+      <p>{{ issuer["common_name"] }}</p>
+      <p>{{ issuer["locality"] }}, {{ issuer["province"] }}, {{ issuer["country"] }}</p>
     </div>
   </div>
 {% endif %}
