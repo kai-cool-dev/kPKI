@@ -15,9 +15,9 @@
     <div class="col-lg-8">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1">Host</span>
+          <span class="input-group-text" id="basic-addon1">Domain</span>
         </div>
-        {{ form.render("host") }}
+        {{ form.render("domain") }}
       </div>
     </div>
     <div class="col-lg-4">
@@ -25,3 +25,17 @@
     </div>
   </div>
 </form>
+
+{% if request.isPost()%}
+  <div class="row bg-primary">
+    <div class="col-lg-12">
+      <h6>{{ subject["common_name"] }} {{ serial_number }}</h6>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <h6 class="card-title">ISSUER</h6>
+      <p></p>
+    </div>
+  </div>
+{% endif %}

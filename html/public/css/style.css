@@ -1,7 +1,20 @@
+html,body {
+  color:#2f3640;
+  background-color: #f5f6fa;
+}
+
 footer p{
   text-align: center;
 }
 
 .red {
   color:#e84118;
+}
+
+.bg-primary {
+  color:#f5f6fa;
+}
+
+.btn-light:hover {
+  border-color: #40739e;
 }

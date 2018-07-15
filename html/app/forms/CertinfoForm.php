@@ -8,15 +8,15 @@ class CertinfoForm extends Form
 {
   public function initialize($entity = null, $options = null)
   {
-    $name = new Text('host', [
-      'placeholder' => 'www.server.pep',
+    $host = new Text('domain', [
+      'placeholder' => 'pki.server.pep',
       'class' => 'form-control'
     ]);
-    $name->addValidators([
+    $host->addValidators([
       new PresenceOf([
-        'message' => 'The host is required'
+        'message' => 'The domain is required'
       ])
     ]);
-    $this->add($name);
+    $this->add($host);
   }
 }
