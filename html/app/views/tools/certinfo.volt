@@ -27,10 +27,17 @@
 </form>
 
 {% if request.isPost()%}
-  <div class="row bg-primary">
-    <div class="col-lg-12">
-      <h6>{{ subject["common_name"] }} {{ serial_number }}</h6>
-    </div>
+    <div class="row">
+    {% if serial_number %}
+      <div class="col-lg-6">
+        <h5>{{ subject["common_name"] }}</h5>
+      </div>
+    {% endif %}
+    {% if serial_number %}
+      <div class="col-lg-6">
+        <h5>{{ serial_number }}</h5>
+      </div>
+    {% endif %}
   </div>
   <div class="row">
     <div class="col-lg-6">
