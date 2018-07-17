@@ -72,8 +72,8 @@ class ToolsController extends ControllerBase
           return false;
         }
         $this->view->connectivity=$data["result"]["Connectivity"];
+        $this->view->tlssession=$data["result"]["TLSSession"]["SessionResume"];
         $this->view->ciphersuite=$data["result"]["TLSHandshake"]["CipherSuite"];
-        //var_dump($data["result"]["TLSHandshake"]["CipherSuite"]["output"][0]["ECDHE-RSA-AES256-GCM-SHA384"]);
       }
     }
 

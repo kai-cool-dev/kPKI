@@ -37,23 +37,27 @@
         {% endfor %}
         )</p>
         <p>TCP Connection: {{ connectivity["TCPDial"]["grade"] }}</p>
-        <p>TLS Connection: {{ connectivity["TLSDial"]["grade"] }} (
+        <p>TLS Connection: {{ connectivity["TLSDial"]["grade"] }}
         {% if connectivity["TLSDial"]["error"] %}
-          {{ connectivity["TLSDial"]["error"] }}
+          ( {{ connectivity["TLSDial"]["error"] }} )
         {% endif %}
-        )</p>
+        </p>
+      </div>
+    {% endif %}
+    {% if tlssession %}
+      <div class="col-lg-12">
+        <p>TLS Session Resume: {{ tlssession["grade"] }}
+        {% if tlssession["error"] %}
+          ( {{ tlssession["error"] }} )
+        {% endif %}
+        </p>
       </div>
     {% endif %}
     {% if ciphersuite %}
       <div class="col-lg-12">
         <h5>CIPHERS</h5>
         <p>Grade: {{ ciphersuite["grade"]  }}</p>
-        {% for cipher in ciphersuite["output"] %}
-          {% for alg in cipher %}
-          {% endfor %}
-        {% endfor %}
       </div>
     {% endif %}
   </div>
 {% endif %}
-
