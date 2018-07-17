@@ -26,3 +26,28 @@
   </div>
 </form>
 
+{% if request.isPost()%}
+  <div class="row">
+    <div class="col-lg-12">
+      {% if subject["common_name"] %}
+        <p>Issuer: {{ subject["common_name"] }}</p>
+      {% endif %}
+      {% if subject["organization"] %}
+        <p>Organization: {{ subject["organization"] }}</p>
+      {% endif %}
+      {% if subject["organizational_unit"] %}
+        <p>Organizational Unit: {{ subject["organizational_unit"] }}</p>
+      {% endif %}
+      {% if subject["locality"] %}
+        <p>Locality: {{ subject["locality"] }}</p>
+      {% endif %}
+      {% if subject["province"] %}
+        <p>Province: {{ subject["province"] }}</p>
+      {% endif %}
+      {% if subject["country"] %}
+        <p>Country: {{ subject["country"] }}</p>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+

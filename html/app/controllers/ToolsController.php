@@ -34,6 +34,7 @@ class ToolsController extends ControllerBase
         $this->view->sigalg=$data["result"]["sigalg"];
         $this->view->authority_key_id=$data["result"]["authority_key_id"];
         $this->view->pem=$data["result"]["pem"];
+        var_dump($this->view->names);
       }
     }
 
@@ -71,7 +72,8 @@ class ToolsController extends ControllerBase
           $this->flash->error("Could not connect");
           return false;
         }
-        var_dump($data);
+        $this->view->subject=$data["result"]["subject"];
+        var_dump($data["result"]);
       }
     }
 

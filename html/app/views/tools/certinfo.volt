@@ -33,6 +33,15 @@
         <p>Common Name: {{ subject["common_name"] }}</p>
       </div>
     {% endif %}
+    {% if names %}
+      <div class="col-lg-12">
+        <p>SANs: 
+        {% for name in names %}
+          {{ name }}
+        {% endfor %}
+        </p>
+      </div>
+    {% endif %}
     <div class="col-lg-12">
       {% if issuer["common_name"] %}
         <p>Issuer: {{ issuer["common_name"] }}</p>
@@ -53,11 +62,11 @@
         <p>Country: {{ issuer["country"] }}</p>
       {% endif %}
     </div>
-    <div class="col-lg-12">
-      {% if sigalg %}
-        <p>Signature Algorithm: {{ sigalg }}</p>
-      {% endif %}
-    </div>
+    {% if sigalg %}
+      <div class="col-lg-12">
+          <p>Signature Algorithm: {{ sigalg }}</p>
+      </div>
+    {% endif %}
     {% if not_before and not_after %}
       <div class="col-lg-12">
         <p>Valid: {{ not_before }} to {{ not_after }}</p>
