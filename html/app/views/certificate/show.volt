@@ -22,4 +22,34 @@
     {{ submit_button("Save", "class":"btn btn-success form-control") }}
   </div>
 </div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">CA Label</span>
+      </div>
+      {{ form.render("ca_label") }}
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Expiry</span>
+      </div>
+      <input type="text" class="form-control" disabled value="{{ cert.expiry }}">
+    </div>
+  </div>
+</div>
 </form>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Certificate</span>
+      </div>
+      <textarea rows="30" class="form-control" disabled>{{ cert.pem }}</textarea>
+    </div>
+  </div>
+</div>
