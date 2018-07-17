@@ -11,7 +11,11 @@
 				<h1>Welcome!</h1>
 				<p class="lead">This is the kPKI GUI with a few tools</p>
 				<div align="right">
-		      {{ link_to('session/login', 'Login', 'class': 'btn btn-primary form-control') }}
+				{%- if logged_in is defined and not(logged_in is empty) -%}
+					{{ link_to('certificate/index', 'Certificate Management', 'class': 'btn btn-primary form-control') }}
+				{% else %}
+					{{ link_to('session/login', 'Login', 'class': 'btn btn-primary form-control') }}
+				{% endif %}
 				</div>
 			</div>
 		</header>

@@ -8,15 +8,17 @@
       <li class="nav-item">
         {{ link_to(null, 'Certificate Tools', 'class':'nav-link') }}
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Certificate Management <b class="caret"></a></b>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          {{ link_to('certificate/index', 'Show Certificates', 'class':'dropdown-item') }}
-          {{ link_to('certificate/search', 'Search Certificates', 'class':'dropdown-item') }}
-          <div class="dropdown-divider"></div>
-          {{ link_to('certificate/create', 'Create Certificate', 'class':'dropdown-item') }}
-          {{ link_to('certificate/revoke', 'Revoke Certificate', 'class':'dropdown-item') }}
-        </div>
+      <li class="nav-item">
+        {{ link_to('certificate/index', 'List Certificates', 'class':'nav-link') }}
+      </li>
+      <li class="nav-item">
+        {{ link_to('certificate/search', 'Search Certificate', 'class':'nav-link') }}
+      </li>
+      <li class="nav-item">
+        {{ link_to('certificate/create', 'Create Certificate', 'class':'nav-link') }}
+      </li>
+      <li class="nav-item">
+        {{ link_to('certificate/revoke', 'Revoke Certificate', 'class':'nav-link') }}
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ auth.getName() }} <b class="caret"></a></b>
