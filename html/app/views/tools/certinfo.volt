@@ -31,7 +31,7 @@
      <div class="col-lg-12">
       <h5>INFO</h5>
       {% if subject["common_name"] %}
-        <p>Issuer: {{ subject["common_name"] }}</p>
+        <p>Issued for: {{ subject["common_name"] }}</p>
       {% endif %}
       {% if subject["organization"] %}
         <p>Organization: {{ subject["organization"] }}</p>
