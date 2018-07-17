@@ -28,20 +28,6 @@
 
 {% if request.isPost()%}
   <div class="row">
-    {% if subject["common_name"] %}
-      <div class="col-lg-12">
-        <p>Common Name: {{ subject["common_name"] }}</p>
-      </div>
-    {% endif %}
-    {% if names %}
-      <div class="col-lg-12">
-        <p>SANs:
-        {% for name in names %}
-          {{ name }}
-        {% endfor %}
-        </p>
-      </div>
-    {% endif %}
      <div class="col-lg-12">
       <h5>INFO</h5>
       {% if subject["common_name"] %}
@@ -66,6 +52,20 @@
     {% if not_before and not_after %}
       <div class="col-lg-12">
         <p>Valid: {{ not_before }} to {{ not_after }}</p>
+      </div>
+    {% endif %}
+    {% if subject["common_name"] %}
+      <div class="col-lg-12">
+        <p>Common Name: {{ subject["common_name"] }}</p>
+      </div>
+    {% endif %}
+    {% if names %}
+      <div class="col-lg-12">
+        <p>SANs:
+        {% for name in names %}
+          {{ name }}
+        {% endfor %}
+        </p>
       </div>
     {% endif %}
     {% if serial_number %}
@@ -112,4 +112,3 @@
     {% endif %}
   </div>
 {% endif %}
-
