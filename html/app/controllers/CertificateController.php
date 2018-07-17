@@ -19,9 +19,15 @@ class CertificateController extends ControllerBase
     public function indexAction()
     {
       $identity = $this->auth->getIdentity();
-
-      $certs = Certificates::find("public = '1' OR userid = '".$identity["id"]."'");
-      if (count($users) == 0) {
+      $numberPage = $this->request->getQuery("page", "int");
+      $certs = Certificates::find([
+        "public = :public: OR userid = :userid:",
+        "bind" => [
+          "public" => "1",
+          "userid" => $identity["id"],
+        ],
+      ]);
+      if (count($certs) == 0) {
           $this->flash->notice("The search did not find any users");
       }
 
@@ -30,7 +36,6 @@ class CertificateController extends ControllerBase
           "limit" => 10,
           "page" => $numberPage
       ]);
-      var_dump($certs);
       $this->view->page = $paginator->getPaginate();
     }
 
