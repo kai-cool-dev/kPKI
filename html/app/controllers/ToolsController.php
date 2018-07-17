@@ -1,6 +1,7 @@
 <?php
 namespace Vokuro\Controllers;
 use Vokuro\Forms\CertinfoForm;
+use Vokuro\Forms\HostinfoForm;
 
 /**
  * Display the default index page.
