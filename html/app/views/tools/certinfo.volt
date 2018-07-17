@@ -35,7 +35,7 @@
     {% endif %}
     {% if names %}
       <div class="col-lg-12">
-        <p>SANs: 
+        <p>SANs:
         {% for name in names %}
           {{ name }}
         {% endfor %}
@@ -63,6 +63,16 @@
         <p>Country: {{ subject["country"] }}</p>
       {% endif %}
     </div>
+    {% if not_before and not_after %}
+      <div class="col-lg-12">
+        <p>Valid: {{ not_before }} to {{ not_after }}</p>
+      </div>
+    {% endif %}
+    {% if serial_number %}
+      <div class="col-lg-12">
+        <p>Serial Number: {{ serial_number }}</p>
+      </div>
+    {% endif %}
     <div class="col-lg-12">
       <h5>ISSUER</h5>
       {% if issuer["common_name"] %}
@@ -87,16 +97,6 @@
     {% if sigalg %}
       <div class="col-lg-12">
           <p>Signature Algorithm: {{ sigalg }}</p>
-      </div>
-    {% endif %}
-    {% if not_before and not_after %}
-      <div class="col-lg-12">
-        <p>Valid: {{ not_before }} to {{ not_after }}</p>
-      </div>
-    {% endif %}
-    {% if serial_number %}
-      <div class="col-lg-12">
-        <p>Serial Number: {{ serial_number }}</p>
       </div>
     {% endif %}
     {% if authority_key_id %}
