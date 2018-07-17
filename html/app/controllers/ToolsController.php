@@ -32,7 +32,6 @@ class ToolsController extends ControllerBase
         $this->view->sigalg=$data["result"]["sigalg"];
         $this->view->authority_key_id=$data["result"]["authority_key_id"];
         $this->view->pem=$data["result"]["pem"];
-        var_dump($this->view->issuer);
       }
     }
 
