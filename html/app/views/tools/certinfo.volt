@@ -76,7 +76,7 @@
     <div class="col-lg-12">
       <h5>ISSUER</h5>
       {% if issuer["common_name"] %}
-        <p>{{ issuer["common_name"] }}</p>
+        <p>Issuer: {{ issuer["common_name"] }}</p>
       {% endif %}
       {% if issuer["organization"] %}
         <p>Organization: {{ issuer["organization"] }}</p>
