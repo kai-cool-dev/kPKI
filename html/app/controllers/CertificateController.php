@@ -10,7 +10,7 @@ class CertificateController extends ControllerBase
 
     public function initialize()
     {
-        $this->view->setTemplateBefore('public');
+        $this->view->setTemplateBefore('private');
     }
 
     // List all Certificates
