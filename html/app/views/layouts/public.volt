@@ -6,17 +6,16 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        {{ link_to(null, 'Tools', 'class':'nav-link') }}
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Public Tools <b class="caret"></a></b>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          {{ link_to('tools/certinfo', 'Certinfo - Analyze SSL certificate', 'class':'dropdown-item') }}
-          {{ link_to('tools/hostinfo', 'SSL Test - (like SSL-Labs)', 'class':'dropdown-item') }}
-        </div>
+        {{ link_to('certificate/index', 'Certificate Management', 'class':'nav-link') }}
       </li>
       <li class="nav-item">
-        {{ link_to('ca', 'About this CA', 'class':'nav-link') }}
+        {{ link_to('tools/certinfo', 'Certinfo - Analyze SSL certificate', 'class':'nav-link') }}
+      </li>
+      <li class="nav-item">
+        {{ link_to('tools/hostinfo', 'Hostinfo - SSL Host Test', 'class':'nav-link') }}
+      </li>
+      <li class="nav-item">
+        {{ link_to('tools/ca', 'About this CA', 'class':'nav-link') }}
       </li>
       {%- if logged_in is defined and not(logged_in is empty) -%}
       <li class="nav-item dropdown">

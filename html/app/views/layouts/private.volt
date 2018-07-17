@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        {{ link_to(null, 'Tools', 'class':'nav-link') }}
+        {{ link_to(null, 'Certificate Tools', 'class':'nav-link') }}
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Certificate Management <b class="caret"></a></b>
