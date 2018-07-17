@@ -61,11 +61,12 @@
     {% endif %}
     {% if names %}
       <div class="col-lg-12">
-        <p>SANs:
+        <p>SANs:</p>
+        <ul>
         {% for name in names %}
-          {{ name }}
+          <li>{{ name }}</li>
         {% endfor %}
-        </p>
+        </ul>
       </div>
     {% endif %}
     {% if serial_number %}

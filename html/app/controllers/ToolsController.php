@@ -2,6 +2,7 @@
 namespace Vokuro\Controllers;
 use Vokuro\Forms\CertinfoForm;
 use Vokuro\Forms\HostinfoForm;
+use Vokuro\Forms\CAinfoForm;
 
 /**
  * Display the default index page.
@@ -77,7 +78,7 @@ class ToolsController extends ControllerBase
       }
     }
 
-    public function dohostinfo($host)
+    private function dohostinfo($host)
     {
       // Get cURL resource
       $curl = curl_init();
@@ -97,4 +98,38 @@ class ToolsController extends ControllerBase
       curl_close($curl);
       return json_decode($resp,true);
     }
+
+    public function caAction()
+    {
+      $this->view->form = new CAinfoForm();
+      if ($this->request->isPost()) {
+        $request=$this->request->getPost();
+        $data=$this->docainfo($request);
+        $this->view->cainfo=$data["result"];
+      }
+    }
+
+    private function docainfo($profile)
+    {
+      $data_string=json_encode($profile);
+      // Get cURL resource
+      $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+      curl_setopt_array($curl, array(
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_URL => $this->config["cfssl"]["remotes"]["caserver"] . '/api/v1/cfssl/info',
+        CURLOPT_USERAGENT => 'kPKI Frontend GUI',
+        CURLOPT_HTTPHEADER => array(
+          'Content-Type: application/json',
+          'Content-Length: ' . strlen($data_string)),
+        CURLOPT_POST => 1,
+        CURLOPT_POSTFIELDS => $data_string
+      ));
+      // Send the request & save response to $resp
+      $resp = curl_exec($curl);
+      // Close request to clear up some resources
+      curl_close($curl);
+      return json_decode($resp,true);
+    }
+
 }
