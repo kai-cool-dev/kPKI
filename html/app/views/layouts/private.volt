@@ -9,16 +9,10 @@
         {{ link_to(null, 'Certificate Tools', 'class':'nav-link') }}
       </li>
       <li class="nav-item">
-        {{ link_to('certificate/index', 'List Certificates', 'class':'nav-link') }}
-      </li>
-      <li class="nav-item">
-        {{ link_to('certificate/search', 'Search Certificate', 'class':'nav-link') }}
+        {{ link_to('certificate/index', 'Search Certificates', 'class':'nav-link') }}
       </li>
       <li class="nav-item">
         {{ link_to('certificate/create', 'Create Certificate', 'class':'nav-link') }}
-      </li>
-      <li class="nav-item">
-        {{ link_to('certificate/revoke', 'Revoke Certificate', 'class':'nav-link') }}
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ auth.getName() }} <b class="caret"></a></b>

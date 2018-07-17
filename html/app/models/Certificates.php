@@ -15,6 +15,4 @@ class Certificates extends Model
   public $expiry;
   public $revoked_at;
   public $pem;
-  public $userid;
-  public $public;
 }
