@@ -42,9 +42,31 @@
         </p>
       </div>
     {% endif %}
+     <div class="col-lg-12">
+      <h5>INFO</h5>
+      {% if subject["common_name"] %}
+        <p>Issuer: {{ subject["common_name"] }}</p>
+      {% endif %}
+      {% if subject["organization"] %}
+        <p>Organization: {{ subject["organization"] }}</p>
+      {% endif %}
+      {% if subject["organizational_unit"] %}
+        <p>Organizational Unit: {{ subject["organizational_unit"] }}</p>
+      {% endif %}
+      {% if subject["locality"] %}
+        <p>Locality: {{ subject["locality"] }}</p>
+      {% endif %}
+      {% if subject["province"] %}
+        <p>Province: {{ subject["province"] }}</p>
+      {% endif %}
+      {% if subject["country"] %}
+        <p>Country: {{ subject["country"] }}</p>
+      {% endif %}
+    </div>
     <div class="col-lg-12">
+      <h5>ISSUER</h5>
       {% if issuer["common_name"] %}
-        <p>Issuer: {{ issuer["common_name"] }}</p>
+        <p>{{ issuer["common_name"] }}</p>
       {% endif %}
       {% if issuer["organization"] %}
         <p>Organization: {{ issuer["organization"] }}</p>
