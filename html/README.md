@@ -5,7 +5,9 @@ The KPKI Frontend is used to provide a user-friendly gui to create or revoke cli
 ## Required:
 
 - php 5.5 or newer
-- phalcon-php extension
+- phalcon php extension
+- curl php extension
+- mysql php extension
 
 ## Installation:
 
