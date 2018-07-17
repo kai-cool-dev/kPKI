@@ -28,26 +28,32 @@
 
 {% if request.isPost()%}
   <div class="row">
-    <div class="col-lg-12">
-      {% if subject["common_name"] %}
-        <p>Issuer: {{ subject["common_name"] }}</p>
-      {% endif %}
-      {% if subject["organization"] %}
-        <p>Organization: {{ subject["organization"] }}</p>
-      {% endif %}
-      {% if subject["organizational_unit"] %}
-        <p>Organizational Unit: {{ subject["organizational_unit"] }}</p>
-      {% endif %}
-      {% if subject["locality"] %}
-        <p>Locality: {{ subject["locality"] }}</p>
-      {% endif %}
-      {% if subject["province"] %}
-        <p>Province: {{ subject["province"] }}</p>
-      {% endif %}
-      {% if subject["country"] %}
-        <p>Country: {{ subject["country"] }}</p>
-      {% endif %}
-    </div>
+    {% if connectivity %}
+      <div class="col-lg-12">
+        <h5>CONNECTIVITY</h5>
+        <p>DNS Lookup: {{ connectivity["DNSLookup"]["grade"] }} (
+        {% for ip in connectivity["DNSLookup"]["output"] %}
+          {{ ip }}
+        {% endfor %}
+        )</p>
+        <p>TCP Connection: {{ connectivity["TCPDial"]["grade"] }}</p>
+        <p>TLS Connection: {{ connectivity["TLSDial"]["grade"] }} (
+        {% if connectivity["TLSDial"]["error"] %}
+          {{ connectivity["TLSDial"]["error"] }}
+        {% endif %}
+        )</p>
+      </div>
+    {% endif %}
+    {% if ciphersuite %}
+      <div class="col-lg-12">
+        <h5>CIPHERS</h5>
+        <p>Grade: {{ ciphersuite["grade"]  }}</p>
+        {% for cipher in ciphersuite["output"] %}
+          {% for alg in cipher %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
 {% endif %}
 

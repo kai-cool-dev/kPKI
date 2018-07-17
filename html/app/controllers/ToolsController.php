@@ -65,14 +65,15 @@ class ToolsController extends ControllerBase
       $this->view->form = new HostinfoForm();
       if ($this->request->isPost()) {
         $request=$this->request->getPost();
-        $data=$this->docertinfo($request);
+        $data=$this->dohostinfo($request);
         if($data["success"]==false || empty($data))
         {
           $this->flash->error("Could not connect");
           return false;
         }
-        $this->view->subject=$data["result"]["subject"];
-        var_dump($data["result"]);
+        $this->view->connectivity=$data["result"]["Connectivity"];
+        $this->view->ciphersuite=$data["result"]["TLSHandshake"]["CipherSuite"];
+        //var_dump($data["result"]["TLSHandshake"]["CipherSuite"]["output"][0]["ECDHE-RSA-AES256-GCM-SHA384"]);
       }
     }
 
@@ -83,7 +84,7 @@ class ToolsController extends ControllerBase
       // Set some options - we are passing in a useragent too here
       curl_setopt_array($curl, array(
         CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_URL => $this->config["cfssl"]["remotes"]["caserver"] . '/api/v1/cfssl/scan?host='.$host,
+        CURLOPT_URL => $this->config["cfssl"]["remotes"]["caserver"] . '/api/v1/cfssl/scan?host='.$host["domain"],
         CURLOPT_USERAGENT => 'kPKI Frontend GUI',
         CURLOPT_HTTPHEADER => array(
           'Content-Type: application/json',
