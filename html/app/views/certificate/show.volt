@@ -14,11 +14,8 @@
   <div class="col-lg-6">
     {{ link_to("certificate", "Go Back", "class":"btn btn-light form-control") }}
   </div>
-  <div class="col-lg-3">
+  <div class="col-lg-6">
     {{ link_to("certificate/revoke/" ~ cert.serial_number, 'Revoke', "class": "btn btn-danger form-control") }}
-  </div>
-  <div class="col-lg-3">
-    {{ submit_button("Save", "class":"btn btn-success form-control") }}
   </div>
 </div>
 
