@@ -2,6 +2,7 @@
 namespace Vokuro\Controllers;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Vokuro\Forms\CertificatesForm;
+use Vokuro\Forms\RevokeForm;
 use Vokuro\Models\Certificates;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Tag;
@@ -104,9 +105,6 @@ class CertificateController extends ControllerBase
       ]);
       if (!$certs) {
         $this->flash->error("Certificate was not found");
-        return $this->dispatcher->forward([
-          'action' => 'index'
-        ]);
       }
       $this->view->cert = $certs;
       $this->view->form = new CertificatesForm($certs, [
@@ -126,8 +124,9 @@ class CertificateController extends ControllerBase
     }
 
     // Revoke Certificate
-    public function revokeAction()
+    public function revokeAction($serial_number)
     {
-
+      $this->view->form = new CertificatesForm($serial_number);
+      $this->view->serial_number=$serial_number;
     }
 }
