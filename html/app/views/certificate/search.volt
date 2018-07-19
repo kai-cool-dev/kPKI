@@ -13,7 +13,8 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">Serial</th>
+          <th scope="col">Organization</td>
+          <th scope="col">Common Name / SANs</th>
           <th scope="col">Status</th>
           <th scope="col">CA Label</th>
           <th scope="col">Expiry</th>
@@ -23,7 +24,21 @@
       <tbody>
       {% for cert in page.items %}
         <tr>
-          <th scope="row">{{ cert.serial_number }}</th>
+          <th scope="row">
+            {% for name in data[cert.serial_number]["subject"] %}
+              {{ name }} <br>
+            {% endfor %}
+          </th>
+          <td>
+            <ul>
+              {% if data[cert.serial_number]["subject"]["common_name"] %}
+                <li>{{ data[cert.serial_number]["subject"]["common_name"] }}</li>
+              {% endif %}
+              {% for san in data[cert.serial_number]["sans"] %}
+                <li>{{ san }}</li>
+              {% endfor %}
+            </ul>
+          </td>
           <td>{{ cert.status }}</td>
           <td>{{ cert.ca_label }}</td>
           <td>{{ cert.expiry }}</td>

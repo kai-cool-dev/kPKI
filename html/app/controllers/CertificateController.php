@@ -52,12 +52,44 @@ class CertificateController extends ControllerBase
           "action" => "index"
         ]);
       }
+      $data = array();
+      foreach ($certs as $key => $value) {
+        $certinfo=$this->certinfo($value->pem);
+        $data[$value->serial_number]["sans"]=$certinfo["sans"];
+        $data[$value->serial_number]["subject"]=$certinfo["subject"]["names"];
+      }
       $paginator = new Paginator([
         "data" => $certs,
         "limit" => 10,
         "page" => $numberPage
       ]);
       $this->view->page = $paginator->getPaginate();
+      $this->view->data = $data;
+    }
+
+    public function certinfo($pem)
+    {
+      $data = array('certificate' => $pem );
+      $data_string=json_encode($data);
+      // Get cURL resource
+      $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+      curl_setopt_array($curl, array(
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_URL => $this->config["cfssl"]["remotes"]["caserver"] . '/api/v1/cfssl/certinfo',
+        CURLOPT_USERAGENT => 'kPKI Frontend GUI',
+        CURLOPT_HTTPHEADER => array(
+          'Content-Type: application/json',
+          'Content-Length: ' . strlen($data_string)),
+        CURLOPT_POST => 1,
+        CURLOPT_POSTFIELDS => $data_string
+      ));
+      // Send the request & save response to $resp
+      $resp = curl_exec($curl);
+      // Close request to clear up some resources
+      curl_close($curl);
+      $data = json_decode($resp,true);
+      return $data["result"];
     }
 
     // Show detailled information
