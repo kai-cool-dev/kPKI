@@ -10,10 +10,9 @@
   </div>
 </div>
 
-<form method="post" autocomplete="off">
 <div class="row">
   <div class="col-lg-6">
-    {{ link_to("users", "Go Back", "class":"btn btn-light form-control") }}
+    {{ link_to("certificate", "Go Back", "class":"btn btn-light form-control") }}
   </div>
   <div class="col-lg-3">
     {{ link_to("certificate/revoke/" ~ cert.serial_number, 'Revoke', "class": "btn btn-danger form-control") }}
@@ -22,18 +21,81 @@
     {{ submit_button("Save", "class":"btn btn-success form-control") }}
   </div>
 </div>
+
 <div class="row">
   <div class="col-lg-12">
+    <h2>SANs</h2>
+  </div>
+  {% for san in  data["sans"] %}
+    <div class="col-lg-4">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">SAN</span>
+        </div>
+        <input type="text" class="form-control" disabled value="{{ san }}">
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <h2>Issued for</h2>
+  </div>
+  {% for key,value in  data["subject"] %}
+    <div class="col-lg-4">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">{{key}}</span>
+        </div>
+        <input type="text" class="form-control" disabled value="{{ value }}">
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <h2>Issuer</h2>
+  </div>
+  {% for key,value in  data["issuer"] %}
+    <div class="col-lg-4">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">{{key}}</span>
+        </div>
+        <input type="text" class="form-control" disabled value="{{ value }}">
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <h2>Misc</h2>
+  </div>
+  {% for key,value in  data["misc"] %}
+    <div class="col-lg-4">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">{{key}}</span>
+        </div>
+        <input type="text" class="form-control" disabled value="{{ value }}">
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">CA Label</span>
+        <span class="input-group-text" id="basic-addon1">Label</span>
       </div>
       {{ form.render("ca_label") }}
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-lg-12">
+  <div class="col-lg-6">
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">Expiry</span>
@@ -42,13 +104,13 @@
     </div>
   </div>
 </div>
-</form>
+
 <div class="row">
   <div class="col-lg-12">
+    <h2>Certificate Public Key</h2>
+  </div>
+  <div class="col-lg-12">
     <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Certificate</span>
-      </div>
       <textarea rows="30" class="form-control" disabled>{{ cert.pem }}</textarea>
     </div>
   </div>

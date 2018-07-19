@@ -16,7 +16,7 @@
           <th scope="col">Organization</td>
           <th scope="col">Common Name / SANs</th>
           <th scope="col">Status</th>
-          <th scope="col">CA Label</th>
+          <th scope="col">Label</th>
           <th scope="col">Expiry</th>
           <th scope="col" colspan="2"></th>
         </tr>
@@ -32,7 +32,7 @@
           <td>
             <ul>
               {% if data[cert.serial_number]["subject"]["common_name"] %}
-                <li>{{ data[cert.serial_number]["subject"]["common_name"] }}</li>
+                <li>{{ data[cert.serial_number]["common_name"] }}</li>
               {% endif %}
               {% for san in data[cert.serial_number]["sans"] %}
                 <li>{{ san }}</li>

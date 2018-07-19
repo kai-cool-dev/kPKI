@@ -30,7 +30,7 @@
   <div class="col-lg-6">
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text" id="name-addon">CA Label</span>
+        <span class="input-group-text" id="name-addon">Label</span>
       </div>
       {{ form.render("ca_label") }}
     </div>

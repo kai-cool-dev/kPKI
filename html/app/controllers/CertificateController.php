@@ -57,6 +57,7 @@ class CertificateController extends ControllerBase
         $certinfo=$this->certinfo($value->pem);
         $data[$value->serial_number]["sans"]=$certinfo["sans"];
         $data[$value->serial_number]["subject"]=$certinfo["subject"]["names"];
+        $data[$value->serial_number]["common_name"]=$certinfo["subject"]["common_name"];
       }
       $paginator = new Paginator([
         "data" => $certs,
@@ -111,6 +112,17 @@ class CertificateController extends ControllerBase
       $this->view->form = new CertificatesForm($certs, [
         'edit' => true
       ]);
+      $certinfo=$this->certinfo($certs->pem);
+      $data["sans"]=$certinfo["sans"];
+      $data["subject"]=$certinfo["subject"];
+      $data["issuer"]=$certinfo["issuer"];
+      unset($data["subject"]["names"]);
+      unset($data["issuer"]["names"]);
+      $data["misc"]["sigalg"]=$certinfo["sigalg"];
+      $data["misc"]["authority_key_id"]=$certinfo["authority_key_id"];
+      $data["misc"]["subject_key_id"]=$certinfo["subject_key_id"];
+      $data["misc"]["subject_key_id"]=$certinfo["subject_key_id"];
+      $this->view->data = $data;
     }
 
     // Revoke Certificate
