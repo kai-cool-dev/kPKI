@@ -53,19 +53,19 @@ class CertificateController extends ControllerBase
           "action" => "index"
         ]);
       }
-      $data = array();
-      foreach ($certs as $key => $value) {
-        $certinfo=$this->certinfo($value->pem);
-        $data[$value->serial_number]["sans"]=$certinfo["sans"];
-        $data[$value->serial_number]["subject"]=$certinfo["subject"]["names"];
-        $data[$value->serial_number]["common_name"]=$certinfo["subject"]["common_name"];
-      }
       $paginator = new Paginator([
         "data" => $certs,
         "limit" => 10,
         "page" => $numberPage
       ]);
       $this->view->page = $paginator->getPaginate();
+      $data = array();
+      foreach ($this->view->page->items as $key => $value) {
+        $certinfo=$this->certinfo($value->pem);
+        $data[$value->serial_number]["sans"]=$certinfo["sans"];
+        $data[$value->serial_number]["subject"]=$certinfo["subject"]["names"];
+        $data[$value->serial_number]["common_name"]=$certinfo["subject"]["common_name"];
+      }
       $this->view->data = $data;
     }
 
