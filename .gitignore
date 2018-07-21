@@ -8,3 +8,4 @@
 html/composer.lock
 html/vendor/
 html/app/config/config.php
+html/cache/*.php
