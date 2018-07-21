@@ -85,12 +85,17 @@
 
 <div class="row">
   <div class="col-lg-6">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Label</span>
+    <form method="post">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Label</span>
+        </div>
+        {{ form.render("ca_label") }}
+        <div class="input-group-append">
+          <button class="btn btn-success" type="submit" id="button-addon2">Save</button>
+        </div>
       </div>
-      {{ form.render("ca_label") }}
-    </div>
+    </form>
   </div>
   <div class="col-lg-6">
     <div class="input-group mb-3">

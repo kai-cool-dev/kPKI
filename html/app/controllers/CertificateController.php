@@ -108,7 +108,7 @@ class CertificateController extends ControllerBase
       }
       $this->view->cert = $certs;
       $this->view->form = new CertificatesForm($certs, [
-        'edit' => true
+        'edit' => false
       ]);
       $certinfo=$this->certinfo($certs->pem);
       $data["sans"]=$certinfo["sans"];

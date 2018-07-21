@@ -8,18 +8,6 @@ class CertificatesForm extends Form
 {
   public function initialize($entity = null, $options = null)
   {
-    $serial_number = new Text('serial_number', [
-      'placeholder' => '',
-      'aria-describedby' => 'name-addon',
-      'class' => 'form-control',
-    ]);
-    $serial_number->addValidators([
-      new PresenceOf([
-        'message' => 'The serial_number is required'
-      ])
-    ]);
-    $this->add($serial_number);
-
     if($options["edit"]==true)
     {
       $ca_label = new Text('ca_label', [
