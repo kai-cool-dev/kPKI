@@ -126,7 +126,14 @@ class CertificateController extends ControllerBase
     // Revoke Certificate
     public function revokeAction($serial_number)
     {
-      $this->view->form = new CertificatesForm($serial_number);
+      $certs = Certificates::findFirst([
+        "serial_number = :serial_number:",
+        "bind" => [
+          "serial_number" => $serial_number
+        ]
+      ]);
+      $this->view->form = new RevokeForm($certs);
       $this->view->serial_number=$serial_number;
+      // TODO: Add Post and Send data to daemon
     }
 }
