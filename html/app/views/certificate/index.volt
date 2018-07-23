@@ -18,8 +18,8 @@
 
 <form method="post" action="{{ url("certificate/search") }}" autocomplete="off" class="form-search">
 <div class="row">
-  <div class="col-lg-6">
-    <div class="input-group mb-3">
+  <div class="col-lg-4">
+    <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text" id="id-addon">Serial Number</span>
       </div>
@@ -27,12 +27,21 @@
     </div>
   </div>
 
-  <div class="col-lg-6">
-    <div class="input-group mb-3">
+  <div class="col-lg-4">
+    <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text" id="name-addon">Label</span>
       </div>
       {{ form.render("ca_label") }}
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="name-addon">Filter</span>
+      </div>
+      {{ form.render("status") }}
     </div>
   </div>
 </div>

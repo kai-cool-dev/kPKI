@@ -43,7 +43,11 @@
           <td>{{ cert.ca_label }}</td>
           <td>{{ cert.expiry }}</td>
           <td>{{ link_to("certificate/show/" ~ cert.serial_number, 'Show', "class": "btn btn-light form-control") }}</td>
-          <td>{{ link_to("certificate/revoke/" ~ cert.serial_number, 'Revoke', "class": "btn btn-danger form-control") }}</td>
+          <td>
+            {% if cert.status != "revoked" %}
+              {{ link_to("certificate/revoke/" ~ cert.serial_number, 'Revoke', "class": "btn btn-danger form-control") }}
+            {% endif %}
+          </td>
         </tr>
       {% else %}
         <tr colspan="8">

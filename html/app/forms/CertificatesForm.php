@@ -2,6 +2,7 @@
 namespace Vokuro\Forms;
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
+use Phalcon\Forms\Element\Select;
 use Phalcon\Validation\Validator\PresenceOf;
 
 class CertificatesForm extends Form
@@ -14,12 +15,6 @@ class CertificatesForm extends Form
       'class' => 'form-control'
     ]);
 
-    $serial_number->addValidators([
-      new PresenceOf([
-        'message' => 'The ca_label is required'
-      ])
-    ]);
-
     $this->add($serial_number);
     $ca_label = new Text('ca_label', [
       'placeholder' => '',
@@ -27,5 +22,14 @@ class CertificatesForm extends Form
       'class' => 'form-control'
     ]);
     $this->add($ca_label);
+
+    $status=new Select('status', [
+      "" => "view all",
+      "revoked" => "view revoked",
+      "good" => "view not revoked"
+    ], [
+      'class' => 'form-control'
+    ]);
+    $this->add($status);
   }
 }
