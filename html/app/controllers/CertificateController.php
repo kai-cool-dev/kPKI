@@ -112,6 +112,20 @@ class CertificateController extends ControllerBase
         "action" => "index"
       ]);
     }
+
+    if ($this->request->isPost()) {
+      $certs->assign([
+        'ca_label' => $this->request->getPost('ca_label', 'striptags')
+      ]);
+      $form = new CertificatesForm($certs);
+      if (!$certs->save()) {
+        $this->flash->error($certs->getMessages());
+      } else {
+        $this->flash->success("Label was updated successfully");
+        Tag::resetInput();
+      }
+    }
+
     $this->view->cert = $certs;
     $this->view->form = new CertificatesForm($certs, [
       'edit' => false
@@ -134,7 +148,6 @@ class CertificateController extends ControllerBase
     $data["misc"]["subject_key_id"]=$certinfo["subject_key_id"];
     $data["misc"]["subject_key_id"]=$certinfo["subject_key_id"];
     $this->view->data = $data;
-    // TODO: Save Label
   }
 
   // Revoke Certificate

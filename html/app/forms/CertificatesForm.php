@@ -21,26 +21,10 @@ class CertificatesForm extends Form
     ]);
 
     $this->add($serial_number);
-
-    if($options["edit"]==true)
-    {
-      $ca_label = new Text('ca_label', [
-        'placeholder' => '',
-        'aria-describedby' => 'name-addon',
-        'class' => 'form-control',
-        'disabled' => true
-      ]);
-    }else {
-      $ca_label = new Text('ca_label', [
-        'placeholder' => '',
-        'aria-describedby' => 'name-addon',
-        'class' => 'form-control'
-      ]);
-    }
-    $ca_label->addValidators([
-      new PresenceOf([
-        'message' => 'The ca_label is required'
-      ])
+    $ca_label = new Text('ca_label', [
+      'placeholder' => '',
+      'aria-describedby' => 'name-addon',
+      'class' => 'form-control'
     ]);
     $this->add($ca_label);
   }
