@@ -6,11 +6,17 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <h2>Revoke Certificate {{ serial_number }}</h2>
+    <h2>Revoke
+      "{% if cert.ca_label %}
+        {{ cert.ca_label }}
+      {% else %}
+        {{ cert.serial_number }}
+      {% endif %}
+      "</h2>
   </div>
 </div>
 
-<form method="post">
+{{ form('class': 'form-search') }}
   <div class="row">
     <div class="col-lg-12">
       {{ form.render("serial_number") }}
@@ -23,9 +29,13 @@
       </div>
     </div>
   </div>
+
   <div class="row">
-    <div class="col-lg-12">
-      <button type="submit" class="form-control btn btn-success">Revoke</button>
+    <div class="col-lg-6">
+      {{ link_to("certificate/show/" ~ cert.serial_number, 'Go Back', "class": "btn btn-light form-control") }}
+    </div>
+    <div class="col-lg-6">
+      <button type="submit" class="form-control btn btn-danger">Revoke</button>
     </div>
   </div>
 </form>

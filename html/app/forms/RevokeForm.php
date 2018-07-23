@@ -27,16 +27,16 @@ class RevokeForm extends Form
     $this->add($authority_key_id);
 
     $reason=new Select('reason', [
-      "unspecified",
-      "keyCompromise",
-      "cACompromise",
-      "affiliationChanged",
-      "superseded",
-      "cessationOfOperation",
-      "certificateHold",
-      "removeFromCRL",
-      "privilegeWithdrawn",
-      "aACompromise"
+      "unspecified" => "unspecified",
+      "keyCompromise" => "keyCompromise",
+      "cACompromise" => "cACompromise",
+      "affiliationChanged" => "affiliationChanged",
+      "superseded" => "superseded",
+      "cessationOfOperation" => "cessationOfOperation",
+      "certificateHold" => "certificateHold",
+      "removeFromCRL" => "removeFromCRL",
+      "privilegeWithdrawn" => "privilegeWithdrawn",
+      "aACompromise" => "aACompromise"
     ], [
       'class' => 'form-control'
     ]);

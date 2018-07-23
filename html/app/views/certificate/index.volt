@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<form method="post" action="{{ url("certificate/search") }}" autocomplete="off">
+<form method="post" action="{{ url("certificate/search") }}" autocomplete="off" class="form-search">
 <div class="row">
   <div class="col-lg-6">
     <div class="input-group mb-3">

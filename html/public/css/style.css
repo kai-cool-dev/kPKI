@@ -18,3 +18,7 @@ footer p{
 .btn-light:hover {
   border-color: #40739e;
 }
+
+.row {
+  margin-top: 5px;
+}

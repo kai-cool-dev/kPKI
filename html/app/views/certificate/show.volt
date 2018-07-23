@@ -4,23 +4,32 @@
   </div>
 </div>
 
+{% if cert.status == "revoked" %}
+  <div class="row">
+    <div class="col-lg-12">
+      {{ link_to("certificate", "Go Back", "class":"btn btn-light form-control") }}
+    </div>
+  </div>
+{% else %}
+  <div class="row">
+    <div class="col-lg-6">
+      {{ link_to("certificate", "Go Back", "class":"btn btn-light form-control") }}
+    </div>
+    <div class="col-lg-6">
+      {{ link_to("certificate/revoke/" ~ cert.serial_number, 'Revoke', "class": "btn btn-danger form-control") }}
+    </div>
+  </div>
+{% endif %}
+
 <div class="row">
   <div class="col-lg-12">
     <h2>Show
-      {% if cert.ca_label %}
+      "{% if cert.ca_label %}
         {{ cert.ca_label }}
       {% else %}
         {{ cert.serial_number }}
-      {% endif %}</h2>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    {{ link_to("certificate", "Go Back", "class":"btn btn-light form-control") }}
-  </div>
-  <div class="col-lg-6">
-    {{ link_to("certificate/revoke/" ~ cert.serial_number, 'Revoke', "class": "btn btn-danger form-control") }}
+      {% endif %}
+      "</h2>
   </div>
 </div>
 
@@ -89,7 +98,7 @@
 </div>
 
 <div class="row">
-  <div class="col-lg-6">
+  <div class="col-lg-4">
     <form method="post">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -102,7 +111,15 @@
       </div>
     </form>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-4">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Serial</span>
+      </div>
+      <input type="text" class="form-control" disabled value="{{ cert.serial_number }}">
+    </div>
+  </div>
+  <div class="col-lg-4">
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">Expiry</span>
