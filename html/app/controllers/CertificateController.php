@@ -121,6 +121,7 @@ class CertificateController extends ControllerBase
       $data["misc"]["subject_key_id"]=$certinfo["subject_key_id"];
       $data["misc"]["subject_key_id"]=$certinfo["subject_key_id"];
       $this->view->data = $data;
+      // TODO: Save Label
     }
 
     // Revoke Certificate
