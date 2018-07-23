@@ -6,7 +6,12 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <h2>Show {{ cert.serial_number }}</h2>
+    <h2>Show
+      {% if cert.ca_label %}
+        {{ cert.ca_label }}
+      {% else %}
+        {{ cert.serial_number }}
+      {% endif %}</h2>
   </div>
 </div>
 

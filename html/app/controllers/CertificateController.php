@@ -108,6 +108,9 @@ class CertificateController extends ControllerBase
     ]);
     if (!$certs) {
       $this->flash->error("Certificate was not found");
+      return $this->dispatcher->forward([
+        "action" => "index"
+      ]);
     }
     $this->view->cert = $certs;
     $this->view->form = new CertificatesForm($certs, [
