@@ -4,6 +4,7 @@ use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Textarea;
 use Phalcon\Forms\Element\Select;
+use Phalcon\Forms\Element\Numeric;
 use Phalcon\Validation\Validator\PresenceOf;
 
 class CertificateCreateForm extends Form
@@ -67,6 +68,31 @@ class CertificateCreateForm extends Form
       'required' => true
     ]);
     $this->add($st);
+
+    $algo = new Select('algo', [
+      'rsa' => 'RSA',
+      'ecdsa' => 'ECDSA'
+    ], [
+      'class' => 'form-control',
+      'data-toggle' => "tooltip",
+      'data-placement' => "right",
+      'title' => "Please select the algorithm.",
+      'required' => true,
+      'onChange' => 'fct_keysize()'
+    ]);
+    $this->add($algo);
+
+    $keysize = new Numeric('keysize', [
+      'class' => 'form-control',
+      'data-toggle' => "tooltip",
+      'data-placement' => "right",
+      'title' => "Please select the keysize. Default: 4096 for RSA and 256 for ECDSA.",
+      'required' => true,
+      'value' => 4096,
+      'min' => 256,
+      'max' => 8192
+    ]);
+    $this->add($keysize);
 
     $country = new Select('C', [
         'AF' => 'Afghanistan',

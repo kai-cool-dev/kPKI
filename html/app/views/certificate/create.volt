@@ -91,4 +91,29 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Key Encryption</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Algorithm</span>
+        </div>
+        {{ form.render("algo") }}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Key Size</span>
+        </div>
+        {{ form.render("keysize") }}
+      </div>
+    </div>
+  </div>
 </form>
