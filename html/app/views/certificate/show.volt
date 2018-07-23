@@ -39,7 +39,7 @@
   </div>
   {% for san in  data["sans"] %}
     <div class="col-lg-4">
-      <div class="input-group mb-3">
+      <div class="input-group ">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">SAN</span>
         </div>
@@ -55,7 +55,7 @@
   </div>
   {% for key,value in  data["subject"] %}
     <div class="col-lg-4">
-      <div class="input-group mb-3">
+      <div class="input-group ">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">{{key}}</span>
         </div>
@@ -71,7 +71,7 @@
   </div>
   {% for key,value in  data["issuer"] %}
     <div class="col-lg-4">
-      <div class="input-group mb-3">
+      <div class="input-group ">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">{{key}}</span>
         </div>
@@ -87,7 +87,7 @@
   </div>
   {% for key,value in  data["misc"] %}
     <div class="col-lg-4">
-      <div class="input-group mb-3">
+      <div class="input-group ">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">{{key}}</span>
         </div>
@@ -100,7 +100,7 @@
 <div class="row">
   <div class="col-lg-4">
     <form method="post">
-      <div class="input-group mb-3">
+      <div class="input-group ">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">Label</span>
         </div>
@@ -112,7 +112,7 @@
     </form>
   </div>
   <div class="col-lg-4">
-    <div class="input-group mb-3">
+    <div class="input-group ">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">Serial</span>
       </div>
@@ -120,7 +120,7 @@
     </div>
   </div>
   <div class="col-lg-4">
-    <div class="input-group mb-3">
+    <div class="input-group ">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">Expiry</span>
       </div>
@@ -134,7 +134,7 @@
     <h2>Certificate Public Key</h2>
   </div>
   <div class="col-lg-12">
-    <div class="input-group mb-3">
+    <div class="input-group ">
       <textarea rows="30" class="form-control" disabled>{{ cert.pem }}</textarea>
     </div>
   </div>

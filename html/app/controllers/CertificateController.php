@@ -3,6 +3,8 @@ namespace Vokuro\Controllers;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Vokuro\Forms\CertificatesForm;
 use Vokuro\Forms\RevokeForm;
+use Vokuro\Forms\CertificateForm;
+use Vokuro\Forms\CertificateCreateForm;
 use Vokuro\Models\Certificates;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Tag;
@@ -26,6 +28,7 @@ class CertificateController extends ControllerBase
   // Create new SSL Certificate
   public function createAction()
   {
+    $this->view->form = new CertificateCreateForm();
   }
 
   // Search for a Certificate
