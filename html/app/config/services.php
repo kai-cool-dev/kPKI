@@ -15,56 +15,45 @@ use Vokuro\Acl\Acl;
 use Vokuro\Mail\Mail;
 
 /**
- * Register the global configuration as config
- */
+* Register the global configuration as config
+*/
 $di->setShared('config', function () {
-    $config = include APP_PATH . '/config/config.php';
-    
-    if (is_readable(APP_PATH . '/config/config.dev.php')) {
-        $override = include APP_PATH . '/config/config.dev.php';
-        $config->merge($override);
-    }
-    
-    return $config;
+  $config = include APP_PATH . '/config/config.php';
+  if (is_readable(APP_PATH . '/config/config.dev.php')) {
+    $override = include APP_PATH . '/config/config.dev.php';
+    $config->merge($override);
+  }
+  return $config;
 });
 
 /**
- * The URL component is used to generate all kind of urls in the application
- */
+* The URL component is used to generate all kind of urls in the application
+*/
 $di->setShared('url', function () {
-    $config = $this->getConfig();
-
-    $url = new UrlResolver();
-    $url->setBaseUri($config->application->baseUri);
-    return $url;
+  $config = $this->getConfig();
+  $url = new UrlResolver();
+  $url->setBaseUri($config->application->baseUri);
+  return $url;
 });
-
 /**
- * Setting up the view component
- */
+* Setting up the view component
+*/
 $di->set('view', function () {
-    $config = $this->getConfig();
-
-    $view = new View();
-
-    $view->setViewsDir($config->application->viewsDir);
-
-    $view->registerEngines([
-        '.volt' => function ($view) {
-            $config = $this->getConfig();
-
-            $volt = new VoltEngine($view, $this);
-
-            $volt->setOptions([
-                'compiledPath' => $config->application->cacheDir . 'volt/',
-                'compiledSeparator' => '_'
-            ]);
-
-            return $volt;
-        }
-    ]);
-
-    return $view;
+  $config = $this->getConfig();
+  $view = new View();
+  $view->setViewsDir($config->application->viewsDir);
+  $view->registerEngines([
+    '.volt' => function ($view) {
+      $config = $this->getConfig();
+      $volt = new VoltEngine($view, $this);
+      $volt->setOptions([
+        'compiledPath' => $config->application->cacheDir . 'volt/',
+        'compiledSeparator' => '_'
+      ]);
+      return $volt;
+    }
+  ]);
+  return $view;
 }, true);
 
 /**
@@ -153,7 +142,7 @@ $di->set('mail', function () {
 });
 
 /**
- * Setup the private resources, if any, for performance optimization of the ACL.  
+ * Setup the private resources, if any, for performance optimization of the ACL.
  */
 $di->setShared('AclResources', function() {
     $pr = [];
