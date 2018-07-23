@@ -83,101 +83,89 @@ $di->set('modelsMetadata', function () {
  * Start the session the first time some component request the session service
  */
 $di->set('session', function () {
-    $session = new SessionAdapter();
-    $session->start();
-    return $session;
+  $session = new SessionAdapter();
+  $session->start();
+  return $session;
 });
 
 /**
- * Crypt service
- */
+* Crypt service
+*/
 $di->set('crypt', function () {
-    $config = $this->getConfig();
-
-    $crypt = new Crypt();
-    $crypt->setKey($config->application->cryptSalt);
-    return $crypt;
+  $config = $this->getConfig();
+  $crypt = new Crypt();
+  $crypt->setKey($config->application->cryptSalt);
+  return $crypt;
 });
-
 /**
- * Dispatcher use a default namespace
- */
+* Dispatcher use a default namespace
+*/
 $di->set('dispatcher', function () {
-    $dispatcher = new Dispatcher();
-    $dispatcher->setDefaultNamespace('Vokuro\Controllers');
-    return $dispatcher;
+  $dispatcher = new Dispatcher();
+  $dispatcher->setDefaultNamespace('Vokuro\Controllers');
+  return $dispatcher;
 });
-
 /**
- * Loading routes from the routes.php file
- */
+* Loading routes from the routes.php file
+*/
 $di->set('router', function () {
-    return require APP_PATH . '/config/routes.php';
+  return require APP_PATH . '/config/routes.php';
 });
-
 /**
- * Flash service with custom CSS classes
- */
+* Flash service with custom CSS classes
+*/
 $di->set('flash', function () {
-    return new Flash([
-        'error' => 'alert alert-danger',
-        'success' => 'alert alert-success',
-        'notice' => 'alert alert-info',
-        'warning' => 'alert alert-warning'
-    ]);
+  return new Flash([
+    'error' => 'alert alert-danger',
+    'success' => 'alert alert-success',
+    'notice' => 'alert alert-info',
+    'warning' => 'alert alert-warning'
+  ]);
 });
 
 /**
- * Custom authentication component
- */
+* Custom authentication component
+*/
 $di->set('auth', function () {
-    return new Auth();
+  return new Auth();
 });
-
 /**
- * Mail service uses AmazonSES
- */
+* Mail service uses AmazonSES
+*/
 $di->set('mail', function () {
-    return new Mail();
+  return new Mail();
 });
-
 /**
- * Setup the private resources, if any, for performance optimization of the ACL.
- */
+* Setup the private resources, if any, for performance optimization of the ACL.
+*/
 $di->setShared('AclResources', function() {
-    $pr = [];
-    if (is_readable(APP_PATH . '/config/privateResources.php')) {
-        $pr = include APP_PATH . '/config/privateResources.php';
-    }
-    return $pr;
+  $pr = [];
+  if (is_readable(APP_PATH . '/config/privateResources.php')) {
+    $pr = include APP_PATH . '/config/privateResources.php';
+  }
+  return $pr;
 });
-
 /**
- * Access Control List
- * Reads privateResource as an array from the config object.
- */
+* Access Control List
+* Reads privateResource as an array from the config object.
+*/
 $di->set('acl', function () {
-    $acl = new Acl();
-    $pr = $this->getShared('AclResources')->privateResources->toArray();
-    $acl->addPrivateResources($pr);
-    return $acl;
+  $acl = new Acl();
+  $pr = $this->getShared('AclResources')->privateResources->toArray();
+  $acl->addPrivateResources($pr);
+  return $acl;
 });
-
 /**
- * Logger service
- */
+* Logger service
+*/
 $di->set('logger', function ($filename = null, $format = null) {
-    $config = $this->getConfig();
-
-    $format   = $format ?: $config->get('logger')->format;
-    $filename = trim($filename ?: $config->get('logger')->filename, '\\/');
-    $path     = rtrim($config->get('logger')->path, '\\/') . DIRECTORY_SEPARATOR;
-
-    $formatter = new FormatterLine($format, $config->get('logger')->date);
-    $logger    = new FileLogger($path . $filename);
-
-    $logger->setFormatter($formatter);
-    $logger->setLogLevel($config->get('logger')->logLevel);
-
-    return $logger;
+  $config = $this->getConfig();
+  $format   = $format ?: $config->get('logger')->format;
+  $filename = trim($filename ?: $config->get('logger')->filename, '\\/');
+  $path     = rtrim($config->get('logger')->path, '\\/') . DIRECTORY_SEPARATOR;
+  $formatter = new FormatterLine($format, $config->get('logger')->date);
+  $logger    = new FileLogger($path . $filename);
+  $logger->setFormatter($formatter);
+  $logger->setLogLevel($config->get('logger')->logLevel);
+  return $logger;
 });
