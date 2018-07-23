@@ -58,6 +58,13 @@ class CertificateController extends ControllerBase
     $data = array();
     foreach ($this->view->page->items as $key => $value) {
       $certinfo=$this->certinfo($value->pem);
+      if(!$certinfo)
+      {
+        $this->flash->notice("Connection to PKI Daemon is not possible");
+        return $this->dispatcher->forward([
+          "action" => "index"
+        ]);
+      }
       $data[$value->serial_number]["sans"]=$certinfo["sans"];
       $data[$value->serial_number]["subject"]=$certinfo["subject"]["names"];
       $data[$value->serial_number]["common_name"]=$certinfo["subject"]["common_name"];
@@ -107,6 +114,13 @@ class CertificateController extends ControllerBase
       'edit' => false
     ]);
     $certinfo=$this->certinfo($certs->pem);
+    if(!$certinfo)
+    {
+      $this->flash->notice("Connection to PKI Daemon is not possible");
+      return $this->dispatcher->forward([
+        "action" => "index"
+      ]);
+    }
     $data["sans"]=$certinfo["sans"];
     $data["subject"]=$certinfo["subject"];
     $data["issuer"]=$certinfo["issuer"];
