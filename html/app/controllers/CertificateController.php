@@ -49,7 +49,29 @@ class CertificateController extends ControllerBase
         'profile' => $this->request->getPost('profile')
       );
       $resp = $this->createCertificate($data);
-      var_dump($resp);
+      if($resp["success"] == true)
+      {
+        $this->flash->success("Certificate created successfully!");
+        $this->flash->notice("Please save your Private-Key because it is not saved in the database. If you loose it the certificate needs to be revoked.");
+        echo '<div class="input-group ">
+          <textarea rows="30" class="form-control" disabled>'.$resp["result"]["private_key"].'</textarea>
+        </div>';
+        $certs = Certificates::findFirst([
+          "pem = :pem:",
+          "bind" => [
+            "pem" => $resp["result"]["certificate"]
+          ]
+        ]);
+        return $this->dispatcher->forward([
+          "action" => "show",
+          "params" => [
+            'serial_number' => $certs->serial_number
+          ]
+        ]);
+      }
+      else {
+        $this->flash->error($resp["errors"]);
+      }
     }
     $this->view->form = new CertificateCreateForm();
   }
