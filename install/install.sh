@@ -2,14 +2,24 @@
 
 # Variables
 BASEFOLDER="$(pwd)"
+# Needed programs
+MYSQL="$(which mysql)"
+CFSSL="$BASEFOLDER/../client/cfssl"
+CAT="$(which cat)"
+# Some Go Stuff (Required for the cfssl daemon)
 export GOROOT="$BASEFOLDER/../go/"
 export PATH=$PATH:$GOROOT/bin
-CFSSL="$BASEFOLDER/../client/cfssl"
-MYSQL="$(which mysql)"
+# MySQL Variables
 MYSQLHOST="localhost"
 MYSQLUSER="root"
 MYSQLPASS=""
 MYSQLDB="cfssl"
+# Config Files Location
+CFSSL_MYSQL_EXAMPLE_CONFIG="$BASEFOLDER/../conf/mysql.config.example.json"
+CFSSL_MYSQL_CONFIG="$BASEFOLDER/../conf/mysql.config.json"
+HTML_MYSQL_EXAMPLE_CONFIG="$BASEFOLDER/../html/app/config/config.php.sample"
+HTML_MYSQL_CONFIG="$BASEFOLDER/../html/app/config/config.php"
+HTML_MYSQL_SCHEMA="$BASEFOLDER/../html/schemas/kPKI.schema.sql"
 
 # Functions
 function addmysql()
@@ -39,6 +49,35 @@ function addmysql()
     echo -e "\tMySQL Connection is not working. Please check your input!\n$OUTPUT"
     exit 0;
   fi
+
+  echo -e "-->\tUpdating Config Files"
+
+  if [ -f $CFSSL_MYSQL_EXAMPLE_CONFIG ]
+  then
+     $CAT $CFSSL_MYSQL_EXAMPLE_CONFIG | sed "s/MYSQLHOST/$MYSQLHOST/g" | sed "s/MYSQLUSER/$MYSQLUSER/g" | sed "s/MYSQLPASS/$MYSQLPASS/g" | sed "s/MYSQLDB/$MYSQLDB/g" > $CFSSL_MYSQL_CONFIG
+  else
+    echo -e "\tDaemon MySQL Example Config not found. Aborting."
+    exit 0;
+  fi
+
+  if [ -f $HTML_MYSQL_EXAMPLE_CONFIG ]
+  then
+     $CAT $HTML_MYSQL_EXAMPLE_CONFIG | sed "s/MYSQLHOST/$MYSQLHOST/g" | sed "s/MYSQLUSER/$MYSQLUSER/g" | sed "s/MYSQLPASS/$MYSQLPASS/g" | sed "s/MYSQLDB/$MYSQLDB/g" > $HTML_MYSQL_CONFIG
+  else
+    echo -e "\tGUI MySQL Example Config not found. Aborting."
+    exit 0;
+  fi
+
+  echo -e "-->\tImport Schema"
+  MYSQLCONN="$MYSQL -u $MYSQLUSER -p$MYSQLPASS -h $MYSQLHOST $MYSQLDB < $HTML_MYSQL_SCHEMA"
+  if $($MYSQLCONN)
+  then
+    echo -e "\tMySQL Schema import successfull"
+  else
+    echo -e "\tMySQL Schema import is not working. Aborting!\n$OUTPUT"
+    exit 0;
+  fi
+
 }
 
 
