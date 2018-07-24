@@ -10,7 +10,11 @@
       [
         "signing",
         "key encipherment",
-        "client auth"
+        "client auth",
+        "digital signature",
+        "ocsp signing",
+        "crl sign",
+        "cert sign"
        ]
      },
      "profiles":

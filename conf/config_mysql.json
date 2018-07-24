@@ -1,4 +1,4 @@
 {
   "driver":"mysql",
-  "data_source":"cfssl:UW4.XG9f48XqX7@/cfssl"
+  "data_source":"cfssl:<password>@/cfssl"
 }
