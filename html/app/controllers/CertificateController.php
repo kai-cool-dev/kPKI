@@ -28,6 +28,10 @@ class CertificateController extends ControllerBase
   // Create new SSL Certificate
   public function createAction()
   {
+    if($this->request->isPost())
+    {
+      var_dump($this->request->getPost());
+    }
     $this->view->form = new CertificateCreateForm();
   }
 

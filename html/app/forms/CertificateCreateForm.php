@@ -11,6 +11,18 @@ class CertificateCreateForm extends Form
 {
   public function initialize($entity = null, $options = null)
   {
+    $profile = new Select('profile',[
+      'server' => 'Server Certificate',
+      'client' => 'Client Certificate'
+    ], [
+      'class' => 'form-control',
+      'data-toggle' => "tooltip",
+      'data-placement' => "right",
+      'title' => "Please select the type of certificate.",
+      'required' => false
+    ]);
+    $this->add($profile);
+
     $cn = new Text('CN',[
       'class' => 'form-control',
       'data-toggle' => "tooltip",
