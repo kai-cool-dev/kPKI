@@ -14,7 +14,7 @@
       <thead>
         <tr>
           <th scope="col">Organization</td>
-          <th scope="col">Common Name / SANs</th>
+          <th scope="col">SANs</th>
           <th scope="col">Status</th>
           <th scope="col">Label</th>
           <th scope="col">Expiry</th>
