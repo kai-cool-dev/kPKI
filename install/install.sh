@@ -39,8 +39,6 @@ function addmysql()
     echo -e "\tMySQL Connection is not working. Please check your input!\n$OUTPUT"
     exit 0;
   fi
-
-  #TODO replace all mysql connection strings in the according files
 }
 
 
