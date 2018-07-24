@@ -116,4 +116,9 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <button type="submit" class="form-control btn btn-success">Create Certificate</button>
+    </div>
+  </div>
 </form>
