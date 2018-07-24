@@ -15,13 +15,6 @@ return new Config([
     "remotes" => [
       // Usually http://localhost:8888
       "caserver" => "http://localhost:8888"
-    ],
-    // only the master key is supported
-    'auth_keys' => [
-      "master" => [
-        "type" => "standard",
-        "key" => "68c29c0ecb9996a90ebb2d76bf28c562"
-      ]
     ]
   ],
   'application' => [
@@ -33,7 +26,7 @@ return new Config([
     'pluginsDir'     => APP_PATH . '/plugins/',
     'cacheDir'       => BASE_PATH . '/cache/',
     'baseUri'        => '/',
-    'publicUrl'      => 'pki.fastnameserver.eu',
+    'publicUrl'      => 'please_change',
     'cryptSalt'      => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
   ],
   'mail' => [
