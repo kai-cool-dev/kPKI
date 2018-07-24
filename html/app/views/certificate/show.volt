@@ -95,9 +95,6 @@
       </div>
     </div>
   {% endfor %}
-</div>
-
-<div class="row">
   <div class="col-lg-4">
     <form method="post">
       <div class="input-group ">

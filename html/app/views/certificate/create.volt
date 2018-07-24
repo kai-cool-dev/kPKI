@@ -10,6 +10,12 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-lg-12">
+    <p>Here you can issue a new certificate. If you want to issue a client certificate, you can leave the SAN field empty.</p>
+  </div>
+</div>
+
 <form method="post" class="form-search">
   <div class="row">
     <div class="col-lg-12">
