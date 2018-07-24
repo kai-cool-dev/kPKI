@@ -3,8 +3,8 @@
   {
     "default":
     {
-      "ocsp_url": "https://ocsp.server.pep",
-      "crl_url": "https://ocsp.server.pep/crl",
+      "ocsp_url": "http://localhost:8889",
+      "crl_url": "http://localhost:8888/crl",
       "expiry": "26280h",
       "usages":
       [

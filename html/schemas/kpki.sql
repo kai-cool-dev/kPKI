@@ -1,10 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `cfssl` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `cfssl`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
---
--- Host: 192.168.2.114    Database: cfssl
--- ------------------------------------------------------
--- Server version	5.5.5-10.1.26-MariaDB-0+deb9u1
+CREATE DATABASE  IF NOT EXISTS `MYSQLDB` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `MYSQLDB`;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;

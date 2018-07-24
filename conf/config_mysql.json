@@ -1,4 +1,4 @@
 {
   "driver":"mysql",
-  "data_source":"cfssl:<password>@/cfssl"
+  "data_source":"MYSQLUSER:MYSQLPASS@tcp(MYSQLHOST)/MYSQLDB"
 }

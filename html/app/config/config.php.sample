@@ -5,10 +5,10 @@ return new Config([
   // MySQL Configuration
   'database' => [
     'adapter' => 'Mysql',
-    'host' => '127.0.0.1',
-    'username' => 'cfssl',
-    'password' => '',
-    'dbname' => 'cfssl'
+    'host' => 'MYSQLHOST',
+    'username' => 'MYSQLUSER',
+    'password' => 'MYSQLPASS',
+    'dbname' => 'MYSQLDB'
   ],
   // CFSSL Configuration
   'cfssl' => [
