@@ -30,9 +30,52 @@ class CertificateController extends ControllerBase
   {
     if($this->request->isPost())
     {
-      var_dump($this->request->getPost());
+      $hosts=str_replace("\r", '', $this->request->getPost('hosts'));
+      $data = array(
+        'request' => array(
+          'hosts' => explode(PHP_EOL,$hosts),
+          'names' => array(array(
+            'O' => $this->request->getPost('O'),
+            'OU' => $this->request->getPost('OU'),
+            'L' => $this->request->getPost('L'),
+            'C' => $this->request->getPost('C')
+          )),
+          'key' => array(
+            'algo' => $this->request->getPost('algo'),
+            'size' => (int)$this->request->getPost('keysize')
+          ),
+          'CN' => $this->request->getPost('CN')
+        ),
+        'profile' => $this->request->getPost('profile')
+      );
+      $resp = $this->createCertificate($data);
+      var_dump($resp);
     }
     $this->view->form = new CertificateCreateForm();
+  }
+
+  private function createCertificate($data)
+  {
+    $data_string=json_encode($data);
+    // Get cURL resource
+    $curl = curl_init();
+    // Set some options - we are passing in a useragent too here
+    curl_setopt_array($curl, array(
+      CURLOPT_RETURNTRANSFER => 1,
+      CURLOPT_URL => $this->config["cfssl"]["remotes"]["caserver"] . '/api/v1/cfssl/newcert',
+      CURLOPT_USERAGENT => 'kPKI Frontend GUI',
+      CURLOPT_HTTPHEADER => array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($data_string)),
+      CURLOPT_POST => 1,
+      CURLOPT_POSTFIELDS => $data_string
+    ));
+    // Send the request & save response to $resp
+    $resp = curl_exec($curl);
+    // Close request to clear up some resources
+    curl_close($curl);
+    $data = json_decode($resp,true);
+    return $data;
   }
 
   // Search for a Certificate
