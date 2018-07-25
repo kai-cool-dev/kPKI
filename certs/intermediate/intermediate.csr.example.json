@@ -1,0 +1,16 @@
+{
+ "CN": "ICA_CN",
+ "key": {
+   "algo": "ecdsa",
+   "size": 256
+ },
+ "names": [
+  {
+   "C": "ICA_C",
+   "L": "ICA_L",
+   "OU": "ICA_U",
+   "O": "ICA_O",
+   "ST": "ICA_ST"
+ }
+ ]
+}

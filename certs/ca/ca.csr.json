@@ -1,5 +1,5 @@
 {
- "CN": "kPKI root CA",
+ "CN": "CA",
  "key": {
  "algo": "ecdsa",
  "size": 256
@@ -8,8 +8,8 @@
  {
  "C": "UK",
  "L": "London",
- "OU": "PKI Operations",
- "O": "kPKI",
+ "OU": "Unit",
+ "O": "Org",
  "ST": "London"
  }
  ]

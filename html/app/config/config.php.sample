@@ -14,7 +14,7 @@ return new Config([
   'cfssl' => [
     "remotes" => [
       // Usually http://localhost:8888
-      "caserver" => "http://localhost:8888"
+      "caserver" => "SERVERIP:8888"
     ]
   ],
   'application' => [
