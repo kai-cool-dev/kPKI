@@ -13,8 +13,7 @@ return new Config([
   // CFSSL Configuration
   'cfssl' => [
     "remotes" => [
-      // Usually http://localhost:8888
-      "caserver" => "SERVERIP:8888"
+      "caserver" => "PKI_URL"
     ]
   ],
   'application' => [

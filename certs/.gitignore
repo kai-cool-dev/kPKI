@@ -1,3 +1,4 @@
-# Ignoriere Zertifikate
+# Ignoriere Zertifikate und Produktive CSR
 *.pem
 *.csr
+*.csr.json

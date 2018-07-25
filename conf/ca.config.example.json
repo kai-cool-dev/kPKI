@@ -3,15 +3,15 @@
   {
     "default":
     {
-      "ocsp_url": "http://SERVERIP:8889",
-      "crl_url": "http://SERVERIP:8888/crl",
+      "ocsp_url": "OCSP_URL",
+      "crl_url": "PKI_URL",
       "expiry": "26280h",
       "usages":
       [
         "signing",
         "key encipherment",
         "client auth",
-        "digital signature",
+        "digital signature"
        ]
      },
      "profiles":

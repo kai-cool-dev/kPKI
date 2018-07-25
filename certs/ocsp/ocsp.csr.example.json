@@ -1,16 +1,16 @@
 {
- "CN": "OCSP_CN",
- "key": {
-   "algo": "ecdsa",
-   "size": 256
- },
- "names": [
-  {
-   "C": "OCSP_C",
-   "L": "OCSP_L",
-   "OU": "OCSP_U",
-   "O": "OCSP_O",
-   "ST": "OCSP_ST"
- }
- ]
+  "CN": "OCSP_CN",
+  "key": {
+    "algo": "ecdsa",
+    "size": 256
+  },
+  "names": [
+    {
+      "C": "CA_C",
+      "L": "CA_L",
+      "OU": "CA_U",
+      "O": "CA_O",
+      "ST": "CA_ST"
+    }
+  ]
 }

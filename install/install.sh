@@ -12,12 +12,14 @@ CAT="$(which cat)"
 # Some Go Stuff (Required for the cfssl daemon)
 export GOROOT="$BASEFOLDER/../go/"
 export PATH=$PATH:$GOROOT/bin
+# Server Variables
+PKI_URL="http://localhost:8888"
+OCSP_URL="http://localhost:8889"
 # MySQL Variables
 MYSQLHOST="localhost"
 MYSQLUSER="root"
 MYSQLPASS=""
 MYSQLDB="cfssl"
-SERVERIP="http://localhost"
 # Config Files Location
 CFSSL_MYSQL_EXAMPLE_CONFIG="$BASEFOLDER/../conf/mysql.config.example.json"
 CFSSL_MYSQL_CONFIG="$BASEFOLDER/../conf/mysql.config.json"
@@ -41,38 +43,30 @@ CA_EXAMPLE_CSR="$CA_FOLDER/ca.csr.example.json"
 CA_CSR="$CA_FOLDER/ca.csr.json"
 
 ## Intermediate CA for signing certificates
-# Intermediate CA Variables
-ICA_CN="kPKI Intermediate CA"
-ICA_O="kPKI"
-ICA_U="PKI Operations"
-ICA_ST="London"
-ICA_C="UK"
-ICA_L="London"
 # CSR Files Location
 ICA_FOLDER="$BASEFOLDER/../certs/intermediate/"
 ICA_EXAMPLE_CSR="$ICA_FOLDER/intermediate.csr.example.json"
 ICA_CSR="$ICA_FOLDER/intermediate.csr.json"
 
 ## OCSP Certificate for signing ocsp responses
-# OCSP Variables
-OCSP_CN="kPKI OCSP"
-OCSP_O="kPKI"
-OCSP_U="PKI Operations"
-OCSP_ST="London"
-OCSP_C="UK"
-OCSP_L="London"
 # CSR Files Location
 OCSP_FOLDER="$BASEFOLDER/../certs/ocsp/"
 OCSP_EXAMPLE_CSR="$OCSP_FOLDER/ocsp.csr.example.json"
-OCSP_CSR="$ICA_FOLDER/ocsp.csr.json"
+OCSP_CSR="$OCSP_FOLDER/ocsp.csr.json"
 
 # Functions
+function serverconfig()
+{
+  echo -e "-->\tPlease Type in the public Hostname/IP for the PKI Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8888]:"
+  read PKI_URL
+  echo -e "\tWe are using '$PKI_URL'"
+  echo -e "-->\tPlease Type in the public Hostname/IP for the OCSP Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8889]:"
+  read OCSP_URL
+  echo -e "\tWe are using '$OCSP_URL'"
+}
+
 function addmysql()
 {
-  echo -e "-->\tPlease Type in the Public Server Hostname/IP (please add HTTP(S) Prefix!!!):"
-  read SERVERIP
-  echo -e "\tWe are using '$SERVERIP' as the Public Hostname"
-
   echo -e "-->\tPlease Type in the MySQL Host:"
   read MYSQLHOST
   echo -e "\tWe are using '$MYSQLHOST' as the MySQL Hostname"
@@ -110,7 +104,7 @@ function addmysql()
 
   if [ -f $HTML_MYSQL_EXAMPLE_CONFIG ]
   then
-     $CAT $HTML_MYSQL_EXAMPLE_CONFIG | sed "s/SERVERIP/$SERVERIP/g" | sed "s/MYSQLHOST/$MYSQLHOST/g" | sed "s/MYSQLUSER/$MYSQLUSER/g" | sed "s/MYSQLPASS/$MYSQLPASS/g" | sed "s/MYSQLDB/$MYSQLDB/g" > $HTML_MYSQL_CONFIG
+     $CAT $HTML_MYSQL_EXAMPLE_CONFIG | sed "s,PKI_URL,$PKI_URL,g" | sed "s/MYSQLHOST/$MYSQLHOST/g" | sed "s/MYSQLUSER/$MYSQLUSER/g" | sed "s/MYSQLPASS/$MYSQLPASS/g" | sed "s/MYSQLDB/$MYSQLDB/g" > $HTML_MYSQL_CONFIG
   else
     echo -e "\tGUI MySQL Example Config not found. Aborting!"
     exit 0;
@@ -118,7 +112,7 @@ function addmysql()
 
   if [ -f $CFSSL_CA_EXAMPLE_CONFIG ]
   then
-    $CAT $CFSSL_CA_EXAMPLE_CONFIG | sed "s/SERVERIP/$SERVERIP/g" > $CFSSL_CA_CONFIG
+    $CAT $CFSSL_CA_EXAMPLE_CONFIG | sed "s,OCSP_URL,$OCSP_URL,g" | sed "s,PKI_URL,$PKI_URL,g" > $CFSSL_CA_CONFIG
   else
     echo -e "\tCA Example Config not found. Aborting!"
     exit 0;
@@ -194,29 +188,9 @@ function createIntermediate()
   read ICA_CN
   echo -e "\tWe are using '$ICA_CN' as the name of your Intermediate CA"
 
-  echo -e "-->\tPlease Type in the Organisation:"
-  read ICA_O
-  echo -e "\tWe are using '$ICA_O' as Organisation"
-
-  echo -e "-->\tPlease Type in the Organisation Unit:"
-  read ICA_U
-  echo -e "\tWe are using '$ICA_U' as Organisation Unit"
-
-  echo -e "-->\tPlease Type in the Locality of your Organisation:"
-  read ICA_L
-  echo -e "\tWe are using '$ICA_L' as Locality"
-
-  echo -e "-->\tPlease Type in the State of your Organisation:"
-  read ICA_ST
-  echo -e "\tWe are using '$ICA_ST' as State"
-
-  echo -e "-->\tPlease Type in the Country of your Organisation:"
-  read ICA_C
-  echo -e "\tWe are using '$ICA_C' as Country"
-
   if [ -f $ICA_EXAMPLE_CSR ]
   then
-    $CAT $ICA_EXAMPLE_CSR | sed "s/ICA_CN/$ICA_CN/g" | sed "s/ICA_O/$ICA_O/g" | sed "s/ICA_U/$ICA_U/g" | sed "s/ICA_L/$ICA_L/g" | sed "s/ICA_ST/$ICA_ST/g" | sed "s/ICA_C/$ICA_C/g" > $ICA_CSR
+    $CAT $ICA_EXAMPLE_CSR | sed "s/ICA_CN/$ICA_CN/g" | sed "s/CA_O/$CA_O/g" | sed "s/CA_U/$CA_U/g" | sed "s/CA_L/$CA_L/g" | sed "s/CA_ST/$CA_ST/g" | sed "s/CA_C/$CA_C/g" > $ICA_CSR
   else
     echo -e "\tExample CSR File not found. Aborting!"
     exit 0;
@@ -243,29 +217,9 @@ function createOCSP()
   read OCSP_CN
   echo -e "\tWe are using '$OCSP_CN' as the name of your OCSP Server"
 
-  echo -e "-->\tPlease Type in the Organisation:"
-  read OCSP_O
-  echo -e "\tWe are using '$OCSP_O' as Organisation"
-
-  echo -e "-->\tPlease Type in the Organisation Unit:"
-  read OCSP_U
-  echo -e "\tWe are using '$OCSP_U' as Organisation Unit"
-
-  echo -e "-->\tPlease Type in the Locality of your Organisation:"
-  read OCSP_L
-  echo -e "\tWe are using '$OCSP_L' as Locality"
-
-  echo -e "-->\tPlease Type in the State of your Organisation:"
-  read OCSP_ST
-  echo -e "\tWe are using '$OCSP_ST' as State"
-
-  echo -e "-->\tPlease Type in the Country of your Organisation:"
-  read OCSP_C
-  echo -e "\tWe are using '$OCSP_C' as Country"
-
   if [ -f $OCSP_EXAMPLE_CSR ]
   then
-    $CAT $OCSP_EXAMPLE_CSR | sed "s/OCSP_CN/$OCSP_CN/g" | sed "s/OCSP_O/$OCSP_O/g" | sed "s/OCSP_U/$OCSP_U/g" | sed "s/OCSP_L/$OCSP_L/g" | sed "s/OCSP_ST/$OCSP_ST/g" | sed "s/OCSP_C/$OCSP_C/g" > $OCSP_CSR
+    $CAT $OCSP_EXAMPLE_CSR | sed "s/OCSP_CN/$OCSP_CN/g" | sed "s/CA_O/$CA_O/g" | sed "s/CA_U/$CA_U/g" | sed "s/CA_L/$CA_L/g" | sed "s/CA_ST/$CA_ST/g" | sed "s/CA_C/$CA_C/g" > $OCSP_CSR
   else
     echo -e "\tExample CSR File not found. Aborting!"
     exit 0;
@@ -288,6 +242,8 @@ function createOCSP()
 
 # Main Routine
 echo -e "\tkPKI Installer started"
+echo -e "\tServer Configuration"
+serverconfig
 echo -e "\tMySQL Configuration"
 addmysql
 echo -e "\tCreate root CA"
