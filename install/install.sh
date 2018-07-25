@@ -300,4 +300,5 @@ createOCSP
 # Create OCSP Dump Crontab
 # Install Systemd Unit files
 # Start Systemd Services
+# Install Composer
 # Finished
