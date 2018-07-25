@@ -20,6 +20,6 @@
   },
   "remotes":
   {
-    "caserver": "SERVERIP:8888"
+    "caserver": "PKI_URL"
   }
 }

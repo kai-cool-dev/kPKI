@@ -1,5 +1,6 @@
 #!/bin/bash
-# kPKI One Click Installer
+# kPKI Installer
+# TODO: Check for Empty Vars
 
 # Variables
 BASEFOLDER="$(pwd)"
@@ -25,6 +26,8 @@ CFSSL_MYSQL_EXAMPLE_CONFIG="$BASEFOLDER/../conf/mysql.config.example.json"
 CFSSL_MYSQL_CONFIG="$BASEFOLDER/../conf/mysql.config.json"
 CFSSL_CA_EXAMPLE_CONFIG="$BASEFOLDER/../conf/ca.config.example.json"
 CFSSL_CA_CONFIG="$BASEFOLDER/../conf/ca.config.json"
+CFSSL_CLIENT_EXAMPLE_CONFIG="$BASEFOLDER/../conf/client.config.example.json"
+CFSSL_CLIENT_CONFIG="$BASEFOLDER/../conf/client.config.json"
 HTML_MYSQL_EXAMPLE_CONFIG="$BASEFOLDER/../html/app/config/config.php.sample"
 HTML_MYSQL_CONFIG="$BASEFOLDER/../html/app/config/config.php"
 HTML_MYSQL_SCHEMA="$BASEFOLDER/../html/schemas/kPKI.schema.sql"
@@ -115,6 +118,14 @@ function addmysql()
     $CAT $CFSSL_CA_EXAMPLE_CONFIG | sed "s,OCSP_URL,$OCSP_URL,g" | sed "s,PKI_URL,$PKI_URL,g" > $CFSSL_CA_CONFIG
   else
     echo -e "\tCA Example Config not found. Aborting!"
+    exit 0;
+  fi
+
+  if [ -f $CFSSL_CLIENT_EXAMPLE_CONFIG ]
+  then
+    $CAT $CFSSL_CLIENT_EXAMPLE_CONFIG | sed "s,PKI_URL,$PKI_URL,g" > $CFSSL_CLIENT_CONFIG
+  else
+    echo -e "\tClient Example Config not found. Aborting!"
     exit 0;
   fi
 
