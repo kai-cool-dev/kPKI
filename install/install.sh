@@ -275,9 +275,9 @@ function createOCSP()
   then
     if $($CFSSL gencert -ca $ICA_FOLDER/intermediate.pem -ca-key $ICA_FOLDER/intermediate-key.pem -config="$CFSSL_CA_CONFIG" -profile="ocsp" $OCSP_CSR | $CFSSLJSON -bare $OCSP_FOLDER/ocsp -)
     then
-      echo -e "\tIntermediate CA successfull created."
+      echo -e "\tOCSP Certificate successfull created."
     else
-      echo -e "\tIntermediate CA could not be created. Aborting!"
+      echo -e "\tOCSP Certificate could not be created. Aborting!"
       exit 0;
     fi
   else
@@ -295,3 +295,9 @@ createCA
 echo -e "\tCreate intermediate CA"
 createIntermediate
 echo -e "\tCreate OCSP certificate"
+createOCSP
+# TODO:
+# Create OCSP Dump Crontab
+# Install Systemd Unit files
+# Start Systemd Services
+# Finished
