@@ -26,6 +26,8 @@ CFSSL_CA_CONFIG="$BASEFOLDER/../conf/ca.config.json"
 HTML_MYSQL_EXAMPLE_CONFIG="$BASEFOLDER/../html/app/config/config.php.sample"
 HTML_MYSQL_CONFIG="$BASEFOLDER/../html/app/config/config.php"
 HTML_MYSQL_SCHEMA="$BASEFOLDER/../html/schemas/kPKI.schema.sql"
+
+## Main CA
 # CA Variables
 CA_CN="kPKI root CA"
 CA_O="kPKI"
@@ -37,8 +39,10 @@ CA_L="London"
 CA_FOLDER="$BASEFOLDER/../certs/ca/"
 CA_EXAMPLE_CSR="$CA_FOLDER/ca.csr.example.json"
 CA_CSR="$CA_FOLDER/ca.csr.json"
+
+## Intermediate CA for signing certificates
 # Intermediate CA Variables
-ICA_CN="kPKI root CA"
+ICA_CN="kPKI Intermediate CA"
 ICA_O="kPKI"
 ICA_U="PKI Operations"
 ICA_ST="London"
@@ -48,6 +52,19 @@ ICA_L="London"
 ICA_FOLDER="$BASEFOLDER/../certs/intermediate/"
 ICA_EXAMPLE_CSR="$ICA_FOLDER/intermediate.csr.example.json"
 ICA_CSR="$ICA_FOLDER/intermediate.csr.json"
+
+## OCSP Certificate for signing ocsp responses
+# OCSP Variables
+OCSP_CN="kPKI OCSP"
+OCSP_O="kPKI"
+OCSP_U="PKI Operations"
+OCSP_ST="London"
+OCSP_C="UK"
+OCSP_L="London"
+# CSR Files Location
+OCSP_FOLDER="$BASEFOLDER/../certs/ocsp/"
+OCSP_EXAMPLE_CSR="$OCSP_FOLDER/ocsp.csr.example.json"
+OCSP_CSR="$ICA_FOLDER/ocsp.csr.json"
 
 # Functions
 function addmysql()
@@ -220,6 +237,55 @@ function createIntermediate()
   fi
 }
 
+function createOCSP()
+{
+  echo -e "-->\tPlease Type in the Name of your OCSP Server:"
+  read OCSP_CN
+  echo -e "\tWe are using '$OCSP_CN' as the name of your OCSP Server"
+
+  echo -e "-->\tPlease Type in the Organisation:"
+  read OCSP_O
+  echo -e "\tWe are using '$OCSP_O' as Organisation"
+
+  echo -e "-->\tPlease Type in the Organisation Unit:"
+  read OCSP_U
+  echo -e "\tWe are using '$OCSP_U' as Organisation Unit"
+
+  echo -e "-->\tPlease Type in the Locality of your Organisation:"
+  read OCSP_L
+  echo -e "\tWe are using '$OCSP_L' as Locality"
+
+  echo -e "-->\tPlease Type in the State of your Organisation:"
+  read OCSP_ST
+  echo -e "\tWe are using '$OCSP_ST' as State"
+
+  echo -e "-->\tPlease Type in the Country of your Organisation:"
+  read OCSP_C
+  echo -e "\tWe are using '$OCSP_C' as Country"
+
+  if [ -f $OCSP_EXAMPLE_CSR ]
+  then
+    $CAT $OCSP_EXAMPLE_CSR | sed "s/OCSP_CN/$OCSP_CN/g" | sed "s/OCSP_O/$OCSP_O/g" | sed "s/OCSP_U/$OCSP_U/g" | sed "s/OCSP_L/$OCSP_L/g" | sed "s/OCSP_ST/$OCSP_ST/g" | sed "s/OCSP_C/$OCSP_C/g" > $OCSP_CSR
+  else
+    echo -e "\tExample CSR File not found. Aborting!"
+    exit 0;
+  fi
+
+  if [ -f $OCSP_CSR ]
+  then
+    if $($CFSSL gencert -ca $ICA_FOLDER/intermediate.pem -ca-key $ICA_FOLDER/intermediate-key.pem -config="$CFSSL_CA_CONFIG" -profile="ocsp" $OCSP_CSR | $CFSSLJSON -bare $OCSP_FOLDER/ocsp -)
+    then
+      echo -e "\tIntermediate CA successfull created."
+    else
+      echo -e "\tIntermediate CA could not be created. Aborting!"
+      exit 0;
+    fi
+  else
+    echo -e "\tCSR not found. Aborting!"
+    exit 0;
+  fi
+}
+
 # Main Routine
 echo -e "\tkPKI Installer started"
 echo -e "\tMySQL Configuration"
@@ -228,4 +294,4 @@ echo -e "\tCreate root CA"
 createCA
 echo -e "\tCreate intermediate CA"
 createIntermediate
-echo -e "\tCreate OSCP Intermediate CA"
+echo -e "\tCreate OCSP certificate"
