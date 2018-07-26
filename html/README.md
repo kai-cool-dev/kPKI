@@ -1,4 +1,4 @@
-# kpki Frontend (WIP)
+# kpki Frontend
 
 The KPKI Frontend is used to provide a user-friendly gui to create or revoke client and server certificates and providing some useful ssl/tls tools.
 
@@ -8,14 +8,6 @@ The KPKI Frontend is used to provide a user-friendly gui to create or revoke cli
 - phalcon php extension
 - curl php extension
 - mysql php extension
-
-## Installation:
-
-Install depedencies with composer
-
-```
-composer install
-```
 
 ## Default Login Credentials:
 
