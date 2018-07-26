@@ -4,7 +4,7 @@
     "default":
     {
       "ocsp_url": "OCSP_URL",
-      "crl_url": "PKI_URL",
+      "crl_url": "PKI_URL/crl",
       "expiry": "26280h",
       "usages":
       [
