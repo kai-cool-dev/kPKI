@@ -57,9 +57,20 @@ OCSP_FOLDER="$BASEFOLDER/../certs/ocsp/"
 OCSP_EXAMPLE_CSR="$OCSP_FOLDER/ocsp.csr.example.json"
 OCSP_CSR="$OCSP_FOLDER/ocsp.csr.json"
 
+# OCSP Dump
+OCSP_DUMP="$BASEFOLDER/../ocspdump.txt"
+
+## Systemd Configuration
+PKI_EXAMPLE_SERVICE="$BASEFOLDER/../install/pki.example.service"
+PKI_SERVICE="$BASEFOLDER/../install/pki.service"
+OCSP_EXAMPLE_SERVICE="$BASEFOLDER/../install/ocsp.example.service"
+OCSP_SERVICE="$BASEFOLDER/../install/ocsp.service"
+
 # Functions
 function serverconfig()
 {
+  echo -e "\tThis is the configuration for the PKI and OCSP Responder. The Services are always launched on Port 8888 and 8889 but here you can type in the public URL."
+  echo -e "\tIt is recommend to use a reverse Proxy."
   echo -e "-->\tPlease Type in the public Hostname/IP for the PKI Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8888]:"
   read PKI_URL
   echo -e "\tWe are using '$PKI_URL'"
@@ -86,7 +97,7 @@ function addmysql()
   read MYSQLDB
   echo -e "\tWe are using '$MYSQLDB' as the MySQL Database"
 
-  echo -e "-->\tTrying to establish a MySQL Connection"
+  echo -e "\tTrying to establish a MySQL Connection"
   if $($MYSQL -B -u $MYSQLUSER -p$MYSQLPASS -h $MYSQLHOST $MYSQLDB -e QUIT)
   then
     echo -e "\tMySQL Connection is working"
@@ -95,11 +106,11 @@ function addmysql()
     exit 0;
   fi
 
-  echo -e "-->\tUpdating Config Files"
+  echo -e "\tUpdating Config Files"
 
   if [ -f $CFSSL_MYSQL_EXAMPLE_CONFIG ]
   then
-     $CAT $CFSSL_MYSQL_EXAMPLE_CONFIG | sed "s/MYSQLHOST/$MYSQLHOST/g" | sed "s/MYSQLUSER/$MYSQLUSER/g" | sed "s/MYSQLPASS/$MYSQLPASS/g" | sed "s/MYSQLDB/$MYSQLDB/g" > $CFSSL_MYSQL_CONFIG
+     $CAT $CFSSL_MYSQL_EXAMPLE_CONFIG | sed "s,MYSQLHOST,$MYSQLHOST,g" | sed "s,MYSQLUSER,$MYSQLUSER,g" | sed "s,MYSQLPASS,$MYSQLPASS,g" | sed "s,MYSQLDB,$MYSQLDB,g" > $CFSSL_MYSQL_CONFIG
   else
     echo -e "\tDaemon MySQL Example Config not found. Aborting."
     exit 0;
@@ -107,7 +118,7 @@ function addmysql()
 
   if [ -f $HTML_MYSQL_EXAMPLE_CONFIG ]
   then
-     $CAT $HTML_MYSQL_EXAMPLE_CONFIG | sed "s,PKI_URL,$PKI_URL,g" | sed "s/MYSQLHOST/$MYSQLHOST/g" | sed "s/MYSQLUSER/$MYSQLUSER/g" | sed "s/MYSQLPASS/$MYSQLPASS/g" | sed "s/MYSQLDB/$MYSQLDB/g" > $HTML_MYSQL_CONFIG
+     $CAT $HTML_MYSQL_EXAMPLE_CONFIG | sed "s,PKI_URL,$PKI_URL,g" | sed "s,MYSQLHOST,$MYSQLHOST,g" | sed "s,MYSQLUSER,$MYSQLUSER,g" | sed "s,MYSQLPASS,$MYSQLPASS,g" | sed "s,MYSQLDB,$MYSQLDB,g" > $HTML_MYSQL_CONFIG
   else
     echo -e "\tGUI MySQL Example Config not found. Aborting!"
     exit 0;
@@ -172,7 +183,7 @@ function createCA()
 
   if [ -f $CA_EXAMPLE_CSR ]
   then
-    $CAT $CA_EXAMPLE_CSR | sed "s/CA_CN/$CA_CN/g" | sed "s/CA_O/$CA_O/g" | sed "s/CA_U/$CA_U/g" | sed "s/CA_L/$CA_L/g" | sed "s/CA_ST/$CA_ST/g" | sed "s/CA_C/$CA_C/g" > $CA_CSR
+    $CAT $CA_EXAMPLE_CSR | sed "s,CA_CN,$CA_CN,g" | sed "s,CA_O,$CA_O,g" | sed "s,CA_U,$CA_U,g" | sed "s,CA_L,$CA_L,g" | sed "s,CA_ST,$CA_ST,g" | sed "s,CA_C,$CA_C,g" > $CA_CSR
   else
     echo -e "\tExample CSR File not found. Aborting!"
     exit 0;
@@ -201,7 +212,7 @@ function createIntermediate()
 
   if [ -f $ICA_EXAMPLE_CSR ]
   then
-    $CAT $ICA_EXAMPLE_CSR | sed "s/ICA_CN/$ICA_CN/g" | sed "s/CA_O/$CA_O/g" | sed "s/CA_U/$CA_U/g" | sed "s/CA_L/$CA_L/g" | sed "s/CA_ST/$CA_ST/g" | sed "s/CA_C/$CA_C/g" > $ICA_CSR
+    $CAT $ICA_EXAMPLE_CSR | sed "s,ICA_CN,$ICA_CN,g" | sed "s,CA_O,$CA_O,g" | sed "s,CA_U,$CA_U,g" | sed "s,CA_L,$CA_L,g" | sed "s,CA_ST,$CA_ST,g" | sed "s,CA_C,$CA_C,g" > $ICA_CSR
   else
     echo -e "\tExample CSR File not found. Aborting!"
     exit 0;
@@ -230,7 +241,7 @@ function createOCSP()
 
   if [ -f $OCSP_EXAMPLE_CSR ]
   then
-    $CAT $OCSP_EXAMPLE_CSR | sed "s/OCSP_CN/$OCSP_CN/g" | sed "s/CA_O/$CA_O/g" | sed "s/CA_U/$CA_U/g" | sed "s/CA_L/$CA_L/g" | sed "s/CA_ST/$CA_ST/g" | sed "s/CA_C/$CA_C/g" > $OCSP_CSR
+    $CAT $OCSP_EXAMPLE_CSR | sed "s,OCSP_CN,$OCSP_CN,g" | sed "s,CA_O,$CA_O,g" | sed "s,CA_U,$CA_U,g" | sed "s,CA_L,$CA_L,g" | sed "s,CA_ST,$CA_ST,g" | sed "s,CA_C,$CA_C,g" > $OCSP_CSR
   else
     echo -e "\tExample CSR File not found. Aborting!"
     exit 0;
@@ -251,6 +262,14 @@ function createOCSP()
   fi
 }
 
+function installsystemd()
+{
+  echo -e "\tInstalling PKI Service"
+  $CAT $PKI_EXAMPLE_SERVICE | sed "s,BASEFOLDER,$BASEFOLDER,g" | sed "s,CFSSL,$CFSSL,g" | sed "s,CFSSL_MYSQL_CONFIG,$CFSSL_MYSQL_CONFIG,g" | sed "s,ICA_FOLDER,$ICA_FOLDER,g" | sed "s,CFSSL_CA_CONFIG,$CFSSL_CA_CONFIG,g" | sed "s,OCSP_FOLDER,$OCSP_FOLDER,g" | sed "s,OCSP_FOLDER,$OCSP_FOLDER,g" > $PKI_SERVICE
+  echo -e "\tInstall OCSP Service"
+  $CAT $OCSP_EXAMPLE_SERVICE | sed "s,BASEFOLDER,$BASEFOLDER,g" | sed "s,CFSSL,$CFSSL,g" | sed "s,OCSP_DUMP,$OCSP_DUMP,g" > $OCSP_SERVICE
+}
+
 # Main Routine
 echo -e "\tkPKI Installer started"
 echo -e "\tServer Configuration"
@@ -263,9 +282,10 @@ echo -e "\tCreate intermediate CA"
 createIntermediate
 echo -e "\tCreate OCSP certificate"
 createOCSP
+echo -e "\tCreate Systemd Unit files"
+installsystemd
 # TODO:
 # Create OCSP Dump Crontab
-# Install Systemd Unit files
 # Start Systemd Services
 # Install Composer
 # Finished
