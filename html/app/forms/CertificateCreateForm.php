@@ -46,7 +46,7 @@ class CertificateCreateForm extends Form
       'data-toggle' => "tooltip",
       'data-placement' => "right",
       'title' => "Type in the organisation.",
-      'placeholder' => '420 SERVICES Ltd',
+      'placeholder' => $this->config["cfssl"]["names"]["O"],
       'required' => true
     ]);
     $this->add($o);
@@ -56,7 +56,7 @@ class CertificateCreateForm extends Form
       'data-toggle' => "tooltip",
       'data-placement' => "right",
       'title' => "Type in the organisation unit.",
-      'placeholder' => 'PKI SERVICES',
+      'placeholder' => $this->config["cfssl"]["names"]["OU"],
       'required' => true
     ]);
     $this->add($ou);
@@ -66,7 +66,7 @@ class CertificateCreateForm extends Form
       'data-toggle' => "tooltip",
       'data-placement' => "right",
       'title' => "Type in the locality.",
-      'placeholder' => 'London',
+      'placeholder' => $this->config["cfssl"]["names"]["L"],
       'required' => true
     ]);
     $this->add($l);
@@ -76,7 +76,7 @@ class CertificateCreateForm extends Form
       'data-toggle' => "tooltip",
       'data-placement' => "right",
       'title' => "Type in the state.",
-      'placeholder' => 'London',
+      'placeholder' => $this->config["cfssl"]["names"]["ST"],
       'required' => true
     ]);
     $this->add($st);

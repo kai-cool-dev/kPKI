@@ -1,4 +1,4 @@
 {
   "driver":"mysql",
-  "data_source":"MYSQLUSER:MYSQLPASS@tcp(MYSQLHOST)/MYSQLDB"
+  "data_source":"MYSQLUSER:MYSQLPASS@tcp(MYSQLHOST:MYSQLPORT)/MYSQLDB"
 }

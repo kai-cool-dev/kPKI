@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/var/www/html/htdocs/kpki/install/../
-ExecStart=/var/www/html/htdocs/kpki/install/../client/cfssl serve -db-config=/var/www/html/htdocs/kpki/install/../client/cfssl_MYSQL_CONFIG -loglevel=0 -ca-key=/var/www/html/htdocs/kpki/install/../certs/intermediate//intermediate-key.pem -ca=/var/www/html/htdocs/kpki/install/../certs/intermediate//intermediate.pem -config=/var/www/html/htdocs/kpki/install/../client/cfssl_CA_CONFIG -responder=/var/www/html/htdocs/kpki/install/../certs/ocsp//ocsp.pem -responder-key=/var/www/html/htdocs/kpki/install/../certs/ocsp//ocsp-key.pem
+WorkingDirectory=/var/www/html/htdocs/kpki/
+ExecStart=/var/www/html/htdocs/kpki//client/cfssl serve -db-config=/var/www/html/htdocs/kpki//conf/mysql.config.json -loglevel=0 -ca-key=/var/www/html/htdocs/kpki//certs/intermediate//intermediate-key.pem -ca=/var/www/html/htdocs/kpki//certs/intermediate//intermediate.pem -config=/var/www/html/htdocs/kpki//conf/ca.config.json -responder=/var/www/html/htdocs/kpki//certs/ocsp//ocsp.pem -responder-key=/var/www/html/htdocs/kpki//certs/ocsp//ocsp-key.pem
 Restart=on-abort
 
 [Install]

@@ -5,7 +5,7 @@ return new Config([
   // MySQL Configuration
   'database' => [
     'adapter' => 'Mysql',
-    'host' => 'MYSQLHOST',
+    'host' => 'MYSQLHOST:MYSQLPORT',
     'username' => 'MYSQLUSER',
     'password' => 'MYSQLPASS',
     'dbname' => 'MYSQLDB'
@@ -14,6 +14,13 @@ return new Config([
   'cfssl' => [
     "remotes" => [
       "caserver" => "PKI_URL"
+    ],
+    "names" => [
+      "C" => "CA_C",
+      "L" => "CA_L",
+      "OU" => "CA_U",
+      "O" => "CA_O",
+      "ST" => "CA_ST"
     ]
   ],
   'application' => [

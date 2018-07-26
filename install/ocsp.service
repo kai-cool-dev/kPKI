@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Type=simple
 User=root
-WorkingDirectory=BASEFOLDER/../
-ExecStart=/var/www/html/htdocs/kpki/install/../client/cfssl ocspserve -port=8889 -responses=/var/www/html/htdocs/kpki/install/../ocspdump.txt  -loglevel=0
+WorkingDirectory=/var/www/html/htdocs/kpki/
+ExecStart=/var/www/html/htdocs/kpki//client/cfssl ocspserve -port=8889 -responses=/var/www/html/htdocs/kpki//ocspdump.txt  -loglevel=0
 Restart=on-abort
 
 [Install]

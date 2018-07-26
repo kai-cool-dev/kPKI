@@ -1,4 +1,4 @@
 {
   "driver":"mysql",
-  "data_source":"cfssl:Test.1234!@tcp(localhost)/cfssl"
+  "data_source":"cfssl:Test.1234!@tcp(localhost:3306)/cfssl"
 }

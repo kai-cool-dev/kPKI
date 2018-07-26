@@ -1,19 +1,27 @@
 #!/bin/bash
 # kPKI Installer
-# TODO: Check for Empty Vars
+# Copyright 2018 Kai Pazdzewicz
+# TODO:
+# Check for Empty Vars
+# Check if needed programs are installed
 
 # Variables
-BASEFOLDER="$(pwd)"
+BASEFOLDER="$(pwd | sed 's/install//g')"
 # Needed programs
 MYSQL="$(which mysql)"
 MYSQLIMPORT="$(which mysqlimport)"
-CFSSL="$BASEFOLDER/../client/cfssl"
-CFSSLJSON="$BASEFOLDER/../client/cfssljson"
+CFSSL="$BASEFOLDER/client/cfssl"
+CFSSLJSON="$BASEFOLDER/client/cfssljson"
 CAT="$(which cat)"
 ECHO="$(which echo)"
 WHOAMI="$(which whoami)"
+CP="$(which cp)"
+SYSTEMCTL="$(which systemctl)"
+SYSTEMD_FOLDER="/etc/systemd/system/"
+CRONTAB="$(which crontab)"
+COMPOSER="$(which composer)"
 # Some Go Stuff (Required for the cfssl daemon)
-export GOROOT="$BASEFOLDER/../go/"
+export GOROOT="$BASEFOLDER/go/"
 export PATH=$PATH:$GOROOT/bin
 # Server Variables
 PKI_URL="http://localhost:8888"
@@ -23,16 +31,17 @@ MYSQLHOST="localhost"
 MYSQLUSER="root"
 MYSQLPASS=""
 MYSQLDB="cfssl"
+MYSQLPORT="3306"
 # Config Files Location
-CFSSL_MYSQL_EXAMPLE_CONFIG="$BASEFOLDER/../conf/mysql.config.example.json"
-CFSSL_MYSQL_CONFIG="$BASEFOLDER/../conf/mysql.config.json"
-CFSSL_CA_EXAMPLE_CONFIG="$BASEFOLDER/../conf/ca.config.example.json"
-CFSSL_CA_CONFIG="$BASEFOLDER/../conf/ca.config.json"
-CFSSL_CLIENT_EXAMPLE_CONFIG="$BASEFOLDER/../conf/client.config.example.json"
-CFSSL_CLIENT_CONFIG="$BASEFOLDER/../conf/client.config.json"
-HTML_MYSQL_EXAMPLE_CONFIG="$BASEFOLDER/../html/app/config/config.php.sample"
-HTML_MYSQL_CONFIG="$BASEFOLDER/../html/app/config/config.php"
-HTML_MYSQL_SCHEMA="$BASEFOLDER/../html/schemas/kPKI.schema.sql"
+CFSSL_MYSQL_EXAMPLE_CONFIG="$BASEFOLDER/conf/mysql.config.example.json"
+CFSSL_MYSQL_CONFIG="$BASEFOLDER/conf/mysql.config.json"
+CFSSL_CA_EXAMPLE_CONFIG="$BASEFOLDER/conf/ca.config.example.json"
+CFSSL_CA_CONFIG="$BASEFOLDER/conf/ca.config.json"
+CFSSL_CLIENT_EXAMPLE_CONFIG="$BASEFOLDER/conf/client.config.example.json"
+CFSSL_CLIENT_CONFIG="$BASEFOLDER/conf/client.config.json"
+HTML_MYSQL_EXAMPLE_CONFIG="$BASEFOLDER/html/app/config/config.php.sample"
+HTML_MYSQL_CONFIG="$BASEFOLDER/html/app/config/config.php"
+HTML_MYSQL_SCHEMA="$BASEFOLDER/html/schemas/kPKI.schema.sql"
 
 ## Main CA
 # CA Variables
@@ -43,30 +52,30 @@ CA_ST="London"
 CA_C="UK"
 CA_L="London"
 # CA CSR Files Location
-CA_FOLDER="$BASEFOLDER/../certs/ca/"
+CA_FOLDER="$BASEFOLDER/certs/ca/"
 CA_EXAMPLE_CSR="$CA_FOLDER/ca.csr.example.json"
 CA_CSR="$CA_FOLDER/ca.csr.json"
 
 ## Intermediate CA for signing certificates
 # CSR Files Location
-ICA_FOLDER="$BASEFOLDER/../certs/intermediate/"
+ICA_FOLDER="$BASEFOLDER/certs/intermediate/"
 ICA_EXAMPLE_CSR="$ICA_FOLDER/intermediate.csr.example.json"
 ICA_CSR="$ICA_FOLDER/intermediate.csr.json"
 
 ## OCSP Certificate for signing ocsp responses
 # CSR Files Location
-OCSP_FOLDER="$BASEFOLDER/../certs/ocsp/"
+OCSP_FOLDER="$BASEFOLDER/certs/ocsp/"
 OCSP_EXAMPLE_CSR="$OCSP_FOLDER/ocsp.csr.example.json"
 OCSP_CSR="$OCSP_FOLDER/ocsp.csr.json"
 
 # OCSP Dump
-OCSP_DUMP="$BASEFOLDER/../ocspdump.txt"
+OCSP_DUMP="$BASEFOLDER/ocspdump.txt"
 
 ## Systemd Configuration
-PKI_EXAMPLE_SERVICE="$BASEFOLDER/../install/pki.example.service"
-PKI_SERVICE="$BASEFOLDER/../install/pki.service"
-OCSP_EXAMPLE_SERVICE="$BASEFOLDER/../install/ocsp.example.service"
-OCSP_SERVICE="$BASEFOLDER/../install/ocsp.service"
+PKI_EXAMPLE_SERVICE="$BASEFOLDER/install/pki.example.service"
+PKI_SERVICE="$BASEFOLDER/install/pki.service"
+OCSP_EXAMPLE_SERVICE="$BASEFOLDER/install/ocsp.example.service"
+OCSP_SERVICE="$BASEFOLDER/install/ocsp.service"
 
 # Functions
 function checkroot()
@@ -98,6 +107,10 @@ function addmysql()
   read MYSQLHOST
   $ECHO -e "\tWe are using '$MYSQLHOST' as the MySQL Hostname"
 
+  $ECHO -e "-->\tPlease Type in the MySQL Port:"
+  read MYSQLPORT
+  $ECHO -e "\tWe are using '$MYSQLPORT' as the MySQL Hostname"
+
   $ECHO -e "-->\tPlease Type in the MySQL Username:"
   read MYSQLUSER
   $ECHO -e "\tWe are using '$MYSQLUSER' as the MySQL Username"
@@ -111,7 +124,7 @@ function addmysql()
   $ECHO -e "\tWe are using '$MYSQLDB' as the MySQL Database"
 
   $ECHO -e "\tTrying to establish a MySQL Connection"
-  if $($MYSQL -B -u $MYSQLUSER -p$MYSQLPASS -h $MYSQLHOST $MYSQLDB -e QUIT)
+  if $($MYSQL -B -u $MYSQLUSER -p$MYSQLPASS -h $MYSQLHOST $MYSQLDB -P $MYSQLPORT -e QUIT)
   then
     $ECHO -e "\tMySQL Connection is working"
   else
@@ -123,7 +136,7 @@ function addmysql()
 
   if [ -f $CFSSL_MYSQL_EXAMPLE_CONFIG ]
   then
-     $CAT $CFSSL_MYSQL_EXAMPLE_CONFIG | sed "s,MYSQLHOST,$MYSQLHOST,g" | sed "s,MYSQLUSER,$MYSQLUSER,g" | sed "s,MYSQLPASS,$MYSQLPASS,g" | sed "s,MYSQLDB,$MYSQLDB,g" > $CFSSL_MYSQL_CONFIG
+     $CAT $CFSSL_MYSQL_EXAMPLE_CONFIG | sed "s,MYSQLHOST,$MYSQLHOST,g" | sed "s,MYSQLPORT,$MYSQLPORT,g" | sed "s,MYSQLHOST,$MYSQLHOST,g" | sed "s,MYSQLUSER,$MYSQLUSER,g" | sed "s,MYSQLPASS,$MYSQLPASS,g" | sed "s,MYSQLDB,$MYSQLDB,g" > $CFSSL_MYSQL_CONFIG
   else
     $ECHO -e "[-]\tDaemon MySQL Example Config not found. Aborting."
     exit 0;
@@ -131,7 +144,7 @@ function addmysql()
 
   if [ -f $HTML_MYSQL_EXAMPLE_CONFIG ]
   then
-     $CAT $HTML_MYSQL_EXAMPLE_CONFIG | sed "s,PKI_URL,$PKI_URL,g" | sed "s,MYSQLHOST,$MYSQLHOST,g" | sed "s,MYSQLUSER,$MYSQLUSER,g" | sed "s,MYSQLPASS,$MYSQLPASS,g" | sed "s,MYSQLDB,$MYSQLDB,g" > $HTML_MYSQL_CONFIG
+     $CAT $HTML_MYSQL_EXAMPLE_CONFIG | sed "s,CA_CN,$CA_CN,g" | sed "s,CA_O,$CA_O,g" | sed "s,CA_U,$CA_U,g" | sed "s,CA_L,$CA_L,g" | sed "s,CA_ST,$CA_ST,g" | sed "s,CA_C,$CA_C,g" | sed "s,PKI_URL,$PKI_URL,g" | sed "s,MYSQLHOST,$MYSQLHOST,g"  | sed "s,MYSQLPORT,$MYSQLPORT,g" | sed "s,MYSQLUSER,$MYSQLUSER,g" | sed "s,MYSQLPASS,$MYSQLPASS,g" | sed "s,MYSQLDB,$MYSQLDB,g" > $HTML_MYSQL_CONFIG
   else
     $ECHO -e "[-]\tGUI MySQL Example Config not found. Aborting!"
     exit 0;
@@ -168,12 +181,8 @@ function addmysql()
   fi
 }
 
-function createCA()
+function cadetails()
 {
-  $ECHO -e "-->\tPlease Type in the Name of your CA:"
-  read CA_CN
-  $ECHO -e "\tWe are using '$CA_CN' as the name of your CA"
-
   $ECHO -e "-->\tPlease Type in the Organisation:"
   read CA_O
   $ECHO -e "\tWe are using '$CA_O' as Organisation"
@@ -193,6 +202,13 @@ function createCA()
   $ECHO -e "-->\tPlease Type in the Country of your Organisation:"
   read CA_C
   $ECHO -e "\tWe are using '$CA_C' as Country"
+}
+
+function createCA()
+{
+  $ECHO -e "-->\tPlease Type in the Name of your CA:"
+  read CA_CN
+  $ECHO -e "\tWe are using '$CA_CN' as the name of your CA"
 
   if [ -f $CA_EXAMPLE_CSR ]
   then
@@ -280,9 +296,25 @@ function installsystemd()
   $ECHO -e "\tInstalling PKI Service"
   if [ -f $PKI_EXAMPLE_SERVICE ]
   then
-    $CAT $PKI_EXAMPLE_SERVICE | sed "s,BASEFOLDER,$BASEFOLDER,g" | sed "s,CFSSL,$CFSSL,g" | sed "s,CFSSL_MYSQL_CONFIG,$CFSSL_MYSQL_CONFIG,g" | sed "s,ICA_FOLDER,$ICA_FOLDER,g" | sed "s,CFSSL_CA_CONFIG,$CFSSL_CA_CONFIG,g" | sed "s,OCSP_FOLDER,$OCSP_FOLDER,g" | sed "s,OCSP_FOLDER,$OCSP_FOLDER,g" > $PKI_SERVICE
+    $CAT $PKI_EXAMPLE_SERVICE | sed "s,BASEFOLDER,$BASEFOLDER,g" | sed "s,CFSSL_MYSQL_CONFIG,$CFSSL_MYSQL_CONFIG,g" | sed "s,CFSSL_CA_CONFIG,$CFSSL_CA_CONFIG,g" | sed "s,CFSSL,$CFSSL,g" | sed "s,ICA_FOLDER,$ICA_FOLDER,g" | sed "s,OCSP_FOLDER,$OCSP_FOLDER,g" | sed "s,OCSP_FOLDER,$OCSP_FOLDER,g" > $PKI_SERVICE
   else
     $ECHO -e "[-]\tExample PKI Systemd Service not found"
+    exit 0;
+  fi
+  if [ -f $PKI_SERVICE ]
+  then
+    $CP $PKI_SERVICE $SYSTEMD_FOLDER/pki.service
+    $SYSTEMCTL enable $SYSTEMD_FOLDER/pki.service
+  else
+    $ECHO -e "[-]\tPKI Systemd Service not found"
+    exit 0;
+  fi
+  $ECHO -e "\tStart PKI Service"
+  if $($SYSTEMCTL start pki.service)
+  then
+    $ECHO -e "[+]\tPKI Service started."
+  else
+    $ECHO -e "[-]\tPKI Service could not started. Aborting."
     exit 0;
   fi
   $ECHO -e "\tInstall OCSP Service"
@@ -293,6 +325,52 @@ function installsystemd()
     $ECHO -e "[-]\tExample OCSP Systemd Service not found"
     exit 0;
   fi
+  if [ -f $OCSP_SERVICE ]
+  then
+    $CP $OCSP_SERVICE $SYSTEMD_FOLDER/ocsp.service
+    $SYSTEMCTL enable $SYSTEMD_FOLDER/ocsp.service
+  else
+    $ECHO -e "[-]\OCSP Systemd Service not found"
+    exit 0;
+  fi
+  if $($SYSTEMCTL start ocsp.service)
+  then
+    $ECHO -e "[+]\tOCSP Service started."
+  else
+    $ECHO -e "[-]\tOCSP Service could not started. Aborting."
+    exit 0;
+  fi
+}
+
+function dumpocsp()
+{
+  $ECHO -e "\tCreate OCSP Dump"
+  if $($CFSSL ocspdump -db-config $CFSSL_MYSQL_CONFIG > $OCSP_DUMP)
+  then
+    $ECHO -e "[+]\tOCSP dump created"
+  else
+    $ECHO -e "[-]\tOCSP dump not created. Aborting."
+    exit 0;
+  fi
+  $ECHO -e "\tCreate Cronjob"
+  if $(($CRONTAB -l ; $ECHO "0 0 */5 * * $CFSSL ocspdump -db-config $CFSSL_MYSQL_CONFIG > $OCSP_DUMP") | $CRONTAB -)
+  then
+    $ECHO -e "[+]\tCronjob installed"
+  else
+    $ECHO -e "[-]\tCronjob not installed. Aborting."
+    exit 0;
+  fi
+}
+
+function installcomposer()
+{
+  if $($COMPOSER --working-dir=$BASEFOLDER/html/ -n install)
+  then
+    $ECHO -e "[+]\tDependencies installed"
+  else
+    $ECHO -e "[-]\tDependencies not installed. Aborting."
+    exit 0;
+  fi
 }
 
 # Main Routine
@@ -301,6 +379,8 @@ $ECHO -e "\tCheck root privileges."
 checkroot
 $ECHO -e "\tServer Configuration"
 serverconfig
+$ECHO -e "\tOrganisation Details"
+cadetails
 $ECHO -e "\tMySQL Configuration"
 addmysql
 $ECHO -e "\tCreate root CA"
@@ -309,10 +389,12 @@ $ECHO -e "\tCreate intermediate CA"
 createIntermediate
 $ECHO -e "\tCreate OCSP certificate"
 createOCSP
-$ECHO -e "\tCreate Systemd Unit files"
+$ECHO -e "\tDump OCSP responses and create OCSP dump crontab"
+dumpocsp
+$ECHO -e "\tCreate Systemd Unit files and start services"
 installsystemd
+$ECHO -e "\tInstall dependencies for web GUI"
+installcomposer
 # TODO:
-# Create OCSP Dump Crontab
-# Start Systemd Services
 # Install Composer
 # Finished
