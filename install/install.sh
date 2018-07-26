@@ -1,9 +1,6 @@
 #!/bin/bash
 # kPKI Installer
 # Copyright 2018 Kai Pazdzewicz
-# TODO:
-# Check for Empty Vars
-# Check if needed programs are installed
 
 # Variables
 BASEFOLDER="$(pwd | sed 's/install//g')"
@@ -148,9 +145,19 @@ function serverconfig()
   $ECHO -e "\tIt is recommend to use a reverse Proxy."
   $ECHO -e "-->\tPlease Type in the public Hostname/IP for the PKI Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8888]:"
   read PKI_URL
+  if [ -z $PKI_URL ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$PKI_URL'"
   $ECHO -e "-->\tPlease Type in the public Hostname/IP for the OCSP Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8889]:"
   read OCSP_URL
+  if [ -z $OCSP_URL ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$OCSP_URL'"
 }
 
@@ -158,22 +165,47 @@ function addmysql()
 {
   $ECHO -e "-->\tPlease Type in the MySQL Host:"
   read MYSQLHOST
+  if [ -z $MYSQLHOST ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$MYSQLHOST' as the MySQL Hostname"
 
   $ECHO -e "-->\tPlease Type in the MySQL Port:"
   read MYSQLPORT
+  if [ -z $MYSQLPORT ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$MYSQLPORT' as the MySQL Hostname"
 
   $ECHO -e "-->\tPlease Type in the MySQL Username:"
   read MYSQLUSER
+  if [ -z $MYSQLUSER ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$MYSQLUSER' as the MySQL Username"
 
   $ECHO -e "-->\tPlease Type in the MySQL Password:"
   read MYSQLPASS
+  if [ -z $MYSQLPASS ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$MYSQLPASS' as the MySQL Password"
 
   $ECHO -e "-->\tPlease Type in the MySQL Database:"
   read MYSQLDB
+  if [ -z $MYSQLDB ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$MYSQLDB' as the MySQL Database"
 
   $ECHO -e "\tTrying to establish a MySQL Connection"
@@ -238,22 +270,47 @@ function cadetails()
 {
   $ECHO -e "-->\tPlease Type in the Organisation:"
   read CA_O
+  if [ -z $CA_O ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$CA_O' as Organisation"
 
   $ECHO -e "-->\tPlease Type in the Organisation Unit:"
   read CA_U
+  if [ -z $CA_U ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$CA_U' as Organisation Unit"
 
   $ECHO -e "-->\tPlease Type in the Locality of your Organisation:"
   read CA_L
+  if [ -z $CA_L ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$CA_L' as Locality"
 
   $ECHO -e "-->\tPlease Type in the State of your Organisation:"
   read CA_ST
+  if [ -z $CA_ST ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$CA_ST' as State"
 
   $ECHO -e "-->\tPlease Type in the Country of your Organisation:"
   read CA_C
+  if [ -z $CA_C ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$CA_C' as Country"
 }
 
@@ -261,6 +318,11 @@ function createCA()
 {
   $ECHO -e "-->\tPlease Type in the Name of your CA:"
   read CA_CN
+  if [ -z $CA_CN ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$CA_CN' as the name of your CA"
 
   if [ -f $CA_EXAMPLE_CSR ]
@@ -290,6 +352,11 @@ function createIntermediate()
 {
   $ECHO -e "-->\tPlease Type in the Name of your Intermediate CA:"
   read ICA_CN
+  if [ -z $ICA_CN ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$ICA_CN' as the name of your Intermediate CA"
 
   if [ -f $ICA_EXAMPLE_CSR ]
@@ -319,6 +386,11 @@ function createOCSP()
 {
   $ECHO -e "-->\tPlease Type in the Name of your OCSP Server:"
   read OCSP_CN
+  if [ -z $OCSP_CN ]
+  then
+    $ECHO -e "[-]\tVariable is empty."
+    exit 0;
+  fi
   $ECHO -e "\tWe are using '$OCSP_CN' as the name of your OCSP Server"
 
   if [ -f $OCSP_EXAMPLE_CSR ]
