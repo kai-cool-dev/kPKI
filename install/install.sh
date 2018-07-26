@@ -9,7 +9,6 @@
 BASEFOLDER="$(pwd | sed 's/install//g')"
 # Needed programs
 MYSQL="$(which mysql)"
-MYSQLIMPORT="$(which mysqlimport)"
 CFSSL="$BASEFOLDER/client/cfssl"
 CFSSLJSON="$BASEFOLDER/client/cfssljson"
 CAT="$(which cat)"
@@ -78,6 +77,60 @@ OCSP_EXAMPLE_SERVICE="$BASEFOLDER/install/ocsp.example.service"
 OCSP_SERVICE="$BASEFOLDER/install/ocsp.service"
 
 # Functions
+function checktools()
+{
+  if [ -z $MYSQL ]
+  then
+    $ECHO -e "[-]\tMYSQL Client not installed"
+    exit 0;
+  fi
+  if [ -z $COMPOSER ]
+  then
+    $ECHO -e "[-]\tcomposer not installed"
+    exit 0;
+  fi
+  if [ -z $CFSSL ]
+  then
+    $ECHO -e "[-]\tcfssl in client folder not found"
+    exit 0;
+  fi
+  if [ -z $CFSSLJSON ]
+  then
+    $ECHO -e "[-]\tcfssl in client folder not found"
+    exit 0;
+  fi
+  if [ -z $ECHO ]
+  then
+    $ECHO -e "[-]\techo not found"
+    exit 0;
+  fi
+  if [ -z $CAT ]
+  then
+    $ECHO -e "[-]\tcat not found"
+    exit 0;
+  fi
+  if [ -z $CP ]
+  then
+    $ECHO -e "[-]\tcp not found"
+    exit 0;
+  fi
+  if [ -z $WHOAMI ]
+  then
+    $ECHO -e "[-]\twhoami not found"
+    exit 0;
+  fi
+  if [ -z $SYSTEMCTL ]
+  then
+    $ECHO -e "[-]\tsystemctl not found"
+    exit 0;
+  fi
+  if [ -z $CRONTAB ]
+  then
+    $ECHO -e "[-]\tcrontab not found"
+    exit 0;
+  fi
+}
+
 function checkroot()
 {
   if [[ $($WHOAMI) == "root" ]]
@@ -375,6 +428,8 @@ function installcomposer()
 
 # Main Routine
 $ECHO -e "\tkPKI Installer started"
+$ECHO -e "\tCheck tools / needed programs"
+checktools
 $ECHO -e "\tCheck root privileges."
 checkroot
 $ECHO -e "\tServer Configuration"
@@ -395,6 +450,3 @@ $ECHO -e "\tCreate Systemd Unit files and start services"
 installsystemd
 $ECHO -e "\tInstall dependencies for web GUI"
 installcomposer
-# TODO:
-# Install Composer
-# Finished
