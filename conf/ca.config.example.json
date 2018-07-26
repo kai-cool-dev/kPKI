@@ -10,8 +10,7 @@
       [
         "signing",
         "key encipherment",
-        "client auth",
-        "digital signature"
+        "client auth"
        ]
      },
      "profiles":

@@ -270,7 +270,7 @@ function cadetails()
 {
   $ECHO -e "-->\tPlease Type in the Organisation:"
   read CA_O
-  if [ -z $CA_O ]
+  if [ -z "$CA_O" ]
   then
     $ECHO -e "[-]\tVariable is empty."
     exit 0;
@@ -279,7 +279,7 @@ function cadetails()
 
   $ECHO -e "-->\tPlease Type in the Organisation Unit:"
   read CA_U
-  if [ -z $CA_U ]
+  if [ -z "$CA_U" ]
   then
     $ECHO -e "[-]\tVariable is empty."
     exit 0;
@@ -288,7 +288,7 @@ function cadetails()
 
   $ECHO -e "-->\tPlease Type in the Locality of your Organisation:"
   read CA_L
-  if [ -z $CA_L ]
+  if [ -z "$CA_L" ]
   then
     $ECHO -e "[-]\tVariable is empty."
     exit 0;
@@ -297,7 +297,7 @@ function cadetails()
 
   $ECHO -e "-->\tPlease Type in the State of your Organisation:"
   read CA_ST
-  if [ -z $CA_ST ]
+  if [ -z "$CA_ST" ]
   then
     $ECHO -e "[-]\tVariable is empty."
     exit 0;
@@ -306,7 +306,7 @@ function cadetails()
 
   $ECHO -e "-->\tPlease Type in the Country of your Organisation:"
   read CA_C
-  if [ -z $CA_C ]
+  if [ -z "$CA_C" ]
   then
     $ECHO -e "[-]\tVariable is empty."
     exit 0;
@@ -318,7 +318,7 @@ function createCA()
 {
   $ECHO -e "-->\tPlease Type in the Name of your CA:"
   read CA_CN
-  if [ -z $CA_CN ]
+  if [ -z "$CA_CN" ]
   then
     $ECHO -e "[-]\tVariable is empty."
     exit 0;
@@ -352,7 +352,7 @@ function createIntermediate()
 {
   $ECHO -e "-->\tPlease Type in the Name of your Intermediate CA:"
   read ICA_CN
-  if [ -z $ICA_CN ]
+  if [ -z "$ICA_CN" ]
   then
     $ECHO -e "[-]\tVariable is empty."
     exit 0;
@@ -386,7 +386,7 @@ function createOCSP()
 {
   $ECHO -e "-->\tPlease Type in the Name of your OCSP Server:"
   read OCSP_CN
-  if [ -z $OCSP_CN ]
+  if [ -z "$OCSP_CN" ]
   then
     $ECHO -e "[-]\tVariable is empty."
     exit 0;

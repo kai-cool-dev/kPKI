@@ -70,7 +70,7 @@ class CertificateController extends ControllerBase
         ]);
       }
       else {
-        $this->flash->error($resp["errors"]);
+        $this->flash->error($resp["errors"][0]["message"]);
       }
     }
     $this->view->form = new CertificateCreateForm();

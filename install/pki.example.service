@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=BASEFOLDER
-ExecStart=CFSSL serve -db-config=CFSSL_MYSQL_CONFIG -loglevel=0 -ca-key=ICA_FOLDER/intermediate-key.pem -ca=ICA_FOLDER/intermediate.pem -config=CFSSL_CA_CONFIG -responder=OCSP_FOLDER/ocsp.pem -responder-key=OCSP_FOLDER/ocsp-key.pem
+ExecStart=CFSSL serve -db-config=CFSSL_MYSQL_CONFIG -loglevel=0 -port=8888 -ca-key=ICA_FOLDER/intermediate-key.pem -ca=ICA_FOLDER/intermediate.pem -config=CFSSL_CA_CONFIG -responder=OCSP_FOLDER/ocsp.pem -responder-key=OCSP_FOLDER/ocsp-key.pem
 Restart=on-abort
 
 [Install]

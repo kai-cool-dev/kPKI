@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=/var/www/html/htdocs/kpki/
-ExecStart=/var/www/html/htdocs/kpki//client/cfssl serve -db-config=/var/www/html/htdocs/kpki//conf/mysql.config.json -loglevel=0 -ca-key=/var/www/html/htdocs/kpki//certs/intermediate//intermediate-key.pem -ca=/var/www/html/htdocs/kpki//certs/intermediate//intermediate.pem -config=/var/www/html/htdocs/kpki//conf/ca.config.json -responder=/var/www/html/htdocs/kpki//certs/ocsp//ocsp.pem -responder-key=/var/www/html/htdocs/kpki//certs/ocsp//ocsp-key.pem
+ExecStart=/var/www/html/htdocs/kpki//client/cfssl serve -db-config=/var/www/html/htdocs/kpki//conf/mysql.config.json -loglevel=0 -port=8888 -ca-key=/var/www/html/htdocs/kpki//certs/intermediate//intermediate-key.pem -ca=/var/www/html/htdocs/kpki//certs/intermediate//intermediate.pem -config=/var/www/html/htdocs/kpki//conf/ca.config.json -responder=/var/www/html/htdocs/kpki//certs/ocsp//ocsp.pem -responder-key=/var/www/html/htdocs/kpki//certs/ocsp//ocsp-key.pem
 Restart=on-abort
 
 [Install]
