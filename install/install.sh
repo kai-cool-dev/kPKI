@@ -34,7 +34,7 @@ CFSSL_MYSQL_CONFIG="$BASEFOLDER/conf/mysql.config.json"
 CFSSL_CA_EXAMPLE_CONFIG="$BASEFOLDER/conf/ca.config.example.json"
 CFSSL_CA_CONFIG="$BASEFOLDER/conf/ca.config.json"
 CFSSL_CLIENT_EXAMPLE_CONFIG="$BASEFOLDER/conf/client.config.example.json"
-CFSSL_CLIENT_CONFIG="$BASEFOLDER/conf/client.config.json"
+CFSSL_CLIENT_CONFIG="$BASEFOLDER/client/client.config.json"
 HTML_MYSQL_EXAMPLE_CONFIG="$BASEFOLDER/html/app/config/config.php.sample"
 HTML_MYSQL_CONFIG="$BASEFOLDER/html/app/config/config.php"
 HTML_MYSQL_SCHEMA="$BASEFOLDER/html/schemas/kPKI.schema.sql"
@@ -143,7 +143,7 @@ function serverconfig()
 {
   $ECHO -e "\tThis is the configuration for the PKI and OCSP Responder. The Services are always launched on Port 8888 and 8889 but here you can type in the public URL."
   $ECHO -e "\tIt is recommend to use a reverse Proxy."
-  $ECHO -e "\e[33m-->\tPlease Type in the public Hostname/IP for the PKI Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8888]:"
+  $ECHO -e "\e[33m-->\tPlease type in the public Hostname/IP for the PKI Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8888]:"
   read PKI_URL
   if [ -z $PKI_URL ]
   then
@@ -151,7 +151,7 @@ function serverconfig()
     exit 0;
   fi
   $ECHO -e "\e[32m[+]\tWe are using '$PKI_URL'\e[0m"
-  $ECHO -e "\e[33m-->\tPlease Type in the public Hostname/IP for the OCSP Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8889]:"
+  $ECHO -e "\e[33m-->\tPlease type in the public Hostname/IP for the OCSP Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8889]:"
   read OCSP_URL
   if [ -z $OCSP_URL ]
   then
@@ -163,7 +163,7 @@ function serverconfig()
 
 function addmysql()
 {
-  $ECHO -e "\e[33m-->\tPlease Type in the MySQL Host:\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the MySQL Host:\e[0m"
   read MYSQLHOST
   if [ -z $MYSQLHOST ]
   then
@@ -172,7 +172,7 @@ function addmysql()
   fi
   $ECHO -e "\e[32m[+]\tWe are using '$MYSQLHOST' as the MySQL Hostname\e[0m"
 
-  $ECHO -e "\e[33m-->\tPlease Type in the MySQL Port:\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the MySQL Port:\e[0m"
   read MYSQLPORT
   if [ -z $MYSQLPORT ]
   then
@@ -181,7 +181,7 @@ function addmysql()
   fi
   $ECHO -e "\e[32m[+]\tWe are using '$MYSQLPORT' as the MySQL Hostname\e[0m"
 
-  $ECHO -e "\e[33m-->\tPlease Type in the MySQL Username:\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the MySQL Username:\e[0m"
   read MYSQLUSER
   if [ -z $MYSQLUSER ]
   then
@@ -190,7 +190,7 @@ function addmysql()
   fi
   $ECHO -e "\e[32m[+]\tWe are using '$MYSQLUSER' as the MySQL Username\e[0m"
 
-  $ECHO -e "\e[33m-->\tPlease Type in the MySQL Password:\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the MySQL Password:\e[0m"
   read MYSQLPASS
   if [ -z $MYSQLPASS ]
   then
@@ -199,7 +199,7 @@ function addmysql()
   fi
   $ECHO -e "\e[32m[+]\tWe are using '$MYSQLPASS' as the MySQL Password\e[0m"
 
-  $ECHO -e "\e[33m-->\tPlease Type in the MySQL Database:\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the MySQL Database:\e[0m"
   read MYSQLDB
   if [ -z $MYSQLDB ]
   then
@@ -269,7 +269,7 @@ function addmysql()
 
 function cadetails()
 {
-  $ECHO -e "\e[33m-->\tPlease Type in the Organisation:\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the Organisation:\e[0m"
   read CA_O
   if [ -z "$CA_O" ]
   then
@@ -278,7 +278,7 @@ function cadetails()
   fi
   $ECHO -e "\e[32m[+]\tWe are using '$CA_O' as Organisation\e[0m"
 
-  $ECHO -e "\e[33m-->\tPlease Type in the Organisation Unit:\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the Organisation Unit:\e[0m"
   read CA_U
   if [ -z "$CA_U" ]
   then
@@ -287,7 +287,7 @@ function cadetails()
   fi
   $ECHO -e "\e[32m[+]\tWe are using '$CA_U' as Organisation Unit\e[0m"
 
-  $ECHO -e "\e[33m-->\tPlease Type in the Locality of your Organisation:\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the Locality of your Organisation:\e[0m"
   read CA_L
   if [ -z "$CA_L" ]
   then
@@ -296,7 +296,7 @@ function cadetails()
   fi
   $ECHO -e "\e[32m[+]\tWe are using '$CA_L' as Locality\e[0m"
 
-  $ECHO -e "\e[33m-->\tPlease Type in the State of your Organisation:\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the State of your Organisation:\e[0m"
   read CA_ST
   if [ -z "$CA_ST" ]
   then
@@ -305,7 +305,7 @@ function cadetails()
   fi
   $ECHO -e "\e[32m[+]\tWe are using '$CA_ST' as State\e[0m"
 
-  $ECHO -e "\e[33m-->\tPlease Type in the Country of your Organisation:\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the Country of your Organisation:\e[0m"
   read CA_C
   if [ -z "$CA_C" ]
   then
@@ -317,7 +317,7 @@ function cadetails()
 
 function createCA()
 {
-  $ECHO -e "\e[33m-->\tPlease Type in the Name of your CA:\e[0m\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the Name of your CA:\e[0m\e[0m"
   read CA_CN
   if [ -z "$CA_CN" ]
   then
@@ -351,7 +351,7 @@ function createCA()
 
 function createIntermediate()
 {
-  $ECHO -e "\e[33m-->\tPlease Type in the Name of your Intermediate CA:\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the Name of your Intermediate CA:\e[0m"
   read ICA_CN
   if [ -z "$ICA_CN" ]
   then
@@ -385,7 +385,7 @@ function createIntermediate()
 
 function createOCSP()
 {
-  $ECHO -e "\e[33m-->\tPlease Type in the Name of your OCSP Server:\e[0m"
+  $ECHO -e "\e[33m-->\tPlease type in the Name of your OCSP Server:\e[0m"
   read OCSP_CN
   if [ -z "$OCSP_CN" ]
   then

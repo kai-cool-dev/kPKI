@@ -1,0 +1,19 @@
+{
+  "CN": "CERT_CN",
+  "hosts": [
+    CERT_HOSTS
+  ],
+  "key": {
+    "algo": "rsa",
+    "size": 4096
+  },
+  "names": [
+    {
+      "C": "CERT_C",
+      "L": "CERT_L",
+      "OU": "CERT_U",
+      "O": "CERT_O",
+      "ST": "CERT_ST"
+    }
+  ]
+}
