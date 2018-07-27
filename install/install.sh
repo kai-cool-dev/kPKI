@@ -78,52 +78,52 @@ function checktools()
 {
   if [ -z $MYSQL ]
   then
-    $ECHO -e "[-]\tMYSQL Client not installed"
+    $ECHO -e "\e[31m[-]\tMYSQL Client not installed. Aborting\e[0m\e[0m"
     exit 0;
   fi
   if [ -z $COMPOSER ]
   then
-    $ECHO -e "[-]\tcomposer not installed"
+    $ECHO -e "\e[31m[-]\tcomposer not installed"
     exit 0;
   fi
   if [ -z $CFSSL ]
   then
-    $ECHO -e "[-]\tcfssl in client folder not found"
+    $ECHO -e "\e[31m[-]\tcfssl in client folder not found"
     exit 0;
   fi
   if [ -z $CFSSLJSON ]
   then
-    $ECHO -e "[-]\tcfssl in client folder not found"
+    $ECHO -e "\e[31m[-]\tcfssl in client folder not found"
     exit 0;
   fi
   if [ -z $ECHO ]
   then
-    $ECHO -e "[-]\techo not found"
+    $ECHO -e "\e[31m[-]\techo not found"
     exit 0;
   fi
   if [ -z $CAT ]
   then
-    $ECHO -e "[-]\tcat not found"
+    $ECHO -e "\e[31m[-]\tcat not found"
     exit 0;
   fi
   if [ -z $CP ]
   then
-    $ECHO -e "[-]\tcp not found"
+    $ECHO -e "\e[31m[-]\tcp not found"
     exit 0;
   fi
   if [ -z $WHOAMI ]
   then
-    $ECHO -e "[-]\twhoami not found"
+    $ECHO -e "\e[31m[-]\twhoami not found"
     exit 0;
   fi
   if [ -z $SYSTEMCTL ]
   then
-    $ECHO -e "[-]\tsystemctl not found"
+    $ECHO -e "\e[31m[-]\tsystemctl not found"
     exit 0;
   fi
   if [ -z $CRONTAB ]
   then
-    $ECHO -e "[-]\tcrontab not found"
+    $ECHO -e "\e[31m[-]\tcrontab not found"
     exit 0;
   fi
 }
@@ -132,9 +132,9 @@ function checkroot()
 {
   if [[ $($WHOAMI) == "root" ]]
   then
-    $ECHO -e "[+]\tOkay, you are running as root"
+    $ECHO -e "\e[32m[+]\tOkay, you are running as root.\e[0m"
   else
-    $ECHO -e "[-]\tYou are not root, please run this script as root or sudo"
+    $ECHO -e "\e[31m[-]\tYou are not root, please run this script as root or sudo. Aborting!\e[0m"
     exit 0;
   fi
 }
@@ -143,77 +143,77 @@ function serverconfig()
 {
   $ECHO -e "\tThis is the configuration for the PKI and OCSP Responder. The Services are always launched on Port 8888 and 8889 but here you can type in the public URL."
   $ECHO -e "\tIt is recommend to use a reverse Proxy."
-  $ECHO -e "-->\tPlease Type in the public Hostname/IP for the PKI Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8888]:"
+  $ECHO -e "\e[33m-->\tPlease Type in the public Hostname/IP for the PKI Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8888]:"
   read PKI_URL
   if [ -z $PKI_URL ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty."
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$PKI_URL'"
-  $ECHO -e "-->\tPlease Type in the public Hostname/IP for the OCSP Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8889]:"
+  $ECHO -e "\e[32m[+]\tWe are using '$PKI_URL'\e[0m"
+  $ECHO -e "\e[33m-->\tPlease Type in the public Hostname/IP for the OCSP Daemon (please add HTTP(S) Prefix and Port suffix) [Default: http://localhost:8889]:"
   read OCSP_URL
   if [ -z $OCSP_URL ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty."
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$OCSP_URL'"
+  $ECHO -e "\e[32m[+]\tWe are using '$OCSP_URL'\e[0m"
 }
 
 function addmysql()
 {
-  $ECHO -e "-->\tPlease Type in the MySQL Host:"
+  $ECHO -e "\e[33m-->\tPlease Type in the MySQL Host:\e[0m"
   read MYSQLHOST
   if [ -z $MYSQLHOST ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty."
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$MYSQLHOST' as the MySQL Hostname"
+  $ECHO -e "\e[32m[+]\tWe are using '$MYSQLHOST' as the MySQL Hostname\e[0m"
 
-  $ECHO -e "-->\tPlease Type in the MySQL Port:"
+  $ECHO -e "\e[33m-->\tPlease Type in the MySQL Port:\e[0m"
   read MYSQLPORT
   if [ -z $MYSQLPORT ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty."
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$MYSQLPORT' as the MySQL Hostname"
+  $ECHO -e "\e[32m[+]\tWe are using '$MYSQLPORT' as the MySQL Hostname\e[0m"
 
-  $ECHO -e "-->\tPlease Type in the MySQL Username:"
+  $ECHO -e "\e[33m-->\tPlease Type in the MySQL Username:\e[0m"
   read MYSQLUSER
   if [ -z $MYSQLUSER ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty."
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$MYSQLUSER' as the MySQL Username"
+  $ECHO -e "\e[32m[+]\tWe are using '$MYSQLUSER' as the MySQL Username\e[0m"
 
-  $ECHO -e "-->\tPlease Type in the MySQL Password:"
+  $ECHO -e "\e[33m-->\tPlease Type in the MySQL Password:\e[0m"
   read MYSQLPASS
   if [ -z $MYSQLPASS ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty."
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$MYSQLPASS' as the MySQL Password"
+  $ECHO -e "\e[32m[+]\tWe are using '$MYSQLPASS' as the MySQL Password\e[0m"
 
-  $ECHO -e "-->\tPlease Type in the MySQL Database:"
+  $ECHO -e "\e[33m-->\tPlease Type in the MySQL Database:\e[0m"
   read MYSQLDB
   if [ -z $MYSQLDB ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m\e[0m"
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$MYSQLDB' as the MySQL Database"
+  $ECHO -e "\e[32m[+]\tWe are using '$MYSQLDB' as the MySQL Database\e[0m"
 
   $ECHO -e "\tTrying to establish a MySQL Connection"
   if $($MYSQL -B -u $MYSQLUSER -p$MYSQLPASS -h $MYSQLHOST $MYSQLDB -P $MYSQLPORT -e QUIT)
   then
-    $ECHO -e "\tMySQL Connection is working"
+    $ECHO -e "\e[32m[+]\tMySQL Connection is working\e[0m"
   else
-    $ECHO -e "\tMySQL Connection is not working. Please check your input!\n"
+    $ECHO -e "\e[31m[-]\tMySQL Connection is not working. Aborting!\e[0m"
     exit 0;
   fi
 
@@ -223,7 +223,7 @@ function addmysql()
   then
      $CAT $CFSSL_MYSQL_EXAMPLE_CONFIG | sed "s,MYSQLHOST,$MYSQLHOST,g" | sed "s,MYSQLPORT,$MYSQLPORT,g" | sed "s,MYSQLHOST,$MYSQLHOST,g" | sed "s,MYSQLUSER,$MYSQLUSER,g" | sed "s,MYSQLPASS,$MYSQLPASS,g" | sed "s,MYSQLDB,$MYSQLDB,g" > $CFSSL_MYSQL_CONFIG
   else
-    $ECHO -e "[-]\tDaemon MySQL Example Config not found. Aborting."
+    $ECHO -e "\e[31m[-]\tDaemon MySQL Example Config not found. Aborting!\e[0m"
     exit 0;
   fi
 
@@ -231,7 +231,7 @@ function addmysql()
   then
      $CAT $HTML_MYSQL_EXAMPLE_CONFIG | sed "s,CA_CN,$CA_CN,g" | sed "s,CA_O,$CA_O,g" | sed "s,CA_U,$CA_U,g" | sed "s,CA_L,$CA_L,g" | sed "s,CA_ST,$CA_ST,g" | sed "s,CA_C,$CA_C,g" | sed "s,PKI_URL,$PKI_URL,g" | sed "s,MYSQLHOST,$MYSQLHOST,g"  | sed "s,MYSQLPORT,$MYSQLPORT,g" | sed "s,MYSQLUSER,$MYSQLUSER,g" | sed "s,MYSQLPASS,$MYSQLPASS,g" | sed "s,MYSQLDB,$MYSQLDB,g" > $HTML_MYSQL_CONFIG
   else
-    $ECHO -e "[-]\tGUI MySQL Example Config not found. Aborting!"
+    $ECHO -e "\e[31m[-]\tGUI MySQL Example Config not found. Aborting!\e[0m"
     exit 0;
   fi
 
@@ -239,7 +239,7 @@ function addmysql()
   then
     $CAT $CFSSL_CA_EXAMPLE_CONFIG | sed "s,OCSP_URL,$OCSP_URL,g" | sed "s,PKI_URL,$PKI_URL,g" > $CFSSL_CA_CONFIG
   else
-    $ECHO -e "[-]\tCA Example Config not found. Aborting!"
+    $ECHO -e "\e[31m[-]\tCA Example Config not found. Aborting!\e[0m"
     exit 0;
   fi
 
@@ -247,89 +247,90 @@ function addmysql()
   then
     $CAT $CFSSL_CLIENT_EXAMPLE_CONFIG | sed "s,PKI_URL,$PKI_URL,g" > $CFSSL_CLIENT_CONFIG
   else
-    $ECHO -e "[-]\tClient Example Config not found. Aborting!"
+    $ECHO -e "\e[31m[-]\tClient Example Config not found. Aborting!\e[0m"
     exit 0;
   fi
 
-  $ECHO -e "-->\tImport Schema"
+  $ECHO -e "\e[33m-->\tImport Schema"
   if [ -f $HTML_MYSQL_SCHEMA ]
   then
     if $($MYSQL -u $MYSQLUSER -p"$MYSQLPASS" -h $MYSQLHOST $MYSQLDB < $HTML_MYSQL_SCHEMA)
     then
-      $ECHO -e "[+]\tImport successfull"
+      $ECHO -e "\e[32m[+]\tImport successfull\e[0m"
     else
-      $ECHO -e "[-]\tImport not successfull"
+      $ECHO -e "\e[31m[-]\tImport not successfull. Aborting!\e[0m"
       exit 0;
     fi
   else
-    $ECHO -e "[-]\tMySQL Schema not found"
+    $ECHO -e "\e[31m[-]\tMySQL Schema not found. Aborting!\e[0m"
+    exit 0;
   fi
 }
 
 function cadetails()
 {
-  $ECHO -e "-->\tPlease Type in the Organisation:"
+  $ECHO -e "\e[33m-->\tPlease Type in the Organisation:\e[0m"
   read CA_O
   if [ -z "$CA_O" ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$CA_O' as Organisation"
+  $ECHO -e "\e[32m[+]\tWe are using '$CA_O' as Organisation\e[0m"
 
-  $ECHO -e "-->\tPlease Type in the Organisation Unit:"
+  $ECHO -e "\e[33m-->\tPlease Type in the Organisation Unit:\e[0m"
   read CA_U
   if [ -z "$CA_U" ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$CA_U' as Organisation Unit"
+  $ECHO -e "\e[32m[+]\tWe are using '$CA_U' as Organisation Unit\e[0m"
 
-  $ECHO -e "-->\tPlease Type in the Locality of your Organisation:"
+  $ECHO -e "\e[33m-->\tPlease Type in the Locality of your Organisation:\e[0m"
   read CA_L
   if [ -z "$CA_L" ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$CA_L' as Locality"
+  $ECHO -e "\e[32m[+]\tWe are using '$CA_L' as Locality\e[0m"
 
-  $ECHO -e "-->\tPlease Type in the State of your Organisation:"
+  $ECHO -e "\e[33m-->\tPlease Type in the State of your Organisation:\e[0m"
   read CA_ST
   if [ -z "$CA_ST" ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$CA_ST' as State"
+  $ECHO -e "\e[32m[+]\tWe are using '$CA_ST' as State\e[0m"
 
-  $ECHO -e "-->\tPlease Type in the Country of your Organisation:"
+  $ECHO -e "\e[33m-->\tPlease Type in the Country of your Organisation:\e[0m"
   read CA_C
   if [ -z "$CA_C" ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$CA_C' as Country"
+  $ECHO -e "\e[32m[+]\tWe are using '$CA_C' as Country\e[0m"
 }
 
 function createCA()
 {
-  $ECHO -e "-->\tPlease Type in the Name of your CA:"
+  $ECHO -e "\e[33m-->\tPlease Type in the Name of your CA:\e[0m\e[0m"
   read CA_CN
   if [ -z "$CA_CN" ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$CA_CN' as the name of your CA"
+  $ECHO -e "\e[32m[+]\tWe are using '$CA_CN' as the name of your CA\e[0m"
 
   if [ -f $CA_EXAMPLE_CSR ]
   then
     $CAT $CA_EXAMPLE_CSR | sed "s,CA_CN,$CA_CN,g" | sed "s,CA_O,$CA_O,g" | sed "s,CA_U,$CA_U,g" | sed "s,CA_L,$CA_L,g" | sed "s,CA_ST,$CA_ST,g" | sed "s,CA_C,$CA_C,g" > $CA_CSR
   else
-    $ECHO -e "[-]\tExample CSR File not found. Aborting!"
+    $ECHO -e "\e[31m[-]\tExample CSR File not found. Aborting!\e[0m"
     exit 0;
   fi
 
@@ -337,33 +338,33 @@ function createCA()
   then
     if $($CFSSL gencert -initca $CA_CSR | $CFSSLJSON -bare $CA_FOLDER/ca -)
     then
-      $ECHO -e "[+]\tCA successfull created."
+      $ECHO -e "\e[32m[+]\tCA successfull created\e[0m"
     else
-      $ECHO -e "[-]\tCA could not be created. Aborting!"
+      $ECHO -e "\e[31m[-]\tCA could not be created. Aborting!\e[0m"
       exit 0;
     fi
   else
-    $ECHO -e "[-]\tCSR not found. Aborting!"
+    $ECHO -e "\e[31m[-]\tCSR not found. Aborting!\e[0m"
     exit 0;
   fi
 }
 
 function createIntermediate()
 {
-  $ECHO -e "-->\tPlease Type in the Name of your Intermediate CA:"
+  $ECHO -e "\e[33m-->\tPlease Type in the Name of your Intermediate CA:\e[0m"
   read ICA_CN
   if [ -z "$ICA_CN" ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$ICA_CN' as the name of your Intermediate CA"
+  $ECHO -e "\e[32m[+]\tWe are using '$ICA_CN' as the name of your Intermediate CA\e[0m"
 
   if [ -f $ICA_EXAMPLE_CSR ]
   then
     $CAT $ICA_EXAMPLE_CSR | sed "s,ICA_CN,$ICA_CN,g" | sed "s,CA_O,$CA_O,g" | sed "s,CA_U,$CA_U,g" | sed "s,CA_L,$CA_L,g" | sed "s,CA_ST,$CA_ST,g" | sed "s,CA_C,$CA_C,g" > $ICA_CSR
   else
-    $ECHO -e "[-]\tExample CSR File not found. Aborting!"
+    $ECHO -e "\e[31m[-]\tExample CSR File not found. Aborting!\e[0m"
     exit 0;
   fi
 
@@ -371,33 +372,33 @@ function createIntermediate()
   then
     if $($CFSSL gencert -ca $CA_FOLDER/ca.pem -ca-key $CA_FOLDER/ca-key.pem -config="$CFSSL_CA_CONFIG" -profile="intermediate" $ICA_CSR | $CFSSLJSON -bare $ICA_FOLDER/intermediate -)
     then
-      $ECHO -e "[+]\tIntermediate CA successfull created."
+      $ECHO -e "\e[32m[+]\tIntermediate CA successfull created\e[0m"
     else
-      $ECHO -e "[-]\tIntermediate CA could not be created. Aborting!"
+      $ECHO -e "\e[31m[-]\tIntermediate CA could not be created. Aborting!\e[0m"
       exit 0;
     fi
   else
-    $ECHO -e "[-]\tCSR not found. Aborting!"
+    $ECHO -e "\e[31m[-]\tCSR not found. Aborting!\e[0m"
     exit 0;
   fi
 }
 
 function createOCSP()
 {
-  $ECHO -e "-->\tPlease Type in the Name of your OCSP Server:"
+  $ECHO -e "\e[33m-->\tPlease Type in the Name of your OCSP Server:\e[0m"
   read OCSP_CN
   if [ -z "$OCSP_CN" ]
   then
-    $ECHO -e "[-]\tVariable is empty."
+    $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
     exit 0;
   fi
-  $ECHO -e "\tWe are using '$OCSP_CN' as the name of your OCSP Server"
+  $ECHO -e "\e[32m[+]\tWe are using '$OCSP_CN' as the name of your OCSP Server\e[0m"
 
   if [ -f $OCSP_EXAMPLE_CSR ]
   then
     $CAT $OCSP_EXAMPLE_CSR | sed "s,OCSP_CN,$OCSP_CN,g" | sed "s,CA_O,$CA_O,g" | sed "s,CA_U,$CA_U,g" | sed "s,CA_L,$CA_L,g" | sed "s,CA_ST,$CA_ST,g" | sed "s,CA_C,$CA_C,g" > $OCSP_CSR
   else
-    $ECHO -e "[-]\tExample CSR File not found. Aborting!"
+    $ECHO -e "\e[31m[-]\tExample CSR File not found. Aborting!\e[0m"
     exit 0;
   fi
 
@@ -405,13 +406,13 @@ function createOCSP()
   then
     if $($CFSSL gencert -ca $ICA_FOLDER/intermediate.pem -ca-key $ICA_FOLDER/intermediate-key.pem -config="$CFSSL_CA_CONFIG" -profile="ocsp" $OCSP_CSR | $CFSSLJSON -bare $OCSP_FOLDER/ocsp -)
     then
-      $ECHO -e "[+]\tOCSP Certificate successfull created."
+      $ECHO -e "\e[32m[+]\tOCSP Certificate successfull created\e[0m"
     else
-      $ECHO -e "[-]\tOCSP Certificate could not be created. Aborting!"
+      $ECHO -e "\e[31m[-]\tOCSP Certificate could not be created. Aborting!\e[0m"
       exit 0;
     fi
   else
-    $ECHO -e "[-]\tCSR not found. Aborting!"
+    $ECHO -e "\e[31m[-]\tCSR not found. Aborting!\e[0m"
     exit 0;
   fi
 }
@@ -423,7 +424,7 @@ function installsystemd()
   then
     $CAT $PKI_EXAMPLE_SERVICE | sed "s,BASEFOLDER,$BASEFOLDER,g" | sed "s,CFSSL_MYSQL_CONFIG,$CFSSL_MYSQL_CONFIG,g" | sed "s,CFSSL_CA_CONFIG,$CFSSL_CA_CONFIG,g" | sed "s,CFSSL,$CFSSL,g" | sed "s,ICA_FOLDER,$ICA_FOLDER,g" | sed "s,OCSP_FOLDER,$OCSP_FOLDER,g" | sed "s,OCSP_FOLDER,$OCSP_FOLDER,g" > $PKI_SERVICE
   else
-    $ECHO -e "[-]\tExample PKI Systemd Service not found"
+    $ECHO -e "\e[31m[-]\tExample PKI Systemd Service not found. Aborting!\e[0m"
     exit 0;
   fi
   if [ -f $PKI_SERVICE ]
@@ -431,15 +432,15 @@ function installsystemd()
     $CP $PKI_SERVICE $SYSTEMD_FOLDER/pki.service
     $SYSTEMCTL enable $SYSTEMD_FOLDER/pki.service
   else
-    $ECHO -e "[-]\tPKI Systemd Service not found"
+    $ECHO -e "\e[31m[-]\tPKI Systemd Service not found"
     exit 0;
   fi
   $ECHO -e "\tStart PKI Service"
   if $($SYSTEMCTL start pki.service)
   then
-    $ECHO -e "[+]\tPKI Service started."
+    $ECHO -e "\e[32m[+]\tPKI Service started\e[0m"
   else
-    $ECHO -e "[-]\tPKI Service could not started. Aborting."
+    $ECHO -e "\e[31m[-]\tPKI Service could not started. Aborting!\e[0m"
     exit 0;
   fi
   $ECHO -e "\tInstall OCSP Service"
@@ -447,7 +448,7 @@ function installsystemd()
   then
     $CAT $OCSP_EXAMPLE_SERVICE | sed "s,BASEFOLDER,$BASEFOLDER,g" | sed "s,CFSSL,$CFSSL,g" | sed "s,OCSP_DUMP,$OCSP_DUMP,g" > $OCSP_SERVICE
   else
-    $ECHO -e "[-]\tExample OCSP Systemd Service not found"
+    $ECHO -e "\e[31m[-]\tExample OCSP Systemd Service not found. Aborting!\e[0m"
     exit 0;
   fi
   if [ -f $OCSP_SERVICE ]
@@ -455,14 +456,14 @@ function installsystemd()
     $CP $OCSP_SERVICE $SYSTEMD_FOLDER/ocsp.service
     $SYSTEMCTL enable $SYSTEMD_FOLDER/ocsp.service
   else
-    $ECHO -e "[-]\OCSP Systemd Service not found"
+    $ECHO -e "\e[31m[-]\OCSP Systemd Service not found. Aborting!\e[0m"
     exit 0;
   fi
   if $($SYSTEMCTL start ocsp.service)
   then
-    $ECHO -e "[+]\tOCSP Service started."
+    $ECHO -e "\e[32m[+]\tOCSP Service started\e[0m"
   else
-    $ECHO -e "[-]\tOCSP Service could not started. Aborting."
+    $ECHO -e "\e[31m[-]\tOCSP Service could not started. Aborting!\e[0m"
     exit 0;
   fi
 }
@@ -472,17 +473,17 @@ function dumpocsp()
   $ECHO -e "\tCreate OCSP Dump"
   if $($CFSSL ocspdump -db-config $CFSSL_MYSQL_CONFIG > $OCSP_DUMP)
   then
-    $ECHO -e "[+]\tOCSP dump created"
+    $ECHO -e "\e[32m[+]\tOCSP dump created\e[0m"
   else
-    $ECHO -e "[-]\tOCSP dump not created. Aborting."
+    $ECHO -e "\e[31m[-]\tOCSP dump not created. Aborting!\e[0m"
     exit 0;
   fi
   $ECHO -e "\tCreate Cronjob"
   if $(($CRONTAB -l ; $ECHO "0 0 */5 * * $CFSSL ocspdump -db-config $CFSSL_MYSQL_CONFIG > $OCSP_DUMP") | $CRONTAB -)
   then
-    $ECHO -e "[+]\tCronjob installed"
+    $ECHO -e "\e[32m[+]\tCronjob installed\e[0m"
   else
-    $ECHO -e "[-]\tCronjob not installed. Aborting."
+    $ECHO -e "\e[31m[-]\tCronjob not installed. Aborting!\e[0m"
     exit 0;
   fi
 }
@@ -491,9 +492,9 @@ function installcomposer()
 {
   if $($COMPOSER --working-dir=$BASEFOLDER/html/ -n install)
   then
-    $ECHO -e "[+]\tDependencies installed"
+    $ECHO -e "\e[32m[+]\tDependencies installed\e[0m"
   else
-    $ECHO -e "[-]\tDependencies not installed. Aborting."
+    $ECHO -e "\e[31m[-]\tDependencies not installed. Aborting!\e[0m"
     exit 0;
   fi
 }
