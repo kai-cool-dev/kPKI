@@ -5,6 +5,7 @@
 # TODO:
 # check programs
 # add client certificate creation
+# Check goroot/gopath
 
 
 # Variables
@@ -13,6 +14,7 @@ CSR_EXAMPLE="$BASEFOLDER/csr.example.json"
 CSR="$BASEFOLDER/csr.json"
 CLIENT_CONFIG="$BASEFOLDER/client.config.json"
 PROFILE="server"
+TYPE="1"
 CERTFOLDER="$BASEFOLDER/live"
 
 # CSR Vars
@@ -21,7 +23,7 @@ CERT_L="London"
 CERT_U="DATA SERVICES"
 CERT_O="420 SERVICES"
 CERT_ST="London"
-CERT_HOSTS="test1,test2,test3"
+CERT_HOSTS=""
 CERT_CN="test1"
 
 # Needed programs
@@ -91,19 +93,56 @@ function addhosts()
     exit 0;
   fi
   $ECHO -e "\e[32m[+]\tWe are using '$CERT_HOSTS'\e[0m"
+  HOSTLIST="$(printf '"%s"\n' "${CERT_HOSTS//,/\",\"}")"
+  CERT_CN="$($ECHO $CERT_HOSTS | cut -d',' -f1)"
+  CERT_HOSTS="\"hosts\":[$HOSTLIST],"
+}
+
+function userinfo()
+{
+  $ECHO -e "\e[33m-->\tPlease type in the user information:\e[0m"
+  read CERT_CN
+  if [ -z "$CERT_CN" ]
+  then
+    $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
+    exit 0;
+  fi
+  $ECHO -e "\e[32m[+]\tWe are using '$CERT_CN'\e[0m"
 }
 
 function generatecsr()
 {
-  HOSTLIST="$(printf '"%s"\n' "${CERT_HOSTS//,/\",\"}")"
-  CERT_CN="$($ECHO $CERT_HOSTS | cut -d',' -f1)"
   if [ -f $CSR_EXAMPLE ]
   then
-    $CAT $CSR_EXAMPLE | sed "s,CERT_CN,$CERT_CN,g" | sed "s/CERT_HOSTS/$HOSTLIST/g" | sed "s,CERT_C,$CERT_C,g" | sed "s,CERT_L,$CERT_L,g" | sed "s,CERT_U,$CERT_U,g" | sed "s,CERT_O,$CERT_O,g" | sed "s,CERT_ST,$CERT_ST,g" > $CSR
+    $CAT $CSR_EXAMPLE | sed "s,CERT_CN,$CERT_CN,g" | sed "s/CERT_HOSTS/$CERT_HOSTS/g" | sed "s,CERT_C,$CERT_C,g" | sed "s,CERT_L,$CERT_L,g" | sed "s,CERT_U,$CERT_U,g" | sed "s,CERT_O,$CERT_O,g" | sed "s,CERT_ST,$CERT_ST,g" > $CSR
   else
     $ECHO -e "\e[31m[-]\tCSR Example not found. Aborting!\e[0m"
     exit 0;
   fi
+}
+
+function gettype()
+{
+  $ECHO -e "\e[33m-->\tPlease select the type of certificate\n1 - server certificate with SAN hosts\n2 - client certificate\e[0m"
+  read TYPE
+  if [ -z "$TYPE" ]
+  then
+    $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
+    exit 0;
+  fi
+  case $TYPE in
+    1)
+      PROFILE="server"
+    ;;
+    2)
+      PROFILE="client"
+    ;;
+    *)
+      $ECHO -e "\e[31m[-]\tType not supported. Aborting!\e[0m"
+      exit 0;
+    ;;
+  esac
+  $ECHO -e "\e[32m[+]\tWe are using type '$PROFILE'\e[0m"
 }
 
 function generatecert()
@@ -135,8 +174,16 @@ function generatecert()
 $ECHO -e "\tWelcome to the kPKI client"
 $ECHO -e "\tOrganisation Information"
 orginfo
-$ECHO -e "\tHosts Information"
-addhosts
+$ECHO -e "\tCertificate Type"
+gettype
+if [[ $PROFILE == "server" ]]
+then
+  $ECHO -e "\tHosts Information"
+  addhosts
+else
+  $ECHO -e "\tUser Information"
+  userinfo
+fi
 $ECHO -e "\tGenerate CSR"
 generatecsr
 $ECHO -e "\tGenerate Certificate"
