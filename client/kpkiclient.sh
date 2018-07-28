@@ -2,12 +2,18 @@
 # kPKI client
 # Copyright 2018 by Kai Pazdzewicz
 
+# TODO:
+# check programs
+# add client certificate creation
+
 
 # Variables
 BASEFOLDER="$(pwd)"
 CSR_EXAMPLE="$BASEFOLDER/csr.example.json"
 CSR="$BASEFOLDER/csr.json"
 CLIENT_CONFIG="$BASEFOLDER/client.config.json"
+PROFILE="server"
+CERTFOLDER="$BASEFOLDER/live"
 
 # CSR Vars
 CERT_C="UK"
@@ -23,6 +29,7 @@ ECHO="$(which echo)"
 CFSSL="$BASEFOLDER/cfssl"
 CFSSLJSON="$BASEFOLDER/cfssljson"
 CAT="$(which cat)"
+MKDIR="$(which mkdir)"
 
 
 # Functions
@@ -101,11 +108,19 @@ function generatecsr()
 
 function generatecert()
 {
+  if [ ! -d "$CERTFOLDER" ]
+  then
+    $MKDIR $CERTFOLDER
+  fi
+  if [ ! -d "$CERTFOLDER/$CERT_CN" ]
+  then
+    $MKDIR $CERTFOLDER/$CERT_CN
+  fi
   if [ -f $CLIENT_CONFIG ]
   then
     if [ -f $CSR ]
     then
-      $CFSSL gencert -config $CLIENT_CONFIG $CSR | $CFSSLJSON -bare $CERT_CN
+      $CFSSL gencert -profile $PROFILE -config $CLIENT_CONFIG $CSR | $CFSSLJSON -bare $CERTFOLDER/$CERT_CN/$CERT_CN
     else
       $ECHO -e "\e[31m[-]\tCSR not found. Aborting!\e[0m"
       exit 0;

@@ -186,22 +186,25 @@ class CertificateController extends ControllerBase
     }
 
     if ($this->request->isPost()) {
-      $certs->assign([
-        'ca_label' => $this->request->getPost('ca_label', 'striptags')
-      ]);
-      $form = new CertificatesForm($certs);
-      if (!$certs->save()) {
-        $this->flash->error($certs->getMessages());
-      } else {
-        $this->flash->success("Label was updated successfully");
-        Tag::resetInput();
+      if($this->request->getPost('ca_label', 'striptags'))
+      {
+        $certs->assign([
+          'ca_label' => $this->request->getPost('ca_label', 'striptags')
+        ]);
+        $form = new CertificatesForm($certs);
+        if (!$certs->save()) {
+          $this->flash->error($certs->getMessages());
+        } else {
+          $this->flash->success("Label was updated successfully");
+          Tag::resetInput();
+        }
       }
     }
 
     $this->view->cert = $certs;
     if($certs->status == "revoked")
     {
-      $this->flash->notice("Certificate is revoked");
+      $this->flash->notice("Certificate is revoked at ".$certs->revoked_at);
     }
     $this->view->form = new CertificatesForm($certs, [
       'edit' => false
