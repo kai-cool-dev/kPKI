@@ -9,3 +9,15 @@ Notice: the private key is not saved in the PKI, if you loose it you need to rev
 1. Copy this files to /opt/kpki on your client computer/server
 2. Install go or copy the complete go folder to /usr/local/go/ (the standard installation path)
 4. run kpkiclient.sh
+
+## Configuration / Automatisation
+
+You can edit `kpkiclient.sh` and fill out following variables for standard input:
+
+```
+CERT_U="" # Organisation Unit
+CERT_O="" # Your Organisation
+CERT_C="" # Country of your Organisation
+CERT_L="" # Locality of your Organisation
+CERT_ST="" # State of your Organisation
+```

@@ -4,9 +4,18 @@
 
 # TODO:
 # check programs
-# add client certificate creation
 # Check goroot/gopath
 
+# Here you can type in the default CSR Data (if this vars are empty you are asked to input)
+CERT_U="" # Organisation Unit
+CERT_O="" # Your Organisation
+CERT_C="" # Country of your Organisation
+CERT_L="" # Locality of your Organisation
+CERT_ST="" # State of your Organisation
+
+#########################################################
+# DO NOT EDIT BEHIND THIS!!!!                           #
+#########################################################
 
 # Variables
 BASEFOLDER="$(pwd)"
@@ -16,15 +25,8 @@ CLIENT_CONFIG="$BASEFOLDER/client.config.json"
 PROFILE="server"
 TYPE="1"
 CERTFOLDER="$BASEFOLDER/live"
-
-# CSR Vars
-CERT_C="UK"
-CERT_L="London"
-CERT_U="DATA SERVICES"
-CERT_O="420 SERVICES"
-CERT_ST="London"
+CERT_CN=""
 CERT_HOSTS=""
-CERT_CN="test1"
 
 # Needed programs
 ECHO="$(which echo)"
@@ -38,7 +40,10 @@ MKDIR="$(which mkdir)"
 function orginfo()
 {
   $ECHO -e "\e[33m-->\tPlease type in the Organisation:\e[0m"
-  read CERT_O
+  if [ -z "$CERT_O" ]
+  then
+    read CERT_O
+  fi
   if [ -z "$CERT_O" ]
   then
     $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
@@ -47,7 +52,10 @@ function orginfo()
   $ECHO -e "\e[32m[+]\tWe are using '$CERT_O' as Organisation\e[0m"
 
   $ECHO -e "\e[33m-->\tPlease type in the Organisation Unit:\e[0m"
-  read CERT_U
+  if [ -z "$CERT_U" ]
+  then
+    read CERT_U
+  fi
   if [ -z "$CERT_U" ]
   then
     $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
@@ -56,7 +64,10 @@ function orginfo()
   $ECHO -e "\e[32m[+]\tWe are using '$CERT_U' as Organisation Unit\e[0m"
 
   $ECHO -e "\e[33m-->\tPlease type in the Locality of your Organisation:\e[0m"
-  read CERT_L
+  if [ -z "$CERT_L" ]
+  then
+    read CERT_L
+  fi
   if [ -z "$CERT_L" ]
   then
     $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
@@ -65,7 +76,10 @@ function orginfo()
   $ECHO -e "\e[32m[+]\tWe are using '$CERT_L' as Locality\e[0m"
 
   $ECHO -e "\e[33m-->\tPlease type in the State of your Organisation:\e[0m"
-  read CERT_ST
+  if [ -z "$CERT_ST" ]
+  then
+    read CERT_ST
+  fi
   if [ -z "$CERT_ST" ]
   then
     $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
@@ -74,7 +88,10 @@ function orginfo()
   $ECHO -e "\e[32m[+]\tWe are using '$CERT_ST' as State\e[0m"
 
   $ECHO -e "\e[33m-->\tPlease type in the Country of your Organisation:\e[0m"
-  read CERT_C
+  if [ -z "$CERT_C" ]
+  then
+    read CERT_C
+  fi
   if [ -z "$CERT_C" ]
   then
     $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
