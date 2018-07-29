@@ -2,16 +2,12 @@
 # kPKI client
 # Copyright 2018 by Kai Pazdzewicz
 
-# TODO:
-# check programs
-# Check goroot/gopath
-
 # Here you can type in the default CSR Data (if this vars are empty you are asked to input)
-CERT_U="" # Organisation Unit
 CERT_O="" # Your Organisation
-CERT_C="" # Country of your Organisation
+CERT_U="" # Organisation Unit
 CERT_L="" # Locality of your Organisation
 CERT_ST="" # State of your Organisation
+CERT_C="" # Country of your Organisation
 
 #########################################################
 # DO NOT EDIT BEHIND THIS!!!!                           #
@@ -22,8 +18,8 @@ BASEFOLDER="$(pwd)"
 CSR_EXAMPLE="$BASEFOLDER/csr.example.json"
 CSR="$BASEFOLDER/csr.json"
 CLIENT_CONFIG="$BASEFOLDER/client.config.json"
-PROFILE="server"
-TYPE="1"
+PROFILE=""
+TYPE=""
 CERTFOLDER="$BASEFOLDER/live"
 CERT_CN=""
 CERT_HOSTS=""
@@ -34,9 +30,40 @@ CFSSL="$BASEFOLDER/cfssl"
 CFSSLJSON="$BASEFOLDER/cfssljson"
 CAT="$(which cat)"
 MKDIR="$(which mkdir)"
+SED="$(which $SED)"
 
 
 # Functions
+function checkprograms()
+{
+  if [ -z "$ECHO" ]
+  then
+    $ECHO -e "\e[31m[-]\techo is missing. Aborting!\e[0m"
+    exit 0;
+  fi
+  if [ -z "$CFSSL" ]
+  then
+    $ECHO -e "\e[31m[-]\tcfssl is missing. Aborting!\e[0m"
+    exit 0;
+  fi
+  if [ -z "$CFSSLJSON" ]
+  then
+    $ECHO -e "\e[31m[-]\tcfssljson is missing. Aborting!\e[0m"
+    exit 0;
+  fi
+  if [ -z "$CAT" ]
+  then
+    $ECHO -e "\e[31m[-]\tcat is missing. Aborting!\e[0m"
+    exit 0;
+  fi
+  if [ -z "$MKDIR" ]
+  then
+    $ECHO -e "\e[31m[-]\tmkdir is missing. Aborting!\e[0m"
+    exit 0;
+  fi
+  $ECHO -e "\e[32m[+]\tall required programs are there, here you go!\e[0m"
+}
+
 function orginfo()
 {
   $ECHO -e "\e[33m-->\tPlease type in the Organisation:\e[0m"
@@ -103,7 +130,10 @@ function orginfo()
 function addhosts()
 {
   $ECHO -e "\e[33m-->\tPlease type in your command seperated hosts (e.g. example.com,www.example.com,sub.example.com):\e[0m"
-  read CERT_HOSTS
+  if [ -z "$CERT_HOSTS" ]
+  then
+    read CERT_HOSTS
+  fi
   if [ -z "$CERT_HOSTS" ]
   then
     $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
@@ -118,7 +148,10 @@ function addhosts()
 function userinfo()
 {
   $ECHO -e "\e[33m-->\tPlease type in the user information:\e[0m"
-  read CERT_CN
+  if [ -z "$CERT_CN" ]
+  then
+    read CERT_CN
+  fi
   if [ -z "$CERT_CN" ]
   then
     $ECHO -e "\e[31m[-]\tVariable is empty. Aborting!\e[0m"
@@ -131,7 +164,7 @@ function generatecsr()
 {
   if [ -f $CSR_EXAMPLE ]
   then
-    $CAT $CSR_EXAMPLE | sed "s,CERT_CN,$CERT_CN,g" | sed "s/CERT_HOSTS/$CERT_HOSTS/g" | sed "s,CERT_C,$CERT_C,g" | sed "s,CERT_L,$CERT_L,g" | sed "s,CERT_U,$CERT_U,g" | sed "s,CERT_O,$CERT_O,g" | sed "s,CERT_ST,$CERT_ST,g" > $CSR
+    $CAT $CSR_EXAMPLE | $SED "s,CERT_CN,$CERT_CN,g" | $SED "s/CERT_HOSTS/$CERT_HOSTS/g" | $SED "s,CERT_C,$CERT_C,g" | $SED "s,CERT_L,$CERT_L,g" | $SED "s,CERT_U,$CERT_U,g" | $SED "s,CERT_O,$CERT_O,g" | $SED "s,CERT_ST,$CERT_ST,g" > $CSR
   else
     $ECHO -e "\e[31m[-]\tCSR Example not found. Aborting!\e[0m"
     exit 0;
@@ -189,6 +222,8 @@ function generatecert()
 
 # Main Routine
 $ECHO -e "\tWelcome to the kPKI client"
+$ECHO -e "\tCheck required programs"
+checkprograms
 $ECHO -e "\tOrganisation Information"
 orginfo
 $ECHO -e "\tCertificate Type"
