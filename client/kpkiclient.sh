@@ -30,7 +30,7 @@ CFSSL="$BASEFOLDER/cfssl"
 CFSSLJSON="$BASEFOLDER/cfssljson"
 CAT="$(which cat)"
 MKDIR="$(which mkdir)"
-SED="$(which $SED)"
+SED="$(which sed)"
 
 
 # Functions
